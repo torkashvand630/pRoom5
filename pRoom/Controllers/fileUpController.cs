@@ -4,20 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-  
+
 using System.Collections.Concurrent;
 using System.IO;
 using System.Net.WebSockets;
 using System.Text;
- 
+
 using System.Net.Http.Headers;
- 
+
 using Microsoft.AspNetCore.Hosting;
 using System.Threading;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging; 
+using System.Drawing.Imaging;
 //using Aspose.Pdf;
 //using Aspose.Pdf.Devices;
 using pRoom.Models;
@@ -30,11 +30,11 @@ namespace pRoom.Controllers
     {
         // GET: fileUp
 
-         
+
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         public fileUpController(Microsoft.Extensions.Hosting.IHostingEnvironment env)
         {
-            
+
             _env = env;
         }
 
@@ -42,26 +42,26 @@ namespace pRoom.Controllers
         public async Task<string> uploadImg(IList<IFormFile> files)
         {
             var from = Request.Form["from"][0];
-            
+
             var fileID = int.Parse(Request.Form["fileID"][0].Trim());
             var pageID = int.Parse(Request.Form["pageID"][0].Trim());
-           
+
             var meetID = int.Parse(Request.Form["meetID"][0].Trim());
-           
-            var meet =   meetService.GetMeeting(meetID);
+
+            var meet = meetService.GetMeeting(meetID);
 
             string envWWWPATH = _env.ContentRootPath + "\\wwwroot\\";
-           
+
             string jsonString = "";
             foreach (IFormFile source in files)
             {
-               
 
 
-             
+
+
                 FileMD filemd = meet.filesModel.fileList[fileID];// (++meet.pdfCount).ToString();
                 var imgId = filemd.imgCount++;
-            
+
                 string imgPath = envWWWPATH + @"files\board\" + meetID + @"\img\" + fileID + "\\";
                 var exit = System.IO.Directory.Exists(imgPath);
                 if (!exit) System.IO.Directory.CreateDirectory(imgPath);
@@ -74,7 +74,7 @@ namespace pRoom.Controllers
                 dynamic MyDynamic = new System.Dynamic.ExpandoObject();
 
                 MyDynamic.userName = from;
-               
+
                 MyDynamic.meetID = meetID.ToString();
                 jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(MyDynamic);
                 try
@@ -96,11 +96,11 @@ namespace pRoom.Controllers
                     dynamic d2 = new System.Dynamic.ExpandoObject();
                     d2.t = "setImage";
                     d2.action = "set";
-                    d2.fileID =  fileID ;
-                
+                    d2.fileID = fileID;
+
                     d2.imgId = imgId;
                     d2.num = pageID;
-                  
+
                     d2.type = "board";
                     d2.board = "draw";
                     d2.width = 100;
@@ -111,8 +111,8 @@ namespace pRoom.Controllers
                     jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(d);
                     message m = new message(d, jsonString);
                     await Models.Board.parse(m, meet);
-                  //  await meet.userManager.sendToAllAsync(d);
-                  
+                    //  await meet.userManager.sendToAllAsync(d);
+
                 }
 
 
@@ -128,12 +128,12 @@ namespace pRoom.Controllers
         public async Task<string> uploadFile(IList<IFormFile> files)
         {
             var from = Request.Form["from"][0];
-            
+
             var meetID = int.Parse(Request.Form["meetID"][0].Trim());
             Console.WriteLine("file upload : " + meetID);
             //  string meetID = "4";
-            var meet=   meetService.GetMeeting(meetID);
-           if(meet ==null )  return "";//|| meet.meetManagPrpperty.finishStatus != "no"
+            var meet = meetService.GetMeeting(meetID);
+            if (meet == null) return "";//|| meet.meetManagPrpperty.finishStatus != "no"
             string envWWWPATH = appInfo.path + "/wwwroot/";
             var pdfPath = envWWWPATH + "files/board/" + meetID + "/pdf/";
             var exit = System.IO.Directory.Exists(pdfPath);
@@ -141,24 +141,25 @@ namespace pRoom.Controllers
             string jsonString = "";
             foreach (IFormFile source in files)
             {
-               
-              
-                
-              
+
+
+
+
                 string filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.Trim('"');
                 //Console.WriteLine("filename : " + filename);
                 var extension = Path.GetExtension(filename).ToLower();
                 //Console.WriteLine("ext : " + extension);
                 filename = this.EnsureCorrectFilename(filename);
-                var tmpFile = meet.filesModel.add(filename,meetID);
-               // (++meet.pdfCount).ToString();
-               // string fileID = meet.filesModel.fileList.Count().ToString();// filemd.inRoomID.ToString();
+                var tmpFile = meet.filesModel.add(filename, meetID);
+                // (++meet.pdfCount).ToString();
+                // string fileID = meet.filesModel.fileList.Count().ToString();// filemd.inRoomID.ToString();
                 string outPicFile = envWWWPATH + "files/board/" + meetID + "/pic/" + tmpFile.inRoomID + "/";
-                var pdfFilePath = pdfPath+ tmpFile.inRoomID + extension;// GetPathAndFilename(filename);
+                var pdfFilePath = pdfPath + tmpFile.inRoomID + extension;// GetPathAndFilename(filename);
                 dynamic MyDynamic = new System.Dynamic.ExpandoObject();
                 try
                 {
-                    if (System.IO.File.Exists(pdfFilePath)){
+                    if (System.IO.File.Exists(pdfFilePath))
+                    {
                         System.IO.File.Delete(pdfFilePath);
                     }
                 }
@@ -166,7 +167,7 @@ namespace pRoom.Controllers
                 {
                     return MyDynamic;
                 }
-               
+
                 try
                 {
                     using (FileStream output = System.IO.File.Create(pdfFilePath))
@@ -176,19 +177,19 @@ namespace pRoom.Controllers
                 {
                     return MyDynamic;
                 }
-               
-                if (meet == null ) return "";//|| meet.meetManagPrpperty.finishStatus != "no"
-                var pp2= "files/board/b2/" + filename;
-                
-              
-               
-                MyDynamic.data =pp2;
+
+                if (meet == null) return "";//|| meet.meetManagPrpperty.finishStatus != "no"
+                var pp2 = "files/board/b2/" + filename;
+
+
+
+                MyDynamic.data = pp2;
                 MyDynamic.pdfPageCount = 1;
                 MyDynamic.meetID = meetID.ToString();
                 jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(MyDynamic);
                 try
                 {
-                    return MyDynamic;                    
+                    return MyDynamic;
                 }
                 catch
                 {
@@ -198,70 +199,74 @@ namespace pRoom.Controllers
                 {
                     // var t =  convertByPoppler(envWWWPATH,meetID,fileID,extension);
                     string t = "";
-                    if(appInfo.pdfConverter=="aspose")
-                      t = convertByAspose(envWWWPATH, meetID, tmpFile.inRoomID.ToString(), extension);
+                    if (appInfo.pdfConverter == "aspose")
+                        t = convertByAspose(envWWWPATH, meetID, tmpFile.inRoomID.ToString(), extension);
                     else
-                        t =await convertByPoppler(envWWWPATH, meetID, tmpFile.inRoomID.ToString(), extension);
+                        t = await convertByPoppler(envWWWPATH, meetID, tmpFile.inRoomID.ToString(), extension);
 
-                    if (meet == null ) t="no";//|| meet.meetManagPrpperty.finishStatus != "no"
+                    if (meet == null) t = "no";//|| meet.meetManagPrpperty.finishStatus != "no"
                     dynamic d = new System.Dynamic.ExpandoObject();
                     d.type = "file";
                     d.action = "file";
                     d.res = t;
                     if (t == "ok")
                     {
-                     
-                        d.pdfPageCount = getPdfPageCount(outPicFile);
-                        System.Drawing.Image img = System.Drawing.Image.FromFile(outPicFile + "1.jpg");
-                        //if (extension != ".pdf")
-                        //{
-                        //    img = resizeImage(img, outPicFile);
-                        //}
 
-                       
-                    
-                        d.meetInfo = MyDynamic;// meetID;
-                        d.fileID = tmpFile.inRoomID;
-                        //   d.href = pp2;
-                        d.fileName = filename;
-                        
-                        d.pdfOrder = tmpFile.inRoomID;
-                      
-                        d.width = img.Width;
-                        d.height = img.Height;
-                        d.ext = extension;
+                        int pCount = getPdfPageCount(outPicFile);
+                        if (pCount >= 1)
+                        {
+                            d.pdfPageCount = pCount;
+                            System.Drawing.Image img = System.Drawing.Image.FromFile(outPicFile + "1.jpg");
+                            //if (extension != ".pdf")
+                            //{
+                            //    img = resizeImage(img, outPicFile);
+                            //}
 
 
-                        //jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(filemd);
-                        //await userList.sendToAllAsync(jsonString,meetID);
-                        //await meet.userManager.sendToAllAsync(d);
-                        await mqtt.send(meet.id, d);
-                        // await meet.filesModel.sendToUser(meet);
-                        // FileMD filemd = meet.filesModel.add(filename);
-                        tmpFile.d = d;
-                        tmpFile.width = img.Width;
-                        tmpFile.height = img.Height;
-                        tmpFile.pageCount = d.pdfPageCount;
-                       // tmpFile.dbStatus = 0;
-                        tmpFile.ext = extension;
-                        tmpFile.meetID = meetID;
-                        meet.board.addFileToDic(tmpFile);
-                        fileRepository fr = new fileRepository();
-                        fr.update(tmpFile);
+
+                            d.meetInfo = MyDynamic;// meetID;
+                            d.fileID = tmpFile.inRoomID;
+                            //   d.href = pp2;
+                            d.fileName = filename;
+
+                            d.pdfOrder = tmpFile.inRoomID;
+
+                            d.width = img.Width;
+                            d.height = img.Height;
+                            d.ext = extension;
+
+
+                            //jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(filemd);
+                            //await userList.sendToAllAsync(jsonString,meetID);
+                            //await meet.userManager.sendToAllAsync(d);
+                            await mqtt.send(meet.id, d);
+                            // await meet.filesModel.sendToUser(meet);
+                            // FileMD filemd = meet.filesModel.add(filename);
+                            tmpFile.d = d;
+                            tmpFile.width = img.Width;
+                            tmpFile.height = img.Height;
+                            tmpFile.pageCount = d.pdfPageCount;
+                            // tmpFile.dbStatus = 0;
+                            tmpFile.ext = extension;
+                            tmpFile.meetID = meetID;
+                            meet.board.addFileToDic(tmpFile);
+                            fileRepository fr = new fileRepository();
+                            fr.update(tmpFile);
+                        }
                     }
                     else
                     {
                         Console.WriteLine("errrrrrrrroor in convert file ....");
                         await mqtt.send(meet.id, d);
                     }
-                  
+
                 }
-              
-               
-                 
+
+
+
             }
             return jsonString;
-             
+
         }
         public string convertByAspose(string envWWWPATH, int meetID, string fileID, string ext)
         {
@@ -325,7 +330,7 @@ namespace pRoom.Controllers
         //        Console.WriteLine("w : " + w);
         //        Console.WriteLine("h : " + h);
         //    }
-          
+
         //    //var w = Math.Round((float)(img.Width) * (float)(scale));
         //    //var h = Math.Round((float)(img.Height) * (float)(scale));
         //    Bitmap new_image = new Bitmap((int)(w), (int)(h));
@@ -345,10 +350,10 @@ namespace pRoom.Controllers
         //    new_image.Save(outPath+"1.jpg", encoder, encParams);
         //    return new_image;
 
-            
+
 
         //}
-        
+
         public async Task<string> convertByPoppler(string envWWWPATH, int meetID, string fileID, string ext)
         {
             var WorkPath = envWWWPATH + "files/board/";
@@ -361,17 +366,17 @@ namespace pRoom.Controllers
                 try
                 {
                     var list = Directory.GetFiles(outFile, "*.*");
-                foreach (var f in list)
-                {
-                    //if (System.IO.File.Exists(outFile + "1.jpg"))
-                    //{
-                    //    System.IO.File.Delete(outFile + "1.jpg");
-                    //}
-                    if (System.IO.File.Exists(f))
+                    foreach (var f in list)
                     {
-                        System.IO.File.Delete(f);
+                        //if (System.IO.File.Exists(outFile + "1.jpg"))
+                        //{
+                        //    System.IO.File.Delete(outFile + "1.jpg");
+                        //}
+                        if (System.IO.File.Exists(f))
+                        {
+                            System.IO.File.Delete(f);
+                        }
                     }
-                }
 
                 }
                 catch
@@ -383,12 +388,12 @@ namespace pRoom.Controllers
 
             string pdfFile = WorkPath + meetID + "/pdf/" + fileID + ".pdf";
 
-          
+
             if (ext != ".pdf")
             {
                 try
                 {
-                    
+
                     System.IO.File.Copy(WorkPath + meetID + "/pdf/" + fileID + ext, outFile + "1.jpg");
                     return "ok";
                 }
@@ -396,11 +401,11 @@ namespace pRoom.Controllers
                 {
                     return "no";
                 }
-               
+
             }
 
             //./pdftoppm -jpeg 3.pdf 3.jpg
-            string command = "pdftoppm -jpeg "+pdfFile+" "+outFile;
+            string command = "pdftoppm -jpeg " + pdfFile + " " + outFile;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 command = appInfo.poppler + pdfFile + " " + outFile;
@@ -414,7 +419,7 @@ namespace pRoom.Controllers
                 {
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
-                       // var processResults = await ProcessEx.RunAsync("git.exe", "pull");
+                        // var processResults = await ProcessEx.RunAsync("git.exe", "pull");
 
                         proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
                         proc.StartInfo.Verb = "runas";
@@ -427,7 +432,7 @@ namespace pRoom.Controllers
                         proc.Start();
                         Console.WriteLine("101");
                         proc.Exited += delegate (object? sender, EventArgs args) {
-                          
+
                         };
                         await Task.Delay(5000);
                         Console.WriteLine("102");
@@ -445,12 +450,12 @@ namespace pRoom.Controllers
                         proc.Kill(true);
                         //   result += proc.StandardOutput.ReadToEnd();
                         //  result += proc.StandardError.ReadToEnd();
-                      
-                       
-                       
-                      
+
+
+
+
                         Console.WriteLine("105");
-                       //  await proc.WaitForExitAsync();
+                        //  await proc.WaitForExitAsync();
                         // proc.WaitForExit();
                         return "ok";
                     }
@@ -470,40 +475,40 @@ namespace pRoom.Controllers
                         return "ok";
                     }
 
-                   
+
                 }
                 catch
                 {
                     return "no";
                 }
             }
-           // Console.WriteLine("result is :" + result);
-           // return result;
+            // Console.WriteLine("result is :" + result);
+            // return result;
             return "ok";
         }
 
         public int getPdfPageCount(string p)
         {
-            var list= Directory.GetFiles(p, "*.jpg");
+            var list = Directory.GetFiles(p, "*.jpg");
             if (appInfo.pdfConverter == "aspose")
                 return list.Count();
             foreach (var f in list)
             {
                 var t = f;
                 t = t.Replace("-00", "");
-                t =  t.Replace("-0", "");
-              t=  t.Replace("-", "");
-               if(t!=f)
+                t = t.Replace("-0", "");
+                t = t.Replace("-", "");
+                if (t != f)
                     try
                     {
                         System.IO.File.Move(f, t);
                     }
                     catch { }
-               
+
             }
             return list.Count();
         }
-    
+
 
         public class kkjj
         {
@@ -538,7 +543,7 @@ namespace pRoom.Controllers
             Console.WriteLine("file offic upload : " + meetID);
             //  string meetID = "4";
             var meet = meetService.GetMeeting(meetID);
-            if (meet == null ) return "";//|| meet.meetManagPrpperty.finishStatus != "no"
+            if (meet == null) return "";//|| meet.meetManagPrpperty.finishStatus != "no"
             string envWWWPATH = appInfo.path + "/wwwroot/";
             var officPath = envWWWPATH + "files/board/" + meetID + "/offic/";
             string jsonString = "";
@@ -554,7 +559,7 @@ namespace pRoom.Controllers
                 var extension = Path.GetExtension(filename).ToLower();
                 //Console.WriteLine("ext : " + extension);
                 filename = this.EnsureCorrectFilename(filename);
-                filename = filename.Replace(" ", "-").Replace("_","-");
+                filename = filename.Replace(" ", "-").Replace("_", "-");
                 var filePath = officPath + filename;
                 // (++meet.pdfCount).ToString();
                 var isValid = !string.IsNullOrEmpty(filename) &&
@@ -591,7 +596,7 @@ namespace pRoom.Controllers
                 }
                 finally
                 {
-                     
+
                 }
 
 
