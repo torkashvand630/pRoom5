@@ -1,0 +1,93 @@
+﻿@model pRoom.meetVM
+
+
+
+
+
+<style>
+    #monaco-editor, #monaco-editor2 {
+        width: 100%;
+        height: 400px;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
+
+    .yRemoteSelection {
+        background-color: rgb(250, 129, 0, .5)
+    }
+
+    .yRemoteSelectionHead {
+        position: absolute;
+        border-left: orange solid 2px;
+        border-top: orange solid 2px;
+        border-bottom: orange solid 2px;
+        height: 100%;
+        box-sizing: border-box;
+    }
+
+        .yRemoteSelectionHead::after {
+            position: absolute;
+            content: ' ';
+            border: 3px solid orange;
+            border-radius: 4px;
+            left: -4px;
+            top: -5px;
+        }
+</style>
+
+
+@*<button type="button" onclick="developControler.fileClick('javascript')" id="y-connect-btn2">javascript</button>
+<button type="button" onclick="developControler.fileClick('html')" id="y-connect-btn3">html</button>
+<button type="button" onclick="developControler.fileClick('css')" id="y-connect-btn4">css</button>*@ 
+
+<div class="row" style="height:100%;">
+    <div class="col-12 col-md-6" style="padding:0px!important;height:100%;">
+        <nav style="height:37px;">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist" style="border:none;">
+                <a class="nav-item nav-link active" id="nav-tab-html" onclick="developControler.fileClick('html')" data-toggle="tab" href="#monaco-editor-tab-html" role="tab" aria-controls="monaco-editor-tab-html" aria-selected="false">html</a>
+                <a class="nav-item nav-link" id="nav-tab-java" onclick="developControler.fileClick('java')" data-toggle="tab" href="#monaco-editor-tab-java" role="tab" aria-controls="monaco-editor-tab-java" aria-selected="false">javaScript</a>
+                <a class="nav-item nav-link" id="nav-tab-css" onclick="developControler.fileClick('css')" data-toggle="tab" href="#monaco-editor-tab-css" role="tab" aria-controls="monaco-editor-tab-css" aria-selected="false">css</a>
+            </div>
+        </nav>
+        <div class="tab-content" style="height:100%;" id="nav-tabContent">
+            <div class="tab-pane fade  active" id="monaco-editor-tab-html" role="tabpanel" aria-labelledby="nav-home-tab" style="height:100%;" >
+                <div id="monaco-html-editor" style="height:100%;width:100%;"></div>
+            </div>
+            <div class="tab-pane fade active" id="monaco-editor-tab-java" role="tabpanel" aria-labelledby="nav-profile-tab" style="height:100%;" >
+                <div id="monaco-java-editor" style="height:100%;width:100%"></div>
+            </div>
+            <div class="tab-pane fade active" id="monaco-editor-tab-css" role="tabpanel" aria-labelledby="nav-contact-tab" style="height:100%;" >
+                <div id="monaco-css-editor" style="height:100%;width:100% "></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12 col-md-6" style="padding:0px!important;height:100%;">
+
+        <div style="width:100%;height:50%;">
+            <iframe id="developFrame" style="width:100%;height:100%;" sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts" allow="accelerometer; camera; encrypted-media; geolocation; gyroscope; microphone; midi; payment;" scrolling="auto" allowtransparency="true" allow-fullscreen="true"></iframe>
+
+        </div>
+        <div style="width:100%;height:50%;">
+            <div style="background-color:#363a36;border:groove 4px;height:100%;width:100%;padding: 15px;color:white;">
+                <div> your console : .........................................</div>
+                <div id="developFrameConsole"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!-- <div id="monaco-editor2" /> -->
+@*<script type="text/javascript" src="./dist/monaco.bundle.js"></script>*@
+@*<script src="http://localhost:8081/monaco/dist/monaco.bundle.js"></script>
+
+    <script src="http://localhost:8081/monaco/dist/editor.worker.bundle.js"></script>
+    <script src="http://localhost:8081/monaco/dist/html.worker.bundle.js"></script>*@
+<div id="developScripPanel"></div>
+
+@*<script src="~/monaco/dist/monaco.bundle.js"></script>*@
+

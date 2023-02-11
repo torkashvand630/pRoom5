@@ -1,0 +1,159 @@
+﻿@using pRoom.Models;
+@using pRoom.Models.eventModel;
+@{
+
+    MyPage myPage = (MyPage)ViewBag.MyPage;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @myPage.t.front_index_OnlineMeeting</title>
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />*@
+
+    <link href="~/event/css/bootstrap.min.css" rel="stylesheet" />
+    @if (myPage.t.Direction == "rtl")
+    {
+        <link href="~/event/css/bootstrap-rtl.min.css" rel="stylesheet" />
+    }
+
+
+    <link href="~/event/css/site.css" rel="stylesheet" />
+    @if (myPage.t.Direction == "ltr")
+    {
+        <link href="~/event/css/ltr.css" rel="stylesheet" />
+    }
+    @*<link href="~/event/css/bootstrap-theme.css" rel="stylesheet" />*@
+    <link href="~/event/datepick/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
+     <link rel="stylesheet" href="~/css/webfonts/font-awesome-all.min.css" />
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />*@
+    <meta name="google-site-verification" content="u4aj5mPHIJs0wGvpRriogCtdnMUUaX_x27QonJAb0Q8" />
+</head>
+<body>
+    <div class="mainBox">
+        <nav style="position:absolute!important;" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @*<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">vRoom</a>*@
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        
+                         <li><a href="/@myPage.lang/home/index">@myPage.t.front_menu_home</a></li>
+                        @if (myPage.muser != null)
+                        {
+                            <li><a href="/@myPage.lang/room/index">@myPage.t.front_menu_yourRoom</a></li>
+                        }
+
+                      @*   <li><a href="/@myPage.lang/document/install">@myPage.t.front_menu_Install</a></li>*@
+                         
+                        @if (@myPage.lang == "fa")
+                        {
+                             
+                             <li><a href="/@myPage.lang/blog/About">@myPage.t.front_menu_aboutUs</a></li>
+                        }
+
+                       
+                        <li><a href="/@myPage.lang/blog/Contact">@myPage.t.front_menu_ContactUs</a></li>
+                        @if(myPage.lang=="fa")
+                        {
+                             <li><a href="/en">English</a></li>
+                        }
+                        else{
+                             <li><a href="/fa">فارسی</a></li>
+                        }
+                      
+                    </ul>
+
+                    @await Html.PartialAsync("_LoginPartial2", myPage)
+
+                </div>
+            </div>
+        </nav>
+
+
+
+        @RenderSection("slide", required: false)
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+
+        </div>
+        @RenderSection("slide2", required: false)
+
+    </div>
+    <footer>
+        @if (@myPage.lang == "fa")
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h2>   </h2>
+                        <ul>
+                            <li><a href="/home/index">سامانه یادگیری مجازی</a></li>
+                            <li><a href="/blog/item/2">وبینار چیست</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h2> </h2>
+                        <ul>
+                            <li><a href="/blog/item/4">کلاس مجازی چیست</a></li>
+                            <li><a href="/blog/item/2">وبینار چیست</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h2> </h2>
+                        <ul>
+                            <li><a href="/blog/About">درباره ما</a></li>
+                            <li><a href="/blog/Contact">ارتباط با ما</a></li>
+                            <li><a href="/user/Login">ورود </a></li>
+                            <li><a href="/user/Register">ثبت نام</a></li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+        <div class="copy">
+            <div style="    height: 38px;padding: 10px;">
+                <span style="margin :0 30px;"> @myPage.t.front_footer_Year &copy;   - @myPage.t.front_footer </span>
+                <a href="https://github.com/sunmobiir/meetapp" target="_blank">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    @*<script src="~/js/site.min.js" asp-append-version="true"></script>*@
+    @*@RenderSection("Scripts", required: false)*@
+    @*@RenderSection("chat", false)*@
+
+
+
+
+    @*<link href="~/event/datepick/bootstrap.css" rel="stylesheet" />*@
+    <script src="~/event/datepick/jquery-3.1.0.min.js"></script>
+    @*<script src="~/event/datepick/jquery-3.1.0.intellisense.js"></script>*@
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>*@
+
+    <script src="~/event/datepick/bootstrap.min.js"></script>
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.min.min.js"></script>*@
+
+    <script src="~/event/js/jalaali.js"></script>
+    <script src="~/event/js/jquery.Bootstrap-PersianDateTimePicker.js"></script>
+
+</body>
+
+</html>

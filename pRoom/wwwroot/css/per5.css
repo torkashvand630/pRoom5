@@ -1,0 +1,920 @@
+
+/*.bs-canvas-overlay {
+    opacity: 0;
+    z-index: -1;
+}
+
+    .bs-canvas-overlay.show {
+        opacity: 0.85;
+        z-index: 1100;
+    }
+
+.bs-canvas-overlay, .bs-canvas {
+    transition: all .4s ease-out;
+    -webkit-transition: all .4s ease-out;
+    -moz-transition: all .4s ease-out;
+    -ms-transition: all .4s ease-out;
+}
+
+.bs-canvas {
+    top: 0;
+    z-index: 1110;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 330px;
+}
+
+.bs-canvas-left {
+    left: 0;
+    margin-left: -330px;
+}
+
+.bs-canvas-right {
+    right: 0;
+    margin-right: -330px;
+}*/
+
+::-webkit-scrollbar {
+    width: 5px;
+    background: #d4d4d3;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    /* background: #f1f1f1; */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    /* background: #888; */
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+*::-webkit-scrollbar {
+    height: 8px;
+    overflow: visible;
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    background: #000;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    /* background: orange; */
+}
+
+*::-webkit-scrollbar-thumb {
+    /* background-color: blue; */
+    /* border-radius: 20px; */
+    border: 5px solid #adacab;
+}
+
+:root {
+    --www1: 300px !important;
+}
+
+#canvas {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#mute-video-span {
+   
+}
+
+#mute-audio-span {
+   
+}
+
+#iconPanelVidu {
+    
+}
+
+
+#toolbar {
+    /* display: none; */
+}
+
+#fileUploadPanel {
+    display: none;
+}
+
+.screanShareIcon {
+    display: block;
+}
+
+
+
+#wrapper {
+    display: flex;
+}
+
+#sidebar-wrapper {
+    resize: horizontal;
+    float: right;
+    overflow: auto;
+    /* flex: 1 1 0%; */
+    position: relative !important;
+    /* width:  var(--www1);*/
+}
+
+#centerVideoPanel {
+    resize: horizontal;
+    float: left;
+    position: relative !important;
+    overflow: auto;
+}
+
+#newVideosBox {
+    /* flex: 1; */
+    background-color: #dfe1e2;
+}
+
+#centerVideoPanel {
+    width: 400px;
+    background-color: #dfe1e2;
+    float: left;
+    display: block;
+    border-left: 2px solid #eceaea;
+    border-top: 2px groove;
+    /* right: 400px; */
+    flex: 1;
+    height: 100%;
+    position: absolute;
+}
+
+#page-content-wrapper {
+    resize: horizontal;
+    float: left;
+    flex: 1.8;
+    overflow-y: hidden;
+    position: relative !important;
+    width: 800px;
+}
+
+#wrapper.pos_1 #screenSharePanel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+}
+
+#wrapper.pos_3 #screenSharePanel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+#wrapper.pos_2 #screenAndBoard {
+    height: auto;
+}
+
+#wrapper.pos_3 #sidebar-wrapper {
+    flex: none;
+}
+
+#wrapper.id_1 #sidebar-wrapper {
+    display: block !important;
+}
+
+#wrapper.id_1.pos_1 #sidebar-wrapper {
+    width: 22%;
+}
+
+#wrapper.id_1.pos_3 #page-content-wrapper {
+    width: 60%;
+}
+
+#wrapper.id_1.pos_3 #sidebar-wrapper, #centerVideoPanel {
+    width: 20%;
+}
+
+#wrapper.id_2.pos_3, #centerVideoPanel {
+    width: 30%;
+}
+
+#wrapper.id_1 #menu-toggle {
+    display: none;
+}
+
+#wrapper.id_2 #menu-toggle {
+    display: block;
+}
+
+#wrapper.id_2 #sidebar-wrapper {
+    flex: none;
+    position: absolute !important;
+    right: 0px;
+    transition: all .5s;
+    resize: none;
+    transform: translate(600px, 0px);
+}
+/*#wrapper.pos_1.pos_2 #page-content-wrapper {
+    padding-right: 0px !important;
+}*/
+#wrapper.id_1.pos_3 #page-content-wrapper {
+    /* right:800px !important; */
+    flex: none;
+    width: 60%;
+}
+
+#wrapper.id_2.pos_3 #page-content-wrapper {
+    /* right:800px !important; */
+    flex: none;
+    width: 70%;
+}
+
+#wrapper.id_1 #page-content-wrapper {
+    /* right: var(--www1); */
+}
+
+#wrapper.id_2.pos_3 #page-content-wrapper {
+    /* right: var(--www1); */
+}
+
+#wrapper.id_1.pos_1 #page-content-wrapper {
+    width: 70%;
+}
+
+#wrapper.id_1.pos_2 #page-content-wrapper {
+    right: var(--www1);
+}
+
+#wrapper.id_2.pos_1 #page-content-wrapper {
+    right: 0px !important;
+    flex: none;
+    position: absolute;
+    width: 100% !important;
+    resize: none;
+}
+
+#wrapper.id_2.pos_2 #page-content-wrapper {
+    right: 0px !important;
+    flex: none;
+    position: absolute;
+    width: 100% !important;
+    resize: none;
+}
+
+#wrapper.id_2.pos_2 #page-content-wrapper {
+    right: 0px !important;
+}
+/*
+#wrapper.pos_3.id_1 #page-content-wrapper {
+    padding-right: 400px !important;
+}*/
+#wrapper.id_1 #sidebar-wrapper { /* width: var(--www1); */
+    transform: translate(0px, 0px) !important;
+}
+
+#wrapper.pos_3 #centerVideoPanel {
+    /* display: block !important; */
+}
+
+#wrapper.pos_1 #centerVideoPanel {
+    display: none !important;
+}
+
+#wrapper.pos_2 #centerVideoPanel {
+    display: none !important;
+}
+
+#wrapper.pos_3 #iconPanelVidu {
+    display: block !important;
+}
+
+#wrapper.id_1 #centerVideoPanel {
+    /* right: var(--www1); */
+}
+
+#wrapper.id_2 #centerVideoPanel {
+    right: 0px !important;
+}
+
+#wrapper.pos_1 #boardHtmlpanel {
+    /*  position: absolute;*/
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);*/
+}
+
+#wrapper.pos_3 #boardHtmlpanel {
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);*/
+}
+
+.kk {
+    position: absolute;
+    bottom: 0px;
+}
+
+#wrapper.pos_2 #newVideosBox {
+    display: block !important;
+    height: 34%;
+}
+#wrapper.pos_4 #newVideosBox {
+    display: block !important;
+    height: 100%;
+}
+#wrapper.pos_4 #screenAndBoard {
+    display: none !important;
+}
+#wrapper.pos_4  #centerVideoPanel {
+    display: none !important;
+}
+#wrapper.id_1.pos_2 #newVideosBox {
+    /*    padding-right: 400px !important;*/
+}
+
+#wrapper.id_2.pos_2 #newVideosBox {
+    padding-right: 0px !important;
+}
+
+#wrapper.pos_1 #newVideosBox {
+    display: none !important;
+}
+
+#wrapper.pos_3 #newVideosBox {
+    display: none !important;
+}
+
+#pagingBoard {
+    width: auto !important;
+    margin-right: 15px;
+    float: left;
+    padding-top: 3px;
+    /* height: 10px; */
+}
+
+#screenAndBoard {
+    position: relative;
+    left: 0;
+    margin: auto;
+    height: 100%;
+    flex: 7;
+}
+
+.my-video-dimensions {
+    height: 100% !important;
+}
+
+#boardHtmlpanel {
+    /* margin: auto;
+    display: inline-block;
+    flex: 1;
+    width: 100%;
+    height: 100%;*/
+}
+
+#page-content-wrapper {
+    /* width:auto; */
+    left: 0px;
+}
+
+#newVideosBox #iconPanelVidu {
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+#sidebar-wrapper.element2 .lPanel {
+    height: 50% !important;
+}
+
+#sidebar-wrapper.element3 .lPanel {
+    height: 33.333% !important;
+}
+
+#sidebar-wrapper.element2 #lpanelVideo {
+    display: none !important;
+}
+
+#sidebar-wrapper.element3 #lpanelVideo {
+    display: block !important;
+}
+
+#screenAndBoard {
+    overflow: hidden;
+    width: 100%;
+    /* background-color: #ebf0f3; */
+}
+
+.naveBarList {
+    overflow-x: overlay;
+    margin-top: 4px;
+    width: 90%;
+    float: left;
+    height: 25px;
+    display: flex;
+    /*flex-direction: row-reverse;*/
+}
+
+#userPanelDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+#userPanel {
+    flex: 1;
+}
+
+#chatPanel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: -34px;
+    padding-top: 42px;
+}
+
+#chatContiner {
+    overflow-y: overlay;
+    overflow-x: hidden;
+    padding: 7px;
+    flex: 1;
+}
+
+#chatInputPanel {
+    display: block;
+    height: 34px;
+}
+ 
+#lpanelVideo {
+    /*    flex:1;*/
+}
+
+.lPanel_nav {
+     
+    padding: 5px;
+  /*  margin-bottom:6px;*/
+    border-bottom: groove 1px white;
+    width: 100%;
+    /* background-color: #dfe1e2; */
+}
+
+.lPanel {
+    height: 33.334%;
+    /*flex:1;*/
+    border: groove 1px #ffffff;
+    border-bottom: 0px;
+    /* background-color: #dfe1e2; */
+    width: 100%;
+}
+
+#session {
+    /*     background-image:url(/image/vidio.png)*/
+}
+
+#userPanel {
+    padding-right: 7px;
+}
+
+.userListItemIcon {
+    padding-left: 15px;
+    color: red;
+   
+}
+
+.userListItemIconT {
+    padding-right: 3px;
+    color: green !important;
+}
+
+.chatMassageItem {
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.chatMassageUserName {
+    float: right;
+}
+
+p.chatMassageItemLine {
+    min-width: 100px;
+    /* padding-bottom: 4px; */
+    margin: 0;
+    padding-left: 3px;
+}
+
+.fileUploaddescription {
+    line-height: 16px;
+    font-size: 12px;
+}
+
+    .fileUploaddescription p {
+        margin: 0px;
+        padding: 3px;
+    }
+
+#toolbar {
+    /*position: absolute;*/
+    /* left: 410px; */
+    /* top: 10px; */
+    /*z-index: 1;
+    bottom: 0;
+    transform-origin: left bottom;
+    background-color: currentColor;*/
+    background-color: #aab5b5;
+}
+
+.toolbarClass {
+    position: fixed;
+    right: 0;
+    /* top: 200px; */
+    z-index: 1;
+    bottom: 0;
+}
+
+.icon-bar {
+    width: 40px;
+    background-color: #555;
+}
+
+    .icon-bar a {
+        display: block;
+        text-align: center;
+        /* padding: 16px; */
+        transition: all 0.3s ease;
+        color: #1d1b1b;
+        font-size: 20px;
+    }
+
+        .icon-bar a:hover {
+            background-color: #000;
+        }
+
+.modal-body {
+    overflow: auto;
+}
+
+.modal-title {
+    font-size: 14px !important;
+    margin: 0 15px;
+}
+
+.modal-content {
+    background-color: #909090;
+    color: white;
+    text-align: right;
+    direction: rtl;
+}
+
+
+
+.viduUiSpan {
+   
+}
+
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+video {
+    /*max-height: 150px;*/
+}
+
+.videoItem {
+    display: block;
+    transform: rotateY(180deg);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.videoItemPanel {
+    margin: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #c6c0c2;
+    border-radius: 5px;
+    float: right;
+    width: 200px;
+    position: relative;
+}
+
+.video11 {
+    max-width: 400px;
+    max-height: 400px;
+    width: 98%;
+    height: 98%;
+}
+
+
+
+
+
+
+#boardPagingPanel {
+    padding: 0px;
+    clear: both;
+    display: inline-block;
+    height: 20px;
+    font-size: 11px;
+}
+
+    #boardPagingPanel .page-link {
+        padding: .3rem .5rem;
+    }
+
+
+
+#boardContainer {
+    /*transform: scale(0.4);*/
+}
+
+#sidebar-wrapper {
+    direction: rtl;
+    text-align: right;
+}
+
+body {
+    font-size: 0.9rem !important;
+    background-color: #dfe1e2;
+}
+
+.farfar {
+    padding-right: 15px;
+    float: right;
+    cursor: pointer;
+    display: none;
+}
+
+
+
+.navbar > .container, .navbar > .container-fluid {
+    display: inline-block !important;
+}
+/* Sidebar */
+#sidebar-wrapper {
+    z-index: 1;
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    /* overflow-y: hidden; */
+    background: #d0d5d8;
+    /*  transition: all .5s;*/
+    right: 0px;
+}
+
+#page-content-wrapper {
+    /* width: 100%; */
+    position: absolute;
+    /*    transition: all .5s;*/
+    height: 100%;
+}
+
+#menu-toggle {
+    transition: all .3s;
+}
+
+.sidebar-nav {
+    padding: 0;
+    list-style: none;
+    transition: all .5s;
+    width: 100%;
+    text-align: center;
+}
+
+    .sidebar-nav li {
+        line-height: 40px;
+        width: 100%;
+        transition: all .3s;
+        padding: 10px;
+    }
+
+        .sidebar-nav li a {
+            display: block;
+            text-decoration: none;
+            color: #ddd;
+        }
+
+        .sidebar-nav li:hover {
+            background: #846bab;
+        }
+
+p.chatMassageItemLine normal {
+    float: right;
+}
+
+p.chatMassageItemLine strong {
+    float: right;
+    cursor: pointer;
+}
+
+.chatMessageTextEdit {
+    color: #b37557;
+    padding: 4px;
+    cursor: pointer;
+}
+
+body.boardEditor #toolbar {
+    display: block !important;
+}
+
+body.boardEditor .boardIcon {
+    display: block !important;
+}
+
+body.boardEditor #pagingBoard {
+    display: flex !important;
+}
+
+
+body.diagram #vPlayerIconPanel {
+    /* pointer-events: none;
+    opacity: 0.4;*/
+}
+
+body.videos #screenAndBoard {
+    flex: 2;
+}
+
+.fa-minus-circle {
+    padding-left: 12px;
+    padding-right: 7px;
+    cursor: pointer;
+}
+
+.fa-plus-circle {
+    padding-right: 12px;
+    cursor: pointer;
+}
+
+nav#MainNavBar {
+    padding: 4px;
+    padding-left: 7px;
+}
+
+.dropdown-toggle {
+    border: none !important;
+    color: black !important;
+    background-color: #dfe1e2 !important;
+    line-height: 13px;
+}
+
+    .dropdown-toggle::after {
+        margin-left: 0px !important;
+        vertical-align: .140em !important;
+    }
+
+#MainBarDesctop .farfar {
+    float: left !important;
+}
+
+#userPanel .fas {
+    padding-left: 10px;
+    padding-right: 15px;
+    font-size: 12px;
+}
+
+.centerPanelItem {
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+}
+
+.officItem {
+    display: none;
+}
+
+body.offic .officItem {
+    display: inline !important;
+}
+
+.fileItem {
+    display: none;
+}
+
+body.file .fileItem {
+    display: inline !important;
+}
+.sUserItem {
+    padding-top: 7px;
+    cursor: pointer;
+    flex-wrap: nowrap;
+    display: flex;
+}
+
+.sUserItemChild {
+   /* width: 100px;*/
+}
+.sUserItemFchild {
+    flex-basis: fit-content;
+}
+.sUserItemSchild {
+    padding: 0 10px;
+    color: deepskyblue;
+}
+#raiseHandIcon {
+    padding-right: 15px;
+    cursor: pointer;
+    float: left !important;
+    color: darkgreen;
+     
+}
+html {
+    background-color: #95adc5;
+}
+.MuiAppBar-positionFixed {
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+div#edumeet > div {
+    display: block !important;
+}
+
+    div#edumeet > div > nav {
+        display: none !important;
+    }
+
+    div#edumeet > div > nav {
+        display: none !important;
+    }
+
+li.MuiButtonBase-root {
+    display: flow-root !important;
+}
+
+.webcam.myvideoitem2 {
+    margin: 2px !important;
+}
+
+.MuiFab-secondary:disabled {
+    display: none !important;
+}
+
+body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+}
+
+.jss60 {
+    /* padding:0px !important;
+   margin-top:-20px;*/
+}
+
+div#edumeet div:nth-child(1) {
+    /* display: block !important;*/
+}
+.MuiDialogActions-root{
+    position:absolute;
+    right:0;
+}
+div#filmstripPanel .webcam {
+    padding-top: 0px!important;
+}
+#wrapper.id_2 #sidebar-wrapper{
+ 
+}
+#sidebar-wrapper {
+    display:none;
+    z-index:24;
+}
+
+@keyframes example {
+    from {
+        display: block;
+    }
+
+    to {
+        display: none;
+    }
+}
+#sidebar-wrapper {
+   
+    background-color: #d0d1d0;
+}
+@media only screen and (max-width: 350px) {
+    #sidebar-wrapper {
+        width:250px;
+    }
+}
+#videosBox {
+    display: flex;
+    flex-direction: column;
+}

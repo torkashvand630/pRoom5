@@ -1,0 +1,101 @@
+﻿@model pRoom.Models.requestMD
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>rr8</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    @*<div onclick="stop()">stop</div>
+    <div><input width="400" type="text" /></div>*@
+    <div>
+        @*<video width="600" height="600" controls id="vvv"></video>*@
+        <iframe style="width:100%;height: 99.5vh;border: none!important;" allow="geolocation; microphone; camera" id="fff"></iframe>
+    </div>
+    <script>
+        var appKey = "fligbahjpapbhblenooadccecphbhkmb";//.\chrome.exe --whitelisted-extension-id=fligbahjpapbhblenooadccecphbhkmb
+        var meetID =@Model.meetID;
+        var rid =@Model.id;
+        var duration =@Model.duration* 200 * 1000;
+        var name='@Model.name';
+        var u = window.location.protocol + "//" + window.location.host + "/n/" + meetID + "/2/0";
+        if (name == 'record') {
+         //   document.getElementById('fff').src =u;
+        }
+
+        console.log(meetID + " - " + rid);
+        setTimeout(event => {
+            ddd();
+
+        }, 1000);
+        function ddd() {
+            
+            console.log(name);
+
+            chrome.runtime.sendMessage(appKey,
+                { rid: rid, duration: duration, action: name, meetID: meetID },
+                function (response) {
+                    console.log(response);
+                    //var stream = response;//
+                    //var recorder = new MediaStreamRecorder(response);
+                    //      recorder.record();
+                    //setTimeout(function () {
+                    //    recorder.stop(function (blob) {
+                    //        console.log(blob.size, blob);
+                    //        var url = URL.createObjectURL(blob);
+                    //        document.getElementById('vvv').src = url;
+                    //    });
+                    //}, 20000);
+                }
+            );
+
+
+        }
+        function stop() {
+            console.log("stop");
+
+            chrome.runtime.sendMessage(appKey,
+                { rid: rid, duration: duration, action: 'stop' },
+                function (response) {
+                    console.log(response);
+                }
+            );
+
+        }
+        function jjpp() {
+            alert("hhhhhhhhhh");
+        }
+        //chrome.runtime.onMessage.addListener(function (message, callback) {
+        //    if (message == 'hello') {
+        //        sendResponse({ greeting: 'welcome!' })
+        //    } else if (message == 'goodbye') {
+        //        chrome.runtime.Port.disconnect();
+        //    }
+        //});
+        //chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+
+
+        //    alert(msg);
+
+        //});
+        chrome.runtime.onMessage.addListener(function callback(message, sender, sendResponse) {
+            console.log(message);
+        });
+
+         
+    </script>
+</body>
+
+</html>

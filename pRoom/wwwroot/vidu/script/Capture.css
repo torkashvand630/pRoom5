@@ -1,0 +1,9 @@
+﻿#uiToolbar{
+    display:none;
+}
+div#edumeet > div > header {
+    display: none !important;
+}
+.chatMessageTextEdit {
+    display: none !important;
+}

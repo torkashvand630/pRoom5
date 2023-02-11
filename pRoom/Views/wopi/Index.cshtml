@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+
+
+
+    @*<form action="https://meet.salampnu.com/loleaflet/a92f157/loleaflet.html?WOPISrc=https://p.learn100.ir/wopi/files/word110.odt&access_token=test;title=word110.odt&amp;lang=en&amp;closebutton=1" target="loleafletframe" enctype="multipart/form-data" method="post">
+            <input name="access_token" value="test" type="hidden" />
+            <input type="submit" value="Load Collabora Online" />
+        </form>
+
+
+        <iframe style="height:800px;width:100%;" id="loleafletframe" name="loleafletframe" nonce></iframe>*@
+
+    <form id="office_form" name="office_form" target="office_frame" action="https://meet.salampnu.com/loleaflet/a92f157/loleaflet.html?WOPISrc=https://p.learn100.ir/wopi/files/word110.odt" method="post">
+        <input name="access_token" value="test token" type="hidden" />
+        <input name="access_token_ttl" value="test ttl" type="hidden" />
+    </form>
+
+    <span id="frameholder"></span>
+    <a onclick="ddd()">dddd</a>
+    <script type="text/javascript">
+function ddd() {
+        var frameholder = document.getElementById('frameholder');
+        var office_frame = document.createElement('iframe');
+        office_frame.name = 'office_frame';
+    office_frame.id = 'office_frame';
+    office_frame.style.height = "100%";
+    office_frame.style.width = "100%";
+        // The title should be set for accessibility
+        office_frame.title = 'Office Online Frame';
+        // This attribute allows true fullscreen mode in slideshow view
+        // when using PowerPoint Online's 'view' action.
+        office_frame.setAttribute('allowfullscreen', 'true');
+        frameholder.appendChild(office_frame);
+        document.getElementById('office_form').submit();
+    }</script>
+</body>
+</html>

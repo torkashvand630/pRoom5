@@ -1,0 +1,182 @@
+﻿@using pRoom.Models
+@model pRoom.Controllers.roomController.manageRoomUserVM
+@{
+    Layout = null;
+}
+<head>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/board/js/jquery-3.2.1.min.js"></script>
+    <style>
+        .left{
+            text-align:left;
+            direction:ltr;
+        }
+    </style>
+</head>
+<body style="padding:15px;text-align:@Model.text_align;direction:@Model.direction;">
+    <div style="margin-bottom:20px;text-align:center;">
+        @Model.t.front_addUser_pageTitle : @Model.node.title
+    </div>
+    <div style="color:red" id="message"></div>
+    <div>
+
+        <input type="text" id="userName" placeholder="@Model.t.front_addUser_userName" />
+        <span style="padding:8px;">@Model.t.front_addUser_registerAs</span>
+        <a class="btn btn-primary" onclick="addUser(0)">@Model.t.front_addUser_student</a>
+        <a class="btn btn-success" onclick="addUser(1)">@Model.t.front_addUser_teacher</a>
+    </div>
+    <div style="margin-top:20px;">
+        <h3>
+            @Model.t.front_addUser_userList
+        </h3>
+        <p style="margin:15px;margin-bottom:25px;">@Model.t.front_addUser_sendLinkMessage</p>
+        <div>
+            <div class="tooltip"></div>
+                <table>
+                    <thead style="background: #656767;">
+                        <tr style="height:45px;" class="offictableheader">
+
+                            <th style="min-width:150px;text-align:center;">@Model.t.front_addUser_userName</th>
+                            <th style="min-width:100px;text-align:center;">@Model.t.front_addUser_role</th>
+                            <th style="min-width:100px;text-align:center;">@Model.t.front_addUser_directLink</th>
+                            <th style="min-width:200px;text-align:center;">copy</th>
+                        </tr>
+                    </thead>
+                    <tbody id="PdfFiletable"> </tbody>
+                </table>
+            </div>
+        </div>
+
+    <script>
+        var uuid = '@Model.node.uuid'
+        var message = document.getElementById('message')
+        function addUser(role) {
+            message.innerHTML = "";
+            var userName = document.getElementById('userName').value;
+            userName = userName.trim();
+            if (userName == "") {
+                message.innerHTML = "@Model.t.front_start_username_empty_message";
+                return;
+            }
+        getData('adduser', userName, role);
+        }
+
+    function getData(type, userName,role) {
+            $.ajax({
+                url: "/psd/room/adduser",
+                type: "POST",
+                data: JSON.stringify({ type: type, name: userName, role: role, uuid: uuid }),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    handleList(data);
+                    //console.log(data);
+                },
+                complete: function (data) {
+                    // handleList(data);
+                    // console.log(data);
+
+
+                }
+
+            });
+        }
+
+        function handleList(data) {
+            console.log(data);
+            var users = data.users;
+            if (users == undefined) return;
+        /*try {*/
+            var table = document.getElementById('PdfFiletable');
+            var rowCount = table.rows.length;
+
+        for (var j = rowCount-1; j >= 0; j--) {
+                table.deleteRow(j);
+            }
+        //} catch (e) {
+        //    console.log(e);
+        //}
+        for (var i = 0; i < users.length; i++) {
+            var r = users[i];
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+
+            var cell1 = row.insertCell(0);
+            var p = '<span>' + r.userName + '</span>';
+            cell1.innerHTML = p;
+
+            cell1 = row.insertCell(1);
+            var role = r.role ? '@Model.t.front_addUser_teacher' : '@Model.t.front_addUser_student'
+            p = '<span>' + role + '</span>';
+            cell1.innerHTML = p;
+
+            var url = 'https://' + data.host  + '/meet/' + r.guid;
+            cell1 = row.insertCell(2);
+            p = '<span><button onclick="myFunction(\'' + url + '\')">copy url</button></span>';
+            cell1.innerHTML = p;
+
+            cell1 = row.insertCell(3);
+            cell1.style.direction= '@Model.direction';
+           p = '<span>'+url+'</span>';
+            cell1.innerHTML = p;
+
+             
+
+
+        }
+        }
+
+        $(document).ready(function () {
+            console.log("ready!");
+            getData('get', 'user',0);
+        });
+        function myFunction(url) {
+            console.log(url);
+            navigator.clipboard.writeText(url);
+
+            //var tooltip = document.getElementById("myTooltip");
+            //tooltip.innerHTML = "Copied: " + url;
+        }
+    </script>
+    <style>
+      
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 140px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            margin-left: -75px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
+            }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+    
+</body>

@@ -1,0 +1,34 @@
+﻿@using pRoom.Models.eventModel
+@{
+    ViewData["Title"] = "ارتباط با ما";
+    MyPage myPage = (MyPage)ViewBag.MyPage;
+}
+@if (@myPage.lang == "fa")
+{
+    <h3>ارتباط با ما</h3>
+    <div>
+        <div style="margin:15px;">
+            <div>تلفن: 09301735919</div>
+            <div>ایمیل: abolfati@gmail.com</div>
+            <div>تلگرام برای پشتیبانی فروش : @@alitorkashvand63</div>
+
+        </div>
+    </div>
+
+}
+else
+{
+
+    <h3>contact us</h3>
+    <div>
+        <div style="margin:15px;">
+          
+            <div>email: abolfati@gmail.com</div>
+            <div>telegram : @@alitorkashvand63</div>
+
+        </div>
+    </div>
+
+}
+
+

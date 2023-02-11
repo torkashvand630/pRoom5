@@ -1,0 +1,206 @@
+﻿@model pRoom.meetVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@Model.meetName</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    @if (Model.isHost == 0)
+    {
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/board/css/main.css" rel="stylesheet">
+        <link rel="stylesheet" href="~/board/css/jquery-ui.min.css">
+        <link href="~/css/per.css" rel="stylesheet" />
+        @*<link href="~/board/css/fontawesome-all.min.css" rel="stylesheet" />*@
+        @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">*@
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
+        <link href="~/vidu/style.css" rel="stylesheet" />
+        @*<script src="https://kit.fontawesome.com/ed44ed7406.js" crossorigin="anonymous"></script>*@
+    }
+    else
+    {
+        <link href="~/css/all.min.css" rel="stylesheet" />
+    }
+<script>
+        var board2 = {
+            userName: '@Model.userName',
+            nickName: '@Model.nickName',
+            meetName: '@Model.meetName',
+            publish: @Model.p,
+            isLimit:@Model.isLimit,
+            host: "http://localhost:8080",
+            IsPublisher: true,
+            pageCount: 7,
+            PdfPageCount: 0,
+            pdfOrder: 0,
+            meetID: '@Model.meetID',
+            fileID: 0,
+            activePage:1,
+            play: 0,
+            user: null,
+            isMobile: 0,
+            width: 1800,
+            height: 1200,
+            isHost: @Model.isHost,
+            exitUrl: '@appInfo.exitUrl@Model.meetID',
+           // obj: @Model,
+            //  js:@Html.Raw(@Model.jmeet)
+    }
+    console.log(JSON.parse(JSON.stringify( @Html.Raw(@Model.jmeet))));
+    //board = JSON.parse(JSON.stringify( @Html.Raw(@Model.jmeet)));
+    board =  @Html.Raw(@Model.jmeet);
+    console.log(board);
+    console.log(board.meetID);
+   // console.log(JSON.parse( board.obj));
+</script>
+</head>
+
+<body>
+
+    @Html.Partial("_permissionModal.cshtml")
+    @Html.Partial("_FilePanel.cshtml")
+    @Html.Partial("_endMeet.cshtml")
+
+    <div style="width:100%;height:100%;position:fixed;" id="wrapper">
+
+        <div style="display: flex;" id="page-content-wrapper">
+            <div style="flex: 1;max-width: 100%;display:flex;flex-direction:column;">
+                <nav id="MainNavBar" style="height: 37px;border-bottom: groove 1px #c3b9b9;background-color: #dfe1e2 !important;" class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a href="#" class="menu-toggle" id="menu-toggle" style="float:left;width:10%;">
+                        <i class="fa fa-bars" style="font-size:17px;" aria-hidden="true"></i>
+                        <span class="glyphicon glyphicon-menu-hamburger"></span>
+                        <span style="color:red" id="unReadMessage"></span>
+                    </a>
+                    <div class="naveBarList" style="flex:1;">
+                         
+                           <div class="farfar"> 
+                               <select class="custom-select" id="layoutDropDownSelect" aria-label="Example select with button addon" style="height:23px;margin:0px;padding:0px;width:100px;padding-left:4px;">
+                                   <option selected="" value="1">پیشفرض </option>
+                                   <option value="11">چیدمان 1</option>
+                                   <option value="12">چیدمان 2 </option>
+                                   <option value="13">چیدمان 3</option>                                 
+                                   <option value="21">چیدمان 4</option>
+                                   <option value="22">چیدمان 5</option>
+                                   <option value="23">چیدمان 6</option>
+                               </select>
+                             
+                        </div>
+                        @*<div class="farfar"> @Model.p</div>*@
+                        @*<div class="farfar" onclick="layout.resizeBoardtest1()">111111111</div>
+                        <div class="farfar" onclick="layout.resizeBoardtest2()">22222222</div>
+                        <div class="farfar" onclick="layout.resizeBoardtest3()">333333333</div>*@
+                        <div class="farfar"> @Model.meetName</div>
+
+
+                        <div class="farfar screanShareIcon" style="color:black;" onclick="screanShareClick(this)" data-toggle="tooltip" data-placement="bottom" title="اشتراک دسکتاپ"> <i class="fas fa-desktop"></i></div>
+                        <div class="farfar pdfFileIcon" style="color:darkred;" onclick="openFilePanelModal()" data-toggle="tooltip" data-placement="bottom" title="مدیریت فایل"><i class="far fa-file-pdf"></i></div>
+                        <div class="farfar boardIcon" style="color:black;" onclick="boardClick()" data-toggle="tooltip" data-placement="bottom" title="تخته سفید"><i class="far fa-edit"></i></div>
+                        @*<div class="farfar"><i style="padding: 0 7px;" href="#" class="far fa-file-pdf" onclick="openFilePanelModal()" data-toggle="tooltip" data-placement="bottom" title="مدیریت فایل ">    </i></div>*@
+                        <div class="farfar" data-toggle="tooltip" data-placement="bottom" title="خروج از کلاس "><span data-toggle="modal" data-target="#endMeetingExitModal"><i style="color:red;font-size:18px;" class="far fa-times-circle"></i></span></div>
+                    </div>
+                </nav>
+                <div id="newVideosBox" style="width:100%;"></div>
+                <div id="screenAndBoard">
+                    <div id="boardHtmlpanel" style="">
+
+                        @Html.Partial("_board.cshtml", Model)
+                    </div>
+
+                    <div class="centerPanel" style="display:none;margin:auto;" id="screenSharePanel">
+
+                        <div style="width:100%; max-width:1000px;background-color:aliceblue;margin:auto" id="screenShareElemnt">
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="centerVideoPanel" style=""></div>
+        <div id="sidebar-wrapper">
+
+            <div id="lpanelVideo" class="lPanel">
+                @Html.Partial("_vidu.cshtml", Model)
+            </div>
+
+            <div class="lPanel" id="chatPanelDiv">
+                <div class="lPanel_nav">
+                    <span style="padding: 0px 7px;font-size: 16px;"><i class="far fa-comments"></i></span>
+                    <span>پنل چت </span>
+                </div>
+                <div id="chatPanel" style="height:100%;">
+                    @Html.Partial("_chat.cshtml")
+                </div>
+            </div>
+
+            <div class="lPanel" id="userPanelDiv">
+                <div class="lPanel_nav">
+                    <span style="padding: 0px 7px;color: darkcyan;font-size:16px;"><i class="fas fa-users"></i></span>
+                    <span>مدیریت کاربر</span>
+                </div>
+                <div id="userPanel" style="overflow-y: auto;">
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    @Html.Partial("_device.cshtml")
+
+    <script src="~/vidu/openvidu-browser-2.13.0.js"></script>
+    @*<script src="~/vidu/JavaScript.js"></script>*@
+    @if (Model.isHost == 0)
+    {
+
+        <script src="~/board/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="~/board/js/jquery-ui.min.js"></script>
+        <script src="~/js/popper.min.1.16.0.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        @*<script type="text/javascript" src="~/board/js/fontawseome5.8.1.min.js"></script>*@
+        <script type="text/javascript" src="~/board/js/socketio2.0.4.min.js"></script>
+        <script type="text/javascript" src="~/board/js/jqColorPicker.min.js"></script>
+        <script type="text/javascript" src="~/board/js/whiteboard.js"></script>
+        <script type="text/javascript" src="~/board/js/main.js"></script>
+        <script src="~/js/pako.min.js"></script>
+
+        <script src="~/css/ResizeSensor.js"></script>
+        <script src="~/css/ElementQueries.js"></script>
+
+        <script src="~/vidu/app.js"></script>
+        <script src="~/vidu/adapter.js"></script>
+        <script src="~/newJS/layout.js"></script>
+        <script src="~/newJS/_chat.js"></script>
+        <script src="~/newJS/_device.js"></script>
+        <script src="~/newJS/_endMeet.js"></script>
+        <script src="~/newJS/_FilePanel.js"></script>
+        <script src="~/newJS/_toolbar.js"></script>
+        <script src="~/newJS/_vidu.js"></script>
+        <script src="~/newJS/t.js"></script>
+        <script src="~/newJS/_board.js"></script>
+    }
+    else
+    {
+        <script src="~/newJS/bundle.min2.js"></script>
+    }
+
+    <environment exclude="Development">
+
+    </environment>
+
+    <environment include="Development">
+
+    </environment>
+
+</body>
+
+</html>

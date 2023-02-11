@@ -1,0 +1,77 @@
+﻿@model pRoom.meetVM
+<div class="container">
+    <div class="modal" id="userModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 id="userModalTitle" class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                </div>
+
+
+                <div class="modal-body">
+                    <input type="checkbox" id="chek_permission_audio">
+                    <label>@Model.translate.Audio</label><br>
+                    <input type="checkbox" id="chek_permission_video">
+                    <label>@Model.translate.AudioAndCamera</label><br>
+                    <input type="checkbox" id="chek_permission_toolBox">
+                    <label>@Model.translate.WhiteBoard</label> <br>
+                    <input type="checkbox" id="chek_permission_file">
+                    <label>@Model.translate.fileManagement</label> <br>
+                    <input type="checkbox" id="chek_permission_chat">
+                    <label>@Model.translate.sendMessage</label> <br>
+                    <input type="checkbox" id="chek_permission_screen">
+                    <label>@Model.translate.DesktopShare</label> <br>
+                    <input type="checkbox" id="chek_permission_diagram">
+                    <label>@Model.translate.diagram</label> <br>
+                    <input type="checkbox" id="chek_permission_MathEditor">
+                    <label>@Model.translate.MathEditor</label> <br>
+                    <input type="checkbox" id="chek_permission_offic">
+                    <label>@Model.translate.officSoft</label> <br>
+                    <input type="checkbox" id="chek_permission_Develop">
+                    <label>@Model.translate.Develop</label> <br>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">@Model.translate.Cancel</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="userManager.userPermissionModalSave()">@Model.translate.save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="messageModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">@Model.translate.deleteMessageTitle </h4>
+                    
+                </div>
+
+
+                <div class="modal-body">
+                   <div id="messageForDelete">
+
+                   </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">@Model.translate.Cancel</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="chatService.deleteMessageToServer()">@Model.translate.delete</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

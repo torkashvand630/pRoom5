@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>bb</title>
+</head>
+<body>
+    <div><input type="text" /></div>
+    <div>
+
+        <video width="600" height="600" controls id="vvv"></video>
+    </div>
+    <script>
+        if (typeof RecordRTC_Extension === 'undefined') {
+            alert('RecordRTC chrome extension is either disabled or not installed.');
+        }
+
+        var recorder = new RecordRTC_Extension();
+        recorder.startRecording(recorder.getSupoortedFormats()[4], function () {
+            setTimeout(function () {
+                recorder.stopRecording(function (blob) {
+                    console.log(blob.size, blob);
+                    var url = URL.createObjectURL(blob);
+                    document.getElementById('vvv').src = url;
+                });
+            }, 20000);
+        });
+    </script>
+</body>
+</html>

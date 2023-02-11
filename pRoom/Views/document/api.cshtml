@@ -1,0 +1,147 @@
+﻿@using pRoom.Models.eventModel;
+@{
+    ViewData["Title"] = "api";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    MyPage myPage = (MyPage)ViewBag.MyPage;
+}
+
+@if (@myPage.lang == "fa")
+{
+
+
+    <h4 style="text-align: right;"><strong>ایجاد کلاس&nbsp;</strong></h4>
+    <p style="text-align: right;">نوع درخواست : post</p>
+    <p style="text-align: left;">url : <span>https://example.com/PostApi/create</span></p>
+    <p style="text-align: left;">body:&nbsp;{"secret" : "12345" , "name" : "test" , "password" : "1111" , "description" :"description"}</p>
+    <p style="text-align: right;"></p>
+    <table border="1" style="border-collapse: collapse; width: 100.708%; height: 174px;">
+        <tbody>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">پارامتر</td>
+                <td style="width: 25%; height: 21px;">نوع</td>
+                <td style="width: 25%; height: 21px;">توضیحات</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">secret</td>
+                <td style="width: 25%; height: 21px;">string</td>
+                <td style="width: 25%; height: 21px;">هنگام نصب سرور مشخص میشود&nbsp;</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">name</td>
+                <td style="width: 25%; height: 21px;">string</td>
+                <td style="width: 25%; height: 21px;">نام کلاس</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">password</td>
+                <td style="width: 25%; height: 21px;">string</td>
+                <td style="width: 25%; height: 21px;">پسورد فقط برای&nbsp; ورود معلم کاربرد دارد</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">description</td>
+                <td style="width: 25%; height: 21px;">string</td>
+                <td style="width: 25%; height: 21px;">توضیحات کلاس</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">duration</td>
+                <td style="width: 25%; height: 21px;">int</td>
+                <td style="width: 25%; height: 21px;">طول کلاس به دقیقه</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="text-align: right;"></p>
+    <p style="text-align: right;">در صورتی که درخواست با موفقیت انجام شود ای دی کلاس ایجاد شده برگشت داده میشود</p>
+    <p style="text-align: right;"></p>
+    <h4 style="text-align: right;"><strong>ویرایش کلاس&nbsp;</strong></h4>
+    <p style="text-align: right;">نوع درخواست : post</p>
+    <p style="text-align: left;">url : <span>https://example.com/PostApi/edit</span></p>
+    <p style="text-align: left;">body:&nbsp;{"secret" : "12345" , "id": 75 , "name" : "test1" , "password" : "1111" , "description" :" " }</p>
+    <p style="text-align: left;"></p>
+    <p style="text-align: right;"></p>
+    <h4 style="text-align: right;"><strong>ورود به کلاس</strong></h4>
+    <p style="text-align: right;">نوع درخواست : post</p>
+    <p style="text-align: left;">url : <span>https://example.com/room/joinRoomApi</span></p>
+    <p style="text-align: left;">body: {"secret": "12345" , "roomID" :75 , "password": "1111" , "userName" : "mnm24" , "role" : "techer" , "lang" : "fa" }</p>
+    <p style="text-align: left;">body: {"secret" : "12345" , "roomID" : 75 , "password" : "" , "userName" : "mnm24" , "role" : "student" , "lang" : "en" }</p>
+    <p style="text-align: right;"></p>
+    <p style="text-align: right;">ورود پسورد برای معلم الزامی است</p>
+    <p style="text-align: right;">در صورتی که درخواست با موفقیت انجام شود لینک ورود به کلاس برگشت داده میشود</p>
+    <p style="text-align: left;"></p>
+}
+else
+{
+
+
+
+
+
+    <h4 style="        text-align: left;"><strong>create meet</strong></h4>
+    <p style="        text-align: left;">Request type : post</p>
+    <p style="text-align: left;">url : <span>https://example.com/PostApi/create</span></p>
+    <p style="text-align: left;">body:&nbsp;{"secret" : "12345" , "name" : "test" , "password" : "1111" , "description" :"description" }</p>
+    <p style="        text-align: left;"></p>
+    <table border="1" style="border-collapse: collapse; width: 100.708%; height: 174px;">
+        <tbody>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">Parameter</td>
+                <td style="width: 25%; height: 21px;">Type</td>
+                <td style="width: 25%; height: 21px;">Description</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">secret</td>
+                <td style="width: 25%; height: 21px;">string</td>
+                <td style="width: 25%; height: 21px;">Is specified when installing the server </td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">name</td>
+                <td style="width: 25%; height: 21px;">string</td>
+                <td style="width: 25%; height: 21px;">meet name</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">password</td>
+                <td style="width: 25%; height: 21px;">string</td>
+                <td style="width: 25%; height: 21px;">password is only used for teacher login</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">description</td>
+                <td style="width: 25%; height: 21px;">string</td>
+                <td style="width: 25%; height: 21px;"> meet description</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+            <tr style="height: 21px;">
+                <td style="width: 25%; height: 21px;">duration</td>
+                <td style="width: 25%; height: 21px;">int</td>
+                <td style="width: 25%; height: 21px;">meet duration in minutes</td>
+                <td style="width: 25%; height: 21px;"></td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="        text-align: left;"></p>
+    <p style="        text-align: left;">If the request is successful, the created class ID will be returned</p>
+    <p style="        text-align: left;"></p>
+    <h4 style="        text-align: left;"><strong>edit meet</strong></h4>
+    <p style="        text-align: left;">Request type : post</p>
+    <p style="text-align: left;">url : <span>https://example.com/PostApi/edit</span></p>
+    <p style="text-align: left;">body:&nbsp;{"secret" : "12345" , "id": 75 , "name" : "test1" , "password" : "1111" , "description" :" "  }</p>
+    <p style="text-align: left;"></p>
+    <p style="        text-align: left;"></p>
+    <h4 style="        text-align: left;"><strong>join meet</strong></h4>
+    <p style="        text-align: left;">Request type : post</p>
+    <p style="text-align: left;">url : <span>https://example.com/room/joinRoomApi</span></p>
+    <p style="text-align: left;">body: {"secret": "12345" , "roomID" :75 , "password": "1111" , "userName" : "mnm24" , "role" : "techer" , "lang" : "en" }</p>
+    <p style="text-align: left;">body: {"secret" : "12345" , "roomID" : 75 , "password" : "" , "userName" : "mnm24" , "role" : "student" , "lang" : "fa" }</p>
+    <p style="        text-align: left;"></p>
+    <p style="        text-align: left;"> password is required for the teacher</p>
+    <p style="        text-align: left;">If the request is successful, the meet entry link will be returned</p>
+    <p style="text-align: left;"></p>
+
+}

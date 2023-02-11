@@ -1,0 +1,99 @@
+﻿@using pRoom.Models.eventModel
+@model IEnumerable<pRoom.Models.eventModel.userMeet>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+     MyPage myPage = (MyPage)ViewBag.MyPage;
+}
+
+<style>
+    @@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+        td:nth-of-type(1):after {
+            content: "meetid";
+        }
+
+       
+
+        td:nth-of-type(2):after {
+            content: "date";
+        }
+
+        td:nth-of-type(3):after {
+            content: "user";
+        }
+        td:nth-of-type(4):after {
+            content: "lang";
+        }
+        
+        td:nth-of-type(5):after {
+            content: "guid";
+        }
+        tr {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+<div style="margin-top:20px;" class="box">
+    <h4 style="margin: 15px;font-weight:bold;">@myPage.t.front_roomList_yourMeetList</h4>
+    <p></p> 
+</div>
+ 
+ 
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead style="background-color:currentColor;">
+            <tr style="color:white;">
+                <th>
+                   meet
+                </th>
+
+
+                <th>
+                  date
+                </th>
+                <th>
+                  user
+                </th>
+
+
+                <th>
+                   lang
+                </th>
+                <th>
+                  guid
+                </th>
+                
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.meetID)
+                </td>
+                <td>
+                    @item.inserDate
+                </td>
+
+              
+               
+                <td>
+                    @item.userName
+                </td>
+             
+                 <td>
+                    @item.lang
+                </td>
+                  <td>
+                    @Html.DisplayFor(modelItem => item.guid)
+                </td>
+               
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div> 

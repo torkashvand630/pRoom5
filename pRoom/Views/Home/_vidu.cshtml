@@ -1,0 +1,31 @@
+﻿@model pRoom.meetVM
+    
+<div id="videosBox" style="height: 100%;overflow: hidden;">
+    <div id="iconPanelVidu" class="lPanel_nav" style="direction:rtl;text-align:right; padding-right: 20px;padding-left:20px;display:none;">
+
+        <span id="mute-video-span"  class="viduUiSpan" data-toggle="tooltip" data-placement="bottom" title="@Model.translate.Camera">
+            <i id="mute-video" disabled="disabled" style="padding-left:18px;padding-right:8px;cursor:pointer;" class="fas fa-video" aria-hidden="true" onclick="appActions.toggleVideo()"></i>
+            @*<i class="fas fa-video"></i>*@
+            @*<i class="fa fa-volume-up"></i>*@
+        </span>
+        <span id="mute-audio-span"   class="viduUiSpan" data-toggle="tooltip" data-placement="bottom" title="@Model.translate.microphone">
+            <i id="mute-audio" class="fas fa-microphone" style="cursor:pointer;padding-left:17px;padding-right:10px;" aria-hidden="true" onclick="appActions.toggleAudio()"></i>
+        </span>
+        <span id="device-settings-span"  class="viduUiSpan" data-toggle="tooltip" data-placement="bottom" title="@Model.translate.microphoneAndCameraSettings">
+            <span id="device-settings" style="float:left;cursor:pointer;" onclick="device.settings()">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+            </span>
+        </span>
+
+         <span id="mute-screen-span"  class="viduUiSpan" data-toggle="tooltip" data-placement="bottom" title="screen share">
+            <i id="screenShareIcon"  style="padding-left:15px;padding-right:8px;cursor:pointer;" class="fas fa-desktop" aria-hidden="true" onclick="screenControler.screanShareClick()"></i>
+            @*<i class="fas fa-video"></i>*@
+            @*<i class="fa fa-volume-up"></i>*@
+        </span>
+    </div>
+     
+    <div id="session">
+
+         
+    </div>
+</div>

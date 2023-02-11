@@ -1,0 +1,147 @@
+﻿@model pRoom.meetVM
+<div class="container">
+    <div class="modal" id="filePanelModal" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 id="deviceModalTitle" class="modal-title">@Model.translate.fileManagement</h4>
+                    <button type="button" class="close" style="padding:10px;" onclick="" data-dismiss="modal">&times;</button>
+                </div>
+
+
+                <div class="modal-body">
+
+
+                    <div class="fileItem" id="fileUploadPanel">
+                        <div class="fileUploaddescription">
+                            <p>
+                                @Model.translate.fileManagement_PermittedFiles
+                            </p>
+                            <p>@Model.translate.fileManagement_FileSelectDescription</p>
+                        </div>
+                        <div style="padding:20px 0px;">
+                            @*<input id="files" name="files" type="file" onchange="uploadFiles('files');">*@
+                            <input type="button" id="loadFileXml" value="@Model.translate.fileManagement_selectFile" onclick="document.getElementById('file-input').click();" />
+
+                            <input id="file-input" name="files" type="file" onchange="startFileUpload()" style="display:none" accept="image/jpeg, image/png,application/pdf,application/x-pdf">
+                            @*<button id="upload-button">آپلود فایل</button>*@
+                            @*<i class="fa fa-arrow-up"></i>*@
+                        </div>
+                        <div id="fileUploadMessage" style="padding:10px;color:white;font-weight:bold;"></div>
+                    </div>
+                    <table>
+                        <thead style="background: #656767;">
+                            <tr class="offictableheader">
+                                <th>id</th>
+                                <th>select</th>
+                                <th>name</th>
+                                <th>dl</th>
+                            </tr>
+                        </thead>
+                        <tbody id="PdfFiletable"> </tbody>
+                    </table>
+
+                    @*<div id="filePanel" style="max-height:300px;overflow:auto;direction:ltr;text-align:left;"></div>*@
+                </div>
+
+
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="" data-dismiss="modal">@Model.translate.close</button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="modal" id="fileOfficPanelModal" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 id="deviceModalTitle" class="modal-title">   @Model.translate.officPanelTitle </h4>
+                    <button type="button" class="close" style="padding:10px;" onclick="" data-dismiss="modal">&times;</button>
+                </div>
+
+
+                <div class="modal-body">
+
+
+                    <div id="fileOfficUploadPanel" class="officItem">
+                        <div class="fileUploaddescription">
+                            <p>
+                                @Model.translate.fileManagementOffic_PermittedFiles
+                            </p>
+                            <p></p>
+                            <p> Word File :  DOCX  ,  DOC , DOT ,  ODT ,  FODT ,  RTF ,  TXT </p>
+                            <p> PowerPoint :   PPTX ,  PPT , PPS ,  POT ,  ODP ,  FODP </p>
+                            <p> Excel  :  XLSX ,  ODS  ,  FODS   </p>
+                            <p></p>
+
+
+                        </div>
+                        <div style="padding:20px 0px;">
+                            @*<input id="files" name="files" type="file" onchange="uploadFiles('files');">*@
+                            <input type="button" id="loadOfficFileXml" value="@Model.translate.fileManagement_selectFile" onclick="document.getElementById('file-offic-input').click();" />
+
+                            <input id="file-offic-input" name="files" type="file" onchange="startFileOfficUpload()" style="display:none">
+                            @*<button id="upload-button">آپلود فایل</button>*@
+                            @*<i class="fa fa-arrow-up"></i>*@
+                        </div>
+                        <div id="fileOfficUploadMessage" style="padding:10px;color:white;font-weight:bold;"></div>
+                        <p style="margin-top:10px;margin-bottom:10px;">@Model.translate.officSelect</p>
+                    </div>
+                    <table>
+                        <thead style="background: #656767;">
+                            <tr class="offictableheader">
+                                <th>id</th>
+                                <th>select</th>
+                                <th>name</th>
+                                <th>dl</th>
+                            </tr>
+                        </thead>
+                        <tbody  id="officFiletable"> </tbody>
+                    </table>
+                    @*<div id="fileOfficPanel" style="max-height:300px;overflow:auto;direction:ltr;text-align:left;"></div>*@
+                </div>
+
+                <p style="padding:10px;" class="officItem">@Model.translate.fileManagementOffic_desc</p>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="" data-dismiss="modal">@Model.translate.close</button>
+
+
+                </div>
+                <style>
+                    table {
+                        font-family: arial, sans-serif;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+
+                    td, th {
+                        border: 1px solid #dddddd;
+                       
+                        padding: 5px;
+                    }
+                    #officFiletable td, .offictableheader th, #PdfFiletable td{
+                        text-align: center;
+                    }
+                    #officFiletable a, #PdfFiletable a {
+                        color: greenyellow;
+                    }
+                </style>
+
+            </div>
+        </div>
+    </div>
+</div>

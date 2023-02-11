@@ -1,0 +1,86 @@
+﻿@using pRoom.Models.eventModel
+@{
+     MyPage myPage = (MyPage)ViewBag.MyPage;
+    ViewBag.Title = myPage.t.front_login_login;
+    
+}
+<h2>@myPage.t.front_login_login</h2>
+<div class="col-md-4">
+    <hr>
+    <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
+        <p id="message"></p>
+    </div>
+
+    <div class="form-group">
+        <label for="Email">@myPage.t.front_userName</label>
+        <input class="form-control" type="email" data-val="true" data-val-email="@myPage.t.front_user_emailIncorrect" data-val-required="@myPage.t.front_user_emailEmpty" id="Email" name="Email" value="">
+        <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+    </div>
+    <div class="form-group">
+        <label for="password">@myPage.t.password</label>
+        <input class="form-control" type="password" data-val="true" data-val-required="@myPage.t.front_user_passwordEmpty" id="password" name="password" value="">
+        <span class="text-danger field-validation-valid" data-valmsg-for="password" data-valmsg-replace="true"></span>
+    </div>
+    <button onclick="regester()" class="btn btn-success"> @myPage.t.front_login_login</button>
+</div>
+<script>
+    function regester() {
+
+        var email = document.getElementById("Email").value;
+        var pass = document.getElementById("password").value;
+
+       // console.log(email);
+      //  console.log(pass);
+        if (email == null || pass == null || pass == "" || email == "") {
+            document.getElementById("message").innerText = "@Html.Raw(myPage.t.front_user_InputIncorrect)";
+            return;
+        }
+        //var data = JSON.stringify({ email: email, pass: pass });
+        //var xhr = new XMLHttpRequest();
+        //var url = "/user/Login3?data=" + encodeURIComponent(data);
+        //xhr.open("GET", url, true);
+        //xhr.setRequestHeader("Content-Type", "application/json");
+        //xhr.onreadystatechange = function () {
+        //    if (xhr.readyState === 4 && xhr.status === 200) {
+        //        if (xhr.responseText == "ok") {
+        //            // window.location = "/home/index";
+        //            document.getElementById("message").innerText = "ok";
+        //        }
+        //        var json = JSON.parse(xhr.responseText);
+        //        console.log(json.email + ", " + json.password);
+        //    }
+        //};
+        //xhr.send();
+
+        //return;
+
+       // console.log(email);
+        $.ajax({
+            url: "/user/login",
+            type: "POST",
+            data: JSON.stringify({ email: email, pass: pass }),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                console.log(data);
+                if (data == "ok") {
+                    // window.location = "/home/index";
+                    document.getElementById("message").innerText = "ok";
+                }
+                else
+                    document.getElementById("message").innerText = "@Html.Raw(myPage.t.front_user_PasswordNotValid)";
+            },
+            complete: function (data) {
+                console.log(data);
+                if (data.responseText == "ok") {
+                    window.location = "/@myPage.lang/room/";
+                    document.getElementById("message").innerText = "ok";
+                }
+                else
+                    document.getElementById("message").innerText =  "@Html.Raw(myPage.t.front_user_PasswordNotValid)";
+
+            }
+        });
+    }
+
+</script>

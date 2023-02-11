@@ -1,0 +1,85 @@
+﻿@model pRoom.meetVM
+<div class="modal" id="endMeetingExitModal" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="deviceModalTitle" class="modal-title"><span>@Model.translate.endMeet_LeaveMeet</span></h4>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom:30px;">
+                    <p style="margin-bottom:20px;">@Model.translate.endMeet_LeaveMeetMessage</p>
+                    <button type="button" class="btn btn-danger" onclick="meetManager.exit()">@Model.translate.endMeet_LeaveMeet</button>
+                </div>
+                @if (Model.p == 1 && Model.isLimit == 1)
+                {
+                    <div id="finishMeetPanel" style="border-top:groove 2px red;padding-top:10px;">
+                        <p style="margin-bottom: 20px;color: #800303; font-weight: bold;">@Model.translate.endMeet_EndMeetMessage</p>
+                        <p style="margin-bottom: 20px;color: white; font-weight: bold;">@Model.translate.endMeet_EndMeetAttention</p>
+                        <button type="button" class="btn btn-danger" onclick="meetManager.end()">@Model.translate.endMeet_EndMeet</button>
+
+                    </div>
+                }
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-danger" onclick="device.close()" data-dismiss="modal" >Close</button>*@
+                <button type="button" class="btn btn-success" data-dismiss="modal">@Model.translate.Cancel</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+@{ 
+    var loadingModalDisplay = Model.isRecorder == 1 ? "none" : "block";
+}
+@*<div class="modal" id="loadingModal" data-backdrop="true" aria-modal="false" style="display: @loadingModalDisplay;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="margin:auto">
+                <h4 id="loadingModalHeder" class="modal-title">loading script</h4>
+            </div>
+            <div class="modal-body" style="margin:auto">
+                <img src="~/image/loading.gif" />
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div class="modal" id="recordModal" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content" style="direction:ltr!important;text-align:left!important;">
+
+
+            <div class="modal-header">
+                <h4 id="deviceModalTitle" class="modal-title"><span>recording  </span></h4>
+                <button type="button" class="close" style="padding:10px;" onclick="" data-dismiss="modal">&times;</button>
+            </div>
+            <h4 id="deviceModalTitle" class="modal-title"><span>status :   </span><span id="recordStatus"></span></h4>
+            <div class="modal-body" style="direction: ltr!important">
+                <div id="meetLiveDiv" style="display:none;margin-bottom:15px;">
+                    <a style="color:#0322ff;font-weight:bold;" href="@(appInfo.recordServer)play/?meetid=@(appInfo.serverID)_@Model.meetID" target="_blank">meet is live : click to play</a>
+                </div>
+                <button type="button" id="recordButton" class="btn btn-success" onclick="recordControler.request()">start record</button>
+                <p id="recordRequstMessage" style="padding-top:10px;"></p>
+                <p style="direction:ltr!important;margin-top:10px;">record file </p>
+                <div id="recordFileList" style="max-height:350px;margin:10px;overflow:auto;direction:ltr!important">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+          
+
+        </div>
+    </div>
+</div>
+

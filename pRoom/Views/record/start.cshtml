@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>start</title>
+    <script src="~/board/js/jquery-3.2.1.min.js"></script>
+    @*<script src="~/board/js/record.js"></script>*@
+    <script src="~/files/record.js"></script>
+</head>
+<body>
+    <input type="button" id="loadFileXml" value="انتخاب فایل " onclick="document.getElementById('file-input').click();" />
+
+    <input id="file-input" name="files" type="file" onchange="uploadFiles()"   >
+
+    <script>
+        var secret ='@ViewBag.secret' ;
+        var username ='@ViewBag.username' ;
+        console.log(secret);
+        console.log(username);
+        function uploadFiles(blob) {
+            //var file = document.querySelector('#file-input').files[0];
+            //var files = input.files;
+            //if (files.length < 1) return;
+            var formData = new FormData();
+            formData.append("files", document.querySelector('#file-input').files[0]);
+          //  data.append('files', document.querySelector('#file-input').files[0]);
+
+            //var formData = new FormData();
+            //formData.append("files", blob);
+            //for (var i = 0; i != files.length; i++) {
+            //    formData.append("files", files[i]);
+            //}
+            formData.append("from", "1");
+            formData.append("meetID", 1);
+            formData.append("fileID", 1);
+
+            console.log(formData);
+            $.ajax(
+                {
+                    url: "/record/uploadWebm2",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    type: "POST",
+                    success: function (data) {
+
+                        console.log(data);
+                        window.close('', '_parent', '');
+
+
+                    }
+                }
+            );
+
+        }
+
+    </script>
+</body>
+</html>

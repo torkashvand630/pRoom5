@@ -1,0 +1,71 @@
+﻿@using pRoom.Models
+@using pRoom.Models.eventModel
+@model pRoom.Models.eventModel.MyPage
+ 
+
+@{
+    // var user = userManager.GetUser();
+    MyPage myPage = (MyPage)ViewBag.MyPage;
+    if (Model.muser == null)
+    {
+        <ul class="nav navbar-nav ">
+
+            <li><a href="/@myPage.lang/user/Register">@myPage.t.front_login_Register</a></li>
+            <li><a href="/@myPage.lang/user/Login">@myPage.t.front_login_login</a></li>
+
+            <li>
+                <a href="https://github.com/sunmobiir/meetapp" target="_blank">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    }
+    else
+    {
+        var st = "navbar-left";
+        if (myPage.t.Direction != "rtl")
+        {
+            st = "navbar-right";
+        }
+       
+             <ul class="nav navbar-nav @st">
+         
+     
+            <li>
+                <a a title="Manage"> @Model.muser.Name</a>
+                @* <a asp-area="" asp-controller="user" asp-action="Index" title="Manage"> @Model.muser.Name</a>*@
+            </li>
+            <li>
+                <button onclick="logout()" class="btn btn-link navbar-btn navbar-link">@myPage.t.front_login_signout  </button>
+            </li>
+            <li>
+                <a href="https://github.com/sunmobiir/meetapp" target="_blank">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+
+    }
+}
+<script>
+    function logout() {
+        delete_cookie("GUID","/");
+        console.log("logout");
+        window.location = "/@myPage.lang/home/index";
+    }
+    //function delete_cookie(name) {
+    //    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    //}
+    function delete_cookie(name, path) {
+        if (get_cookie(name)) {
+            document.cookie = name + "=" +
+                ((path) ? ";path=" + path : "") +
+                ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+        }
+    }
+    function get_cookie(name) {
+        return document.cookie.split(';').some(c => {
+            return c.trim().startsWith(name + '=');
+        });
+    }
+</script>

@@ -1,0 +1,391 @@
+﻿@model pRoom.meetVM
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:200italic,200,400" rel="stylesheet" type="text/css"> -->
+    <link href="~/board_files/googleFont.css?family=Open+Sans:200italic,200,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/board_files/idroo.css?v=1.01">
+    <script src="~/board_files/pep.js"></script>
+    <script src="~/board_files/jquery-3.1.0.min.js"></script>
+
+    <script>
+        var idrooPlan = {
+            "max_boards": 5,
+            "max_data": 50,
+            "sync_interval": 250,
+            "f_user_management": 0,
+            "f_advanced_tools": 0,
+            "f_audio_call": 0,
+            "f_video_call": 0,
+            "f_guests": 0,
+            "f_statistics": 0,
+            "f_tutor_profile": 0
+        };
+    </script>
+</head>
+<div id="uiToolbar" style="width:100%;">
+
+
+    <div id="ui">
+        <header>
+
+            <div class="toolbar separate" id="toolbar2">
+                <div id="pagingBoard" class="input-group" style="display:none;">
+                    <i class="fa fa-angle-left" aria-hidden="true"
+                       style="font-size:24px;padding-right:5px;cursor:pointer;" onclick="prevPage()"></i>
+                    <select class="custom-select" id="inputGroupSelect04"
+                            aria-label="Example select with button addon"
+                            style="height:23px;margin:0px;padding:0px;width:48px;padding-left:4px;">
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                        <option value="2">3</option>
+                        <option value="3">4</option>
+                        <option value="4">5</option>
+                        <option value="5">6</option>
+                        <option value="6">7</option>
+                    </select>
+                    <i class="fa fa-angle-right" aria-hidden="true"
+                       style="font-size:24px;padding-left:5px;cursor:pointer;" onclick="nextPage()"></i>
+                </div>
+              
+                <div class="toolbar" id="floatbar">
+                    <i class="fas fa-mouse" onclick="CBoard.activeMousePointer(this)" data-toggle="tooltip" data-placement="bottom" title="@Model.translate.WhiteBoard_showPointer" style="cursor: pointer;color:greenyellow;"></i>
+                    <i class="fas fa-minus-circle" onclick="setZoomOUT()"></i>
+                    <i class="fas fa-plus-circle" onclick="setZoomIN()"></i>
+                    @*<div class="button icon-minus" onclick="setZoomOUT()" id="zoom-out1"></div>
+        <div class="button icon-plus" onclick="setZoomIN()" id="zoom-in1"></div>
+        <div class="button" id="zoom" data-value="100"></div>*@
+                </div>
+                <div class="toolbar-group" id="stroke-toolbar">
+                    @*<div class="title">Stroke</div>*@
+                    <div class="color-button-back">
+                        <div class="color-button" id="stroke-color-button"></div>
+                    </div>
+                    <div class="slider" id="stroke-width-slider" data-min="1" data-max="20" data-value="4">
+                        <div class="track">
+                            <div class="bar">
+                                <div class="handle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="colorpicker" id="stroke-color-picker">
+                        <div class="on-off">
+                            <div class="color-button off"></div>
+                        </div>
+                        <div class="colors">
+                            <div class="color-button" style="background:hsl(3,84%,46%)" data-color="[3,84,46]"></div>
+                            <div class="color-button" style="background:hsl(40,92%,50%)" data-color="[40,92,50]"></div>
+                            <div class="color-button" style="background:hsl(55,100%,50%)" data-color="[55,100,50]">
+                            </div>
+                            <div class="color-button" style="background:hsl(301,85%,45%)" data-color="[301,85,45]">
+                            </div>
+                            <div class="color-button" style="background:hsl(0,0%,0%)" data-color="[0,0,0]"></div>
+                            <div class="color-button" style="background:hsl(79,90%,43%)" data-color="[79,90,43]"></div>
+                            <div class="color-button" style="background:hsl(235,83%,50%)" data-color="[235,83,50]">
+                            </div>
+                            <div class="color-button" style="background:hsl(179,89%,40%)" data-color="[179,89,40]">
+                            </div>
+                            <div class="color-button" style="background:hsl(123,89%,34%)" data-color="[123,89,34]">
+                            </div>
+                        </div>
+                        <div class="advanced">
+                            <div class="color-button colorwheel"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="toolbar-group" id="fill-toolbar">
+                    @*<div class="title">Fill</div>*@
+                    <div class="color-button-back">
+                        <div class="color-button" id="fill-color-button"></div>
+                    </div>
+                    <div class="colorpicker" id="fill-color-picker">
+                        <div class="on-off">
+                            <div class="color-button off"></div>
+                        </div>
+                        <div class="colors">
+                            <div class="color-button" style="background:hsl(3,84%,89%)" data-color="[3,84,89]"></div>
+                            <div class="color-button" style="background:hsl(40,92%,90%)" data-color="[40,92,90]"></div>
+                            <div class="color-button" style="background:hsl(55,100%,90%)" data-color="[55,100,90]">
+                            </div>
+                            <div class="color-button" style="background:hsl(301,85%,89%)" data-color="[301,85,89]">
+                            </div>
+                            <div class="color-button" style="background:hsl(0,0%,80%)" data-color="[0,0,80]"></div>
+                            <div class="color-button" style="background:hsl(79,90%,88%)" data-color="[79,90,88]"></div>
+                            <div class="color-button" style="background:hsl(235,83%,90%)" data-color="[235,83,90]">
+                            </div>
+                            <div class="color-button" style="background:hsl(179,89%,88%)" data-color="[179,89,88]">
+                            </div>
+                            <div class="color-button" style="background:hsl(123,89%,86%)" data-color="[123,89,86]">
+                            </div>
+                        </div>
+                        <div class="advanced">
+                            <div class="color-button colorwheel"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="toolbar-group" id="text-toolbar">
+                    @*<div class="title">Text</div>*@
+                    <div class="color-button-back">
+                        <div class="color-button" id="text-color-button"></div>
+                    </div>
+                    <div class="slider" id="text-size-slider" data-min="10" data-max="40" data-value="12">
+                        <div class="track">
+                            <div class="bar">
+                                <div class="handle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button select-button" id="text-font-button" style="display:none;" data-value="Open Sans">
+                        <div class="items" id="fonts-list"></div>
+                    </div>
+                    <div class="colorpicker" id="text-color-picker">
+                        <div class="colors">
+                            <div class="color-button" style="background:hsl(3,84%,32%)" data-color="[3,84,32]"></div>
+                            <div class="color-button" style="background:hsl(40,92%,35%)" data-color="[40,92,35]"></div>
+                            <div class="color-button" style="background:hsl(55,100%,35%)" data-color="[55,100,35]">
+                            </div>
+                            <div class="color-button" style="background:hsl(301,85%,31%)" data-color="[301,85,31]">
+                            </div>
+                            <div class="color-button" style="background:hsl(0,0%,0%)" data-color="[0,0,0]"></div>
+                            <div class="color-button" style="background:hsl(79,90%,30%)" data-color="[79,90,30]"></div>
+                            <div class="color-button" style="background:hsl(235,83%,35%)" data-color="[235,83,35]">
+                            </div>
+                            <div class="color-button" style="background:hsl(179,89%,28%)" data-color="[179,89,28]">
+                            </div>
+                            <div class="color-button" style="background:hsl(123,89%,23%)" data-color="[123,89,23]">
+                            </div>
+                        </div>
+                        <div class="advanced">
+                            <div class="color-button colorwheel"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="toolbar-group" id="formula-toolbar">
+                    @*<div class="title">Formula</div>*@
+                    <div class="color-button-back">
+                        <div class="color-button" id="formula-color-button"></div>
+                    </div>
+                    <div class="colorpicker" id="formula-color-picker">
+                        <div class="colors">
+                            <div class="color-button" style="background:hsl(3,84%,32%)" data-color="[3,84,32]"></div>
+                            <div class="color-button" style="background:hsl(40,92%,35%)" data-color="[40,92,35]"></div>
+                            <div class="color-button" style="background:hsl(55,100%,35%)" data-color="[55,100,35]">
+                            </div>
+                            <div class="color-button" style="background:hsl(301,85%,31%)" data-color="[301,85,31]">
+                            </div>
+                            <div class="color-button" style="background:hsl(0,0%,0%)" data-color="[0,0,0]"></div>
+                            <div class="color-button" style="background:hsl(79,90%,30%)" data-color="[79,90,30]"></div>
+                            <div class="color-button" style="background:hsl(235,83%,35%)" data-color="[235,83,35]">
+                            </div>
+                            <div class="color-button" style="background:hsl(179,89%,28%)" data-color="[179,89,28]">
+                            </div>
+                            <div class="color-button" style="background:hsl(123,89%,23%)" data-color="[123,89,23]">
+                            </div>
+                        </div>
+                        <div class="advanced">
+                            <div class="color-button colorwheel"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="colorpicker">
+            <div class="button icon-close"></div>
+            <div class="colors">
+                <div class="color" style="background:hsl(0,75%,36%)" data-color="[0,75,36]"></div>
+                <div class="color" style="background:hsl(0,27%,64%)" data-color="[0,27,64]"></div>
+                <div class="color" style="background:hsl(0,87%,46%)" data-color="[0,87,46]"></div>
+                <div class="color" style="background:hsl(0,73%,81%)" data-color="[0,73,81]"></div>
+                <div class="color" style="background:hsl(31,91%,52%)" data-color="[31,91,52]"></div>
+                <div class="color" style="background:hsl(31,91%,83%)" data-color="[31,91,83]"></div>
+                <div class="color" style="background:hsl(51,100%,50%)" data-color="[51,100,50]"></div>
+                <div class="color" style="background:hsl(51,100%,83%)" data-color="[51,100,83]"></div>
+                <div class="color" style="background:hsl(92,78%,50%)" data-color="[92,78,50]"></div>
+                <div class="color" style="background:hsl(92,78%,83%)" data-color="[92,78,83]"></div>
+                <div class="color" style="background:hsl(120,70%,32%)" data-color="[120,70,32]"></div>
+                <div class="color" style="background:hsl(120,34%,76%)" data-color="[120,34,76]"></div>
+                <div class="color" style="background:hsl(160,100%,39%)" data-color="[160,100,39]"></div>
+                <div class="color" style="background:hsl(160,64%,72%)" data-color="[160,64,72]"></div>
+                <div class="color" style="background:hsl(185,100%,50%)" data-color="[185,100,50]"></div>
+                <div class="color" style="background:hsl(185,100%,83%)" data-color="[185,100,83]"></div>
+                <div class="color" style="background:hsl(199,100%,50%)" data-color="[199,100,50]"></div>
+                <div class="color" style="background:hsl(199,100%,83%)" data-color="[199,100,83]"></div>
+                <div class="color" style="background:hsl(223,100%,50%)" data-color="[223,100,50]"></div>
+                <div class="color" style="background:hsl(223,100%,83%)" data-color="[223,100,83]"></div>
+                <div class="color" style="background:hsl(279,70%,49%)" data-color="[279,70,49]"></div>
+                <div class="color" style="background:hsl(279,69%,82%)" data-color="[279,69,82]"></div>
+                <div class="color" style="background:hsl(298,78%,55%)" data-color="[298,78,55]"></div>
+                <div class="color" style="background:hsl(299,78%,84%)" data-color="[299,78,84]"></div>
+                <div class="color" style="background:hsl(24,66%,37%)" data-color="[24,66,37]"></div>
+                <div class="color" style="background:hsl(24,38%,78%)" data-color="[24,38,78]"></div>
+                <div class="color" style="background:hsl(0,0%,0%)" data-color="[0,0,0]"></div>
+                <div class="color" style="background:hsl(0,0%,78%)" data-color="[0,0,78]"></div>
+                <div class="color" style="background:hsl(0,0%,38%)" data-color="[0,0,38]"></div>
+                <div class="color" style="background:hsl(0,0%,87%)" data-color="[0,0,87]"></div>
+                <div class="color" style="background:hsl(0,0%,63%)" data-color="[0,0,63]"></div>
+                <div class="color" style="background:hsl(0,0%,100%)" data-color="[0,0,100]"></div>
+            </div>
+            <div class="slider hue" id="colorpicker-hue" data-max="360" data-value="0">
+                <div class="track">
+                    <div class="bar">
+                        <div class="handle"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider alpha" id="colorpicker-alpha" data-value="100">
+                <div class="track">
+                    <div class="bar">
+                        <div class="handle"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="colorpicker-preview-back"></div>
+            <div id="colorpicker-preview"></div>
+            <div class="picker-color" id="colorpicker-picker-color"></div>
+            <div class="picker" id="colorpicker-picker" data-step="0.1">
+                <div class="area">
+                    <div class="pointer">
+                        <div class="p top"></div>
+                        <div class="p bottom"></div>
+                        <div class="p left"></div>
+                        <div class="p right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu" id="context-menu">
+            <div class="menu-group">
+                <div class="button" data-name="delete">Delete</div>
+            </div>
+            <div class="menu-group" id="context-menu-grouping">
+                <div class="button" data-name="group">Group</div>
+                <div class="button" data-name="ungroup">Ungroup</div>
+            </div>
+            <div class="menu-group" id="context-menu-ordering">
+                <div class="button" data-name="bringfront">Bring to front</div>
+                <div class="button" data-name="sendback">Send to back</div>
+                <div class="button" data-name="moveforward">Move forwards</div>
+                <div class="button" data-name="movebackward">Move backwards</div>
+            </div>
+            <div class="menu-group" id="context-menu-locking">
+                <div class="button" data-name="lock">Lock to background</div>
+                <div class="button" data-name="unlock">Unlock</div>
+            </div>
+        </div>
+
+        <div id="lock2" style="display:none!important;">
+
+            <div id="lock-message">
+                <div class="lock-reason" id="lock-reason-load">
+                    <h2>Please wait</h2>
+                    <p>Loading board...</p>
+                    <div class="spinner"></div>
+                </div>
+                <div class="lock-reason" id="lock-reason-reconnect">
+                    <h2>Connection lost</h2>
+                    <p>Hold on, trying to reconnect...</p>
+                    <div class="spinner"></div>
+                </div>
+                <div class="lock-reason" id="lock-reason-reconnect-manual">
+                    <h2>Connection lost</h2>
+                    <div class="button">Reconnect</div>
+                </div>
+                <div class="lock-reason" id="lock-reason-fail">
+                    <h2>Connection failed</h2>
+                    <p>Please try reloading the page.</p>
+                </div>
+                <div class="lock-reason" id="lock-reason-board-not-found">
+                    <h2>Board not found</h2>
+                    <p>Go to your Dashboard to create a new board.</p>
+                    <a class="button" href="/">Click here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="toolbar" id="toolbar" style="float:left;width:28px;left:3px;top:50px;z-index:2;position:absolute;display:none;">
+
+    <div class="toolbar-group">
+        <div class="button icon-pointer active" data-name="pointer" data-action="point" title="@Model.translate.WhiteBoard_pointer (P)">
+        </div>
+        <div class="button icon-pen" data-name="freehand" data-action="draw" data-type="Freehand"
+             title="@Model.translate.WhiteBoard_TakePen (F)"></div>
+        <div class="button icon-line" data-name="line" data-action="draw" data-type="Line" title="@Model.translate.WhiteBoard_drawLine (L)">
+        </div>
+        <div class="button icon-rectangle" data-name="rectangle" data-action="draw" data-type="Rectangle"
+             title="@Model.translate.WhiteBoard_drawRectangle (R)"></div>
+        <div class="button icon-ellipse" data-name="ellipse" data-action="draw" data-type="Ellipse"
+             title="@Model.translate.WhiteBoard_drawCircle (C)"></div>
+        <div class="button icon-text" data-name="text" data-action="draw" data-type="Text" title="@Model.translate.WhiteBoard_writeText (T)">
+        </div>
+        <div class="button icon-formula" data-name="formula" data-action="draw" data-type="Formula"
+             title="@Model.translate.WhiteBoard_formula (G)"></div>
+    </div>
+    <div class="toolbar-group">
+        <div class="button icon-eraser" data-name="eraser" data-action="erase" title="@Model.translate.WhiteBoard_takeEraser (E)"></div>
+        @*<div class="button icon-hand" data-name="hand" data-action="pan" title="Hand (M)"></div>
+        <div class="button icon-hand" onclick="newpageClick()" title="Hand 222"></div>*@
+     
+
+        <div class="toolbar-group" id="undo-redo">
+            @*<div class="title"></div>*@
+            <div class="button disabled icon-undo" id="undo-button" title="@Model.translate.WhiteBoard_Undo"></div>
+            <div class="button disabled icon-redo" id="redo-button" title="@Model.translate.WhiteBoard_Redo"></div>
+        </div>
+        <script>
+            var myArr = [];
+            var activePage = 1;
+            function newpageClick() {
+                console.log(myArr);
+                for (var i = 0; i < myArr.length; i++) {
+                    var r = myArr[i];
+                    var m = r.m;
+                    var p = r.p;
+                    console.log(r);
+                    console.log(m);
+                    console.log(p);
+                    if (p != activePage) toPage(p);
+                    idroo.board.restoreChange(m);
+                }
+            }
+            document.getElementById('inputGroupSelect04').onchange = function () {
+                var p = document.getElementById('inputGroupSelect04').value;
+                var a = parseInt(p);
+                p = { type: 'board', action: 'pageSelect', p: a, f: bboard.fileID, m: '', };
+                mainApp.sendToServer(p);
+            }
+            function toPage(a) {
+                if (activePage == a) {
+                    return;
+                }
+                idroo.board.deleteAll();
+                //idroo.board.init();
+                //var editor={"nr":6,"id":1218010,"pic":null,"name":"javad6","mouse":[0,0],"active":[]};
+                //idroo.board.editors[editor.nr] = editor,
+                activePage = a;
+
+            }
+        </script>
+    </div>
+</div>
+
+    <div id="newBoard2" style=" position: relative;overflow:overlay;width:100%;">
+        <div id="newBoard" style="width:100%;">
+            <div style="transform-origin: left top; width: 600px;height:800px; border: groove 1px;border-radius:3px;" id="boardContainer" class="">
+                <div id="canvas" touch-action="none" style="touch-action: none;   width: 600px;  position: relative;background-color: rgb(232, 232, 235);"></div>
+
+                <script src="~/board_files/webfont.js"></script>
+                @*<script src="~/board_files/socket.io.js"></script>*@
+
+                <script src="~/board_files/underscore-min.js"></script>
+                <script src="~/board_files/draggable-shim.js@(appInfo.randomStr)"></script>
+                @*<script src="~/board_files/adapter.js"></script>*@
+                <script src="~/board_files/my.min.js@(appInfo.randomStr)"></script>
+
+            </div>
+        </div>
+    </div>
+ 

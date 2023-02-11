@@ -1,0 +1,87 @@
+﻿@using pRoom.Models.eventModel
+
+@{
+     MyPage myPage = (MyPage)ViewBag.MyPage;
+    ViewBag.Title = myPage.t.front_login_Register;
+   
+}
+
+<h2> @myPage.t.front_login_Register</h2>
+
+<div class="col-md-4">
+
+
+    <hr>
+    <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
+        <p id="message"></p>
+    </div>
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="UserName">  @myPage.t.name</label>
+        <input class="form-control" type="text" data-val="true" data-val-required=" @myPage.t.front_create_emptyName" id="UserName" name="UserName" value="">
+        <span class="text-danger field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+    </div>
+   @* <div class="form-group">
+        <label for="Email"> @myPage.t.front_user_email</label>
+      
+        <input class="form-control" type="email" data-val="true" data-val-email="@myPage.t.front_user_emailIncorrect" data-val-required="@myPage.t.front_user_emailEmpty" id="Email" name="Email" value="">
+        <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+    </div>*@
+    <div class="form-group">
+        <label for="password"> @myPage.t.password</label>
+        <input class="form-control" type="password" data-val="true" data-val-required="@myPage.t.front_user_passwordEmpty" id="password" name="password" value="">
+        <span class="text-danger field-validation-valid" data-valmsg-for="password" data-valmsg-replace="true"></span>
+    </div>
+    <button onclick="regester()" class="btn btn-success"> @myPage.t.front_login_Register  </button>
+
+</div>
+<script>
+    function regester() {
+        var name = document.getElementById("UserName").value;
+        var email =name;// document.getElementById("Email").value;
+        var pass = document.getElementById("password").value;
+
+        if (name == null   || pass == null || pass == "" || name == ""  ) {
+            document.getElementById("message").innerText = "@Html.Raw(myPage.t.front_user_InputIncorrect)";
+            return;
+        }
+
+
+        $.ajax({
+            url: "/user/Register/",
+            type: "POST",
+            data:  '{  "name" :"'+ name+'",  "email" :"'+ email+'",  "pass" :"'+ pass+'" }' ,
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                console.log(data);
+                if (data.status == "ok") {
+                    document.getElementById("message").innerText = "@Html.Raw(myPage.t.front_user_RegisterSuccessfull)";
+                    setTimeout(function () { window.location = "/@myPage.lang/room/"; }, 1000);
+
+                }
+                else
+                    document.getElementById("message").innerText ="@Html.Raw(myPage.t.front_user_emailRepetitious)";// data.message;
+            }
+            //,
+            // complete: function (data) {
+            //     console.log(data);
+            //     if (data.status == "ok") {
+            //         document.getElementById("message").innerText = "ثبت نام با موفقیت انجام شد";
+            //        // setTimeout(function () { window.location = "/room/"; }, 1500);
+
+            //     }
+            //     else
+            //         document.getElementById("message").innerText = data.message;
+
+            //}
+        });
+
+    }
+
+</script>

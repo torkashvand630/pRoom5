@@ -1,0 +1,171 @@
+﻿@model pRoom.meetVM
+<div class="modal" id="quizModal" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="quiz" class="modal-title">@Model.translate.quiz_create_title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <p>@Model.translate.quiz_create_text</p>
+                    <textarea id="quizText" style="width:90%;height:110px;"></textarea>
+                </div>
+                <p>@Model.translate.quiz_create_optionText</p>
+                <div>
+                    <input id="quizoption1" class="quizoption" type="text" placeholder="@Model.translate.option 1" />
+                    <input id="quizoption2" class="quizoption" type="text" placeholder="@Model.translate.option 2" />
+                    <input id="quizoption3" class="quizoption" type="text" placeholder="@Model.translate.option 3" />
+                    <input id="quizoption4" class="quizoption" type="text" placeholder="@Model.translate.option 4" />
+                </div>
+
+                <div id="quizResult">  </div>
+                <div id="quizMessage" style="margin-top:15px;font-size:16px;color:black;font-weight:bold; "></div>
+            </div>
+            <div id="showResultForAllPanel" style="padding-top:15px;display:none;">
+                <button type="button" class="btn btn-success" onclick="quiz.showResultForAll()">@Model.translate.quiz_create_PublishedResults</button>
+                <button type="button" class="btn btn-success" onclick="quiz.GetResultdetails()">@Model.translate.quiz_create_GetResultdetails</button>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">@Model.translate.Cancel</button>
+                <button type="button" id="quizFormSavaButton" class="btn btn-success" onclick="quiz.save()">@Model.translate.save</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="quizviewModal" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="quiz" class="modal-title">@Model.translate.quiz_view_title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+
+                    <p id="quizviewText"></p>
+                </div>
+
+                <div>
+
+                    <p style="font-weight:bold;color:black;margin:15px;">@Model.translate.quiz_view_rightOptionText</p>
+
+                    <input type="radio" id="quizoptioninput1" name="quizoption" onclick="quiz.quizOptionHandleClick(this);" value="1">
+                    <label id="quizoptionlable1" for="1"></label><br>
+
+                    <input type="radio" id="quizoptioninput2" name="quizoption" onclick="quiz.quizOptionHandleClick(this);" value="2">
+                    <label id="quizoptionlable2" for="2"></label><br>
+
+                    <input type="radio" id="quizoptioninput3" name="quizoption" onclick="quiz.quizOptionHandleClick(this);" value="3">
+                    <label id="quizoptionlable3" for="3"></label><br>
+
+                    <input type="radio" id="quizoptioninput4" name="quizoption" onclick="quiz.quizOptionHandleClick(this);" value="4">
+                    <label id="quizoptionlable4" for="4"></label><br>
+
+                </div>
+                <div id="quizViewMessage" style="margin-top:15px;font-size:16px;color:black;font-weight:bold; "></div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">@Model.translate.Cancel</button>
+                <button type="button" class="btn btn-success" style="display:none;" id="quizViewsendAnswer" onclick="quiz.sendAnswer()">@Model.translate.send</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="quizResultModal" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="quiz" class="modal-title">@Model.translate.quiz_Result_title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+
+                    <p id="quizviewTextResult"></p>
+                </div>
+                <div id="quizviewResult"></div>
+                <div>
+                    <div class="ct-chart ct-perfect-fourth"></div>
+
+                    <div id="piechart"></div>
+
+
+                </div>
+                <div id="quizViewMessage" style="margin-top:15px;font-size:16px;color:black;font-weight:bold; "></div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">@Model.translate.close</button>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="externalVideoModal" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="quiz" class="modal-title">@Model.translate.player_title</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <p>@Model.translate.player_text</p>
+
+                </div>
+                <input type="text" id="externalVideoInput" style="width:400px;max-width:92%;" />
+
+                <div id="externalVideoMessage" style="margin-top:15px;font-size:16px;color:black;font-weight:bold; "></div>
+
+            </div>
+            <div style="margin:10px;">
+                <p>example : </p>
+                <pre>https://www.youtube.com/watch?v=zda3Nl52msk </pre>
+               
+                <pre>https://dl.ahang7.ir/video/file/7388-480.mp4</pre>
+                <p>note : youtube video not work for iranian user</p>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">@Model.translate.close</button>
+                <button type="button" class="btn btn-success" onclick="vPlayer.startPlayToServer()">@Model.translate.Play</button>
+                <button type="button" id="videoPlayerButton" class="btn btn-success" onclick="vPlayer.continuPlayToServer()">@Model.translate.player_ContinuePlaying</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .quizoption {
+        display: block;
+        margin-top: 10px;
+    }
+</style>
+

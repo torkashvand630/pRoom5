@@ -1,0 +1,314 @@
+﻿@using pRoom.Models;
+@using pRoom.Models.eventModel;
+@{
+     MyPage myPage = (MyPage)ViewBag.MyPage;
+    ViewData["Title"] = myPage.t.home;
+   
+}
+ 
+@section slide {
+    <div class="row myBox" style="overflow: hidden;">
+        <div class="col-md-8">
+            @Html.Partial("_slide.cshtml")
+
+            @*<img style="max-width:100%;max-height:500px" src="~/images/img/5.jpg" />*@
+        </div>
+        <div class="col-md-4">
+            <div class="box2">
+                <div class="box3">
+
+                    <h3>@myPage.t.front_index_OnlineMeeting</h3>
+                    <ul>
+
+                        <li> @myPage.t.front_index_OnlineTeaching</li>
+                        <li> @myPage.t.front_index_WebConference</li>
+                        <li>@myPage.t.front_index_LearningManagementSystem </li>
+                        <li>@myPage.t.front_index_FullSessionRecording </li>
+                        <li> @myPage.t.front_index_AllFacilitiesNeeded</li>
+                        <li> @myPage.t.front_index_completelyFree </li>
+                        @if (@myPage.lang == "fa")
+                        {
+                            <li> @myPage.t.front_index_CompletelyPersianEnvironment </li>
+                        }
+
+                    </ul>
+                </div>
+
+                <br /><br />
+
+                <a href="/@myPage.lang/room/start/@appInfo.demoMeetID" style="margin-bottom:10px;" class="btn btn-success">@myPage.t.front_index_demo</a>
+            </div>
+        </div>
+    </div>
+}
+
+@section slide2 {
+    <div class="row myBox">
+    </div>
+    @if (@myPage.lang == "fa")
+    {
+        <div style="margin-top:25px;" class="container box">
+            <div class=" mg-b-30" style="padding-bottom: 30px;">
+
+                <h4 style="font-weight: bold;margin-top:25px;" class="title-customers statwrap">
+                    قابل استفاده در اداره ، مدرسه و سازمان
+                </h4>
+
+
+                <div style=" margin-top: 30px;display: inline-block;line-height:18px;" class="brand-custumer">
+                    <p style="line-height:25px;">
+                        همچنان که میدانید  معمولا در ادارات و مدارس ایران  از فایروال و انتی ویروس ها جهت کنترل و مراقبت از شبکه استفاده میشود و همین امر باعث ایجاد اختلال در سرویس های مبتنی بر ویدئو کنفرانس میشود و  استفاده از این سرویس ها عملا غیر ممکن است یا با مشکل همراه میشود.
+                        بسیار مفتخر هستیم که اعلام کنیم سرویس آماده شده بدون کمترین مشکل در ادارات و مدارس با وجود فایروال و انتی ویروس قابل استفاده میباشد و توانایی عبور از انواع فایروال ها را دارا میباشد
+
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="cus-show">
+
+            </div>
+
+        </div>
+        <div style="margin-top:25px;" class="container box">
+            <div class="text-center mg-b-30" style="padding-bottom: 30px;">
+
+                <h4 style="margin-top:15px; font-weight: bold;" class="title-customers statwrap">
+                    برخی از مشتریان ما
+
+
+                </h4>
+
+
+                <div style="text-align: center;margin-top: 15px;display: inline-block;" class="brand-custumer">
+                    <div class="b-customer">
+                        <img src="/images/customer/logo17.png" alt="سایت تولید محتوا رایا مارکتینگ ">
+                    </div>
+                    <div class="b-customer">
+                        <img src="/images/customer/logo37.png" alt="   قسطی کلاب ">
+                    </div>
+                    <div class="b-customer">
+                        <img src="/images/customer/logo3.png" alt=" دانشگاه شیراز">
+                    </div>
+                    <div class="b-customer">
+                        <img src="/images/customer/logo5.png" alt="دانشگاه ازاد اسلامی واحد آبادان">
+                    </div>
+                    <div class="b-customer">
+                        <img src="/images/customer/logo6.png" alt="موسسه حقوقی مهاجرت آواتا">
+                    </div>
+                    <div class="b-customer">
+                        <img src="/images/customer/logo9.png" alt=" شهرداری دشتک">
+                    </div>
+                    <div class="b-customer">
+                        <img src="/images/customer/logo40.png" alt="ا">
+                    </div>
+                    <div class="b-customer">
+                        <img src="/images/customer/logo12.png" alt="  ">
+                    </div>
+
+                    <div class="b-customer">
+                        <img src="/images/customer/logo8 (1).png" alt="">
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="cus-show">
+
+            </div>
+
+        </div>
+    }
+}
+
+<section id="services" class="section">
+    <div class="container">
+        <p></p>
+        @if (@myPage.lang == "fa22222")
+        {
+            <p style="color:rebeccapurple;font-weight:bold;font-size:18px;margin-top:30px;">
+                قابل توجه آموزشگاه ها و سایت های ارائه دهنده سرویس کلاس مجازی و وب کنفرانس
+            </p>
+            <p style="color:green;font-weight:bold;font-size:18px;margin-top:20px;">
+                این نرم افزار کاملا رایگان است . به راحتی میتوانید آن را روی سرور ویندوز و لینوکس نصب کنید و بینهایت کلاس مجازی تعریف کنید
+            </p>
+            <p style="color:green;font-weight:bold;font-size:18px;margin-top:20px;">
+                جهت نصب نسخه سرور از منوی اصلی روی راهنمای استفاده کلیک کنید .
+                <a href="/document/index">نصب نسخه سرور</a>
+            </p>
+        }
+
+        <div class="section-header">
+            <br>
+            <h2>   @myPage.t.front_index_FeatureList</h2>
+            @if (@myPage.lang == "fa")
+            {
+                <p class="section-subtitle">پلتفرم لرن 100 یک محیط مجازی جهت ایجاد کلاس آنلان یا وب کنفرانس می باشد که دارای همه امکانات لازم جهت آموزش از راه دور میباشد.</p>
+
+                <p>تنها مواردی که جهت اسفاده از این سروریس نیاز دارید اینترنت و مرورگر میباشد و به هیچ گونه نرم افزار دیگری نیاز نیست.</p>
+                <br>
+            }
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">  <i class="far fa-edit fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.front_index_features_whiteboard </h4>
+                        <p>@myPage.t.front_index_features_whiteboard_desc</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">  <i class="fas fa-file-word fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.offic </h4>
+                        <p>@myPage.t.officSoft</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">    <i class="fas fa-file-pdf fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.front_index_features_slide   </h4>
+                        <p>@myPage.t.front_index_features_slide_desc</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">  <i class="fas fa-play-circle fa-2x" style="color: white;"></i> </div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.front_index_features_Record</h4>
+                        <p>@myPage.t.front_index_features_Record_desc</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing"> <i class="fas fa-comments fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.front_index_features_chat</h4>
+                        <p>@myPage.t.front_index_features_chat_desc</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">   <i class="fas fa-desktop fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.front_index_features_sharing</h4>
+                        <p>@myPage.t.front_index_features_sharing_desc</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">  <i class="fas fa-video fa-2x " style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.front_index_features_videoConference</h4>
+                        <p>@myPage.t.front_index_features_videoConference_desc </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">  <i class="fas fa-file-upload fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.front_index_features_FileSharing</h4>
+                        <p>@myPage.t.front_index_features_FileSharing_desc</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">  <i class="fas fa-microphone fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.front_index_features_Voice </h4>
+                        <p>@myPage.t.front_index_features_Voice_desc</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">  <i class="fas fa-poll fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.front_index_features_polls</h4>
+                        <p>@myPage.t.front_index_features_polls_desc </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">  <i class="far fa-play-circle fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.Play</h4>
+                        <p>@myPage.t.player_title </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">  <i class="fas fa-project-diagram fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.diagram</h4>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="itemBox">
+                    <div class="itemBox1 itemBoxing">  <i class="fas fa-square-root-alt fa-2x" style="color: white;"></i></div>
+                    <div class="itemBox2 itemBoxing">
+                        <h4>@myPage.t.MathEditor</h4>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<div style="width: 100%;display: inline-block;height: 30px;margin-top: 10px;margin-bottom: 20px;"></div>
+
+<style>
+    .b-customer {
+        float: right;
+        padding: 10px;
+    }
+</style>
+ 
+
+
+
+
+
+
+
+
+

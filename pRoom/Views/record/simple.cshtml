@@ -1,0 +1,18 @@
+﻿@model pRoom.Controllers.recordController.simpleRecorder
+@{
+    Layout = null;
+}
+<head>
+    <script src="~/js/mqtt.min.js"></script>
+   
+</head>
+<body>
+    <div>serverID : @Model.serverID</div>
+    <div>mqttServer : @Model.mqttServer</div>
+    <script>
+        var serverID = '@Model.serverID';
+       var mqttServer = '@Model.mqttServer';
+    </script>
+    <script src="~/files/simpleRecorder.js"></script>
+</body>
+ 

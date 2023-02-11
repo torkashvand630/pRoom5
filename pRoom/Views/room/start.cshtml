@@ -1,0 +1,253 @@
+@using pRoom.Models;
+@using pRoom.Models.eventModel;
+@model pRoom.Models.eventModel.roomEditVm
+
+@{
+    ViewData["Title"] = Model.room.name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    MyPage myPage = (MyPage)ViewBag.myPage;
+    var password = "";
+    if (Model.isOwner) { password = Model.room.password; }
+}
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 5px;
+        text-align: left;
+    }
+    input{
+        height:38px;
+    }
+</style>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @myPage.t.front_start_meetName
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.room.name)
+        </dd>
+
+        @*<dt>
+                @Html.DisplayNameFor(model => model.room.CreateDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.room.CreateDate)
+            </dd>*@
+      @*  @if (@myPage.lang == "fa")
+        {
+            <dt> زمان شروع کلاس   </dt>
+            <dd style="color:red "> @Model.longPerianStartDate </dd>
+        }*@
+
+        <dt>
+            @myPage.t.Description
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.room.description)
+        </dd>
+       @* @if (Model.room.recording != 0 && Model.recordUrl != null)
+        {
+            <dt>
+                @myPage.t.front_start_recordFile
+            </dt>
+            <dd>
+                <a target="_blank" href="@Model.recordUrl">@myPage.t.Play </a>
+
+            </dd>
+        }*@
+    </dl>
+    @*@if (Model.room.recording == 1 && Model.recordUrl == null)
+        {
+            <p style="margin:15px;">  @myPage.t.front_start_recordMessage</p>
+        }*@
+</div>
+<div>
+    <p style="color: red;font-weight: bold;" id="errMessage"></p>
+</div>
+@if (Model.status != "timeOut")
+{
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">@myPage.t.front_start_enterStudent</div>
+            <div class="panel-body">
+                @*<div class="description" style="margin-bottom:10px;"><span>زمان شروع کلاس برای دانش آموز : </span><span style="color:red;font-weight:normal;"> @Model.longPerianStartDate</span> </div>*@
+                <div class="col-md-6"> <input id="userName" placeholder="@myPage.t.front_userName" type="text" /></div>
+                <div class="col-md-6"><a class="btn btn-primary" onclick="joinRoom('s')">@myPage.t.front_start_EnterMeeting</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <a id="joinbtn" class="btn btn-success" style="display:none;padding-bottom:10px;" target="_blank" href="#">join room</a>
+    </div>
+
+    <div class="container">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">@myPage.t.front_start_enterTeacher  </div>
+            <div class="panel-body">
+                @*<div class="description" style="padding: 10px;">معلم 5 دقیقه قبل از زمان قانونی شروع کلاس میتواند در کلاس شرکت کند</div>*@
+                <div class="col-md-6">
+
+                    @if (myPage.muser != null)
+                    {
+                        <div style="margin-bottom:10px;"><div style="width:140px;float:initial; ">@myPage.t.front_userName </div> <input id="userName2" value="@myPage.muser.Name" type="text" /></div>
+                    }
+                    else
+                    {
+                        <div style="margin-bottom:10px;"><div style="width:140px;float:initial;">@myPage.t.front_userName </div> <input id="userName2" placeholder="@myPage.t.front_userName" type="text" /></div>
+                    }
+
+                    <div style="width:140px;">@myPage.t.password</div> <span><input style="" type="text" value="@password" placeholder="password" id="tpass" /></span>
+                </div>
+                <div class="col-md-6" style="margin-top:20px;">
+                    <a class="btn btn-primary" onclick="joinRoom('t')">@myPage.t.front_start_EnterMeeting</a>
+                </div>
+                <div style="clear:both;margin:25px 4px;">
+                    <p style="color:green;">@myPage.t.front_start_note</p>
+                    <div style="padding-left:10px;">@myPage.t.front_start_meetLink    </div><div id="shareLinkUrl" style="padding-right:10px;color:darkblue; "> </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
+@*
+<div class="container" style="margin-top:25px;">
+    <div class="panel panel-default">
+        <div style="text-align:center;margin-bottom:15px;margin:auto;">
+            <h4 style="font-weight:bold;">record file list</h4>
+        </div>
+        <div id="recordFiles">
+
+        </div>
+
+    </div>
+</div>*@
+<script>
+
+
+    //window.open('', '_self').close();
+    //var customWindow = window.open('', '_blank', '');
+    //customWindow.close();
+    var joinbtn=document.getElementById("joinbtn");
+    function joinRoom(type) {
+        joinbtn.style.display="none";
+        document.getElementById("errMessage").innerText="";
+        var userName = document.getElementById("userName").value;
+
+        if (type == "t") userName = document.getElementById("userName2").value;
+        if (userName == "" || userName == undefined)
+        {
+            document.getElementById("errMessage").innerText = "@Html.Raw(myPage.t.front_start_username_empty_message)";
+             return;
+                }
+        var tpass = document.getElementById("tpass").value;
+        console.log("userName : " + userName);
+        console.log("tpass : " + tpass);
+        var cid =@Model.room.id;
+        $.ajax({
+            url: "/room/joinRoom",
+            type: "POST",
+            //  data: "{ UserName: '" + UserName + "',PassWord: '" + PassWord + "' }",
+            data: JSON.stringify({ cid:   cid  , userName:   userName  , tpass:  tpass  , type:   type ,lang : '@myPage.lang'  }),
+            dataType: "json",
+            async: true,
+            contentType: "application/json",
+            success: function (data) {
+                console.log("a");
+                console.log(data);
+                console.log("b");
+            },
+            complete: function (data) {
+                console.log("aa");
+                console.log(data);
+                console.log(data.responseText);
+               // window.open(data.responseText, '_blank');
+               parsJoinRoomRespons(data.responseJSON);
+
+                console.log("bb");
+            }
+        });
+    }
+    function parsJoinRoomRespons(p){
+        console.log(p.status + " okkkkkk");
+        if (p.status =="error")   document.getElementById("errMessage").innerText=p.message;
+
+        if(p.status=="ok"){
+            joinbtn.style.display="block";
+            joinbtn.href=p.url;
+            window.open(p.url, '_blank');
+        }
+    }
+
+    var u = window.location.protocol + "//" + window.location.host + "/room/start/" + @Model.room.id;
+
+    var shareLinkUrl = document.getElementById('shareLinkUrl');
+    if (shareLinkUrl) shareLinkUrl.innerHTML = u;
+
+    var recordServer = "@ViewBag.recordServer";
+    function getRecordData() {
+        var cid =@Model.room.id;
+        var url = recordServer + "api/" + cid;
+        $.get(url, function (data, status) {
+            console.log(data);
+           // try {
+            var flist = JSON.parse(data);
+
+                flist.forEach(element => {
+                    console.log(element);
+                });
+            renderRecordFile(flist)
+            //} catch {
+
+            //}
+
+        });
+        console.log(url);
+            }
+    function renderRecordFile(flist) {
+        var s = '<table style="width:100%">'
+        s += '<tr>'
+        s += '<td> id </td>';
+        s += '<td> open </td>';
+        s += '<td> name </td>';
+
+        s += '</tr>'
+        var i = 1;
+        flist.forEach(element => {
+            var dl = recordServer + element
+            s+='<tr>'
+            s += '<td> ' + i + ' </td>';
+            s += '<td> <a target="_blank" href="' + dl + '">open</a> </td>';
+            s += '<td> ' + element + ' </td>';
+
+            s += '</tr>'
+            i++;
+        });
+        s += '</table>'
+        document.getElementById('recordFiles').innerHTML = s;
+    }
+    // window.onload = "ge";
+    document.addEventListener('DOMContentLoaded', loadComplate, false);
+    function loadComplate() {
+      //  getRecordData();
+    }
+
+    console.log(recordServer);
+</script>
+

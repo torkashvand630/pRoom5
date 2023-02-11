@@ -1,0 +1,17 @@
+﻿@model pRoom.meetErrorVM
+@{
+    Layout = null;
+}
+<div>@Model.message</div>
+ 
+
+<script type="text/javascript">
+    var code=@Model.code;
+    console.log(code);
+    if(code==1){
+        setTimeout(() => {
+            window.location.reload(true);
+        },3000)
+    }
+      
+</script>

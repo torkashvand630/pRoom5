@@ -1,0 +1,209 @@
+﻿@model pRoom.Models.requestMDVM
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>rr8</title>
+
+
+    <script src="~/vidu/RecordRTC/DiskStorage.js"></script>
+    <script src="~/vidu/RecordRTC/EBML.js"></script>
+    @*<script src="~/vidu/RecordRTC/getAllAudioVideoDevices.js"></script>
+        <script src="~/vidu/RecordRTC/MediaStreamRecorder.js"></script>
+        <script src="~/vidu/RecordRTC/MultiStreamRecorder.js"></script>
+        <script src="~/vidu/RecordRTC/MultiStreamsMixer.js"></script>
+        <script src="~/vidu/RecordRTC/StereoAudioRecorder.js"></script>*@
+
+    <script src="~/board/js/jquery-3.2.1.min.js"></script>
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    @*<div onclick="stop()">stop</div>
+        <div><input width="400" type="text" /></div>*@
+    <div>
+        @*<video width="600" height="600" controls id="vvv"></video>*@
+        @*<iframe style="width:700px;height: 600px;border: none!important;" src="https://ahang7.ir/v/7390" allow="geolocation; microphone;sound; camera;display-capture" ></iframe>*@
+        <iframe style="width:1200px;height: 1000px;border: none!important;" allow="geolocation; microphone;sound; camera;display-capture;autoplay" id="fff"></iframe>
+    </div>
+    <script>
+        var result ='@Model.joinroom.status';
+        var message ='@Model.joinroom.message';
+        if (result != "ok") console.log("error in room : " + message);
+
+        var url = '@Model.joinroom.url';
+        console.warn(url);
+        var meetID =@Model.req.meetID;
+        var rid =@Model.req.id;
+        var duration = 15000;// @Model.req.duration *  60*   1000;
+        var name = '@Model.req.name';
+        var u =  window.location.protocol + "//" + window.location.host + url;// "https://p.learn100.ir/meet/245545af-83fc-43fc-86c4-d4d039accb14";//  window.location.protocol + "//" + window.location.host   + url;
+        //document.getElementById('fff').src = u;
+        window.open(u, '_blank');
+
+        var constraints = {
+             
+            audio: {
+                echoCancellation: false,
+                noiseSuppression: false,
+                sampleRate: 44100
+            },
+            video:  {
+               
+                cursor: "never",
+              
+                "width": 1400,
+                "height": 900
+            }
+        };
+        //  frameRate: 15,
+        //constraints.cursor = "never";
+        //constraints.frameRate = 5;
+        //constraints.video.cursor = "never";
+        //constraints.video.frameRate = 5;
+        let captureStream = null;
+        async function startCapture() {
+           // setTimeout(() => { document.title = "hhhh " }, 1000);
+            captureStream = await navigator.mediaDevices.getDisplayMedia(constraints);
+            console.log("captureStream start" + captureStream)
+            console.warn(captureStream);
+            var mediaStreamTracks = captureStream.getTracks();
+            mediaStreamTracks.forEach(track => console.log(track));
+            //document.getElementById('fff').src = u;
+            setTimeout(() => {
+                console.log("on succes ");
+                onSuccess(captureStream);
+            }, 2000);
+
+        }
+        setTimeout(() => { startCapture(); }, 2000);
+        let chunks = [];
+        var mediaRecorder = null;
+        let onSuccess = function (stream) {
+            //var options2 = {
+            //    audioBitsPerSecond: 32000,
+            //    videoBitsPerSecond: 940000,
+            //}
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start();
+            setTimeout(() => {
+                stopRecordier();
+            }, duration);
+            mediaRecorder.onstop = function (e) {
+
+                const blob = new Blob(chunks, { mimeType: "video/webm" });
+                uploadFiles(blob);
+                getSeekableBlob(blob, function (jj) {
+                     download(jj, "jjjj");
+
+                });
+                chunks = [];
+            }
+
+            mediaRecorder.ondataavailable = function (e) {
+                chunks.push(e.data);
+                //uploadFiles(chunks);
+            }
+        }
+
+        function stopRecordier() {
+            console.log("mediaRecorder stop");
+            if (mediaRecorder.state == "recording")
+                mediaRecorder.stop();
+             var mediaStreamTracks = captureStream.getTracks();
+               mediaStreamTracks.forEach(track => track.stop());
+
+        }
+
+
+        function uploadFiles(blob) {
+            var formData = new FormData();
+            formData.append("files", blob);
+            //for (var i = 0; i != files.length; i++) {
+            //    formData.append("files", files[i]);
+            //}
+            formData.append("from", "1");
+            formData.append("meetID", meetID);
+            formData.append("fileID", 1);
+
+            console.log(formData);
+            $.ajax(
+                {
+                    url: "/record/uploadWebm",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    type: "POST",
+                    success: function (data) {
+                        console.log(data);
+                    }
+                }
+            );
+
+        }
+
+        function getSeekableBlob(inputBlob, callback) {
+            // EBML.js copyrights goes to: https://github.com/legokichi/ts-ebml
+            if (typeof EBML === 'undefined') {
+                throw new Error('Please link: https://cdn.webrtc-experiment.com/EBML.js');
+            }
+
+            var reader = new EBML.Reader();
+            var decoder = new EBML.Decoder();
+            var tools = EBML.tools;
+
+            var fileReader = new FileReader();
+            fileReader.onload = function (e) {
+                var ebmlElms = decoder.decode(this.result);
+                ebmlElms.forEach(function (element) {
+                    reader.read(element);
+                });
+                reader.stop();
+                var refinedMetadataBuf = tools.makeMetadataSeekable(reader.metadatas, reader.duration, reader.cues);
+                var body = this.result.slice(reader.metadataSize);
+                var newBlob = new Blob([refinedMetadataBuf, body], {
+                    type: 'video/webm'
+                });
+
+                callback(newBlob);
+            };
+            fileReader.readAsArrayBuffer(inputBlob);
+        }
+
+        function download(recordedChunks, fileName) {
+            //var blob = new Blob(recordedChunks, {
+            // type: "video/webm"
+            //});
+            uploadFiles(recordedChunks);
+            var url = URL.createObjectURL(recordedChunks);
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            a.href = url;
+            a.download = fileName + ".webm";
+            a.click();
+            window.URL.revokeObjectURL(url);
+
+        }
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+﻿@using pRoom.Models.eventModel
+@{
+   
+    Layout = "~/Views/Shared/_Layout.cshtml";
+      MyPage myPage = (MyPage)ViewBag.MyPage;
+}
+<div>
+    <h3>
+        The installation process is very easy and can be installed in less than 5 minutes
+
+    </h3>
+    <h4>
+        for install go to github page https://github.com/sunmobiir/meetapp
+    </h4>
+    <a href="https://github.com/sunmobiir/meetapp" target="_blank" class="btn btn-success">github page  </a>
+</div>
+<h3 style="        text-align: left;">api</h3>
+<a class="btn btn-success" href="/@myPage.lang/document/api">api</a>

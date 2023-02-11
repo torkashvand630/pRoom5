@@ -1,0 +1,39 @@
+[
+  {
+    "outputFileName": "wwwroot/js/bundle.js",
+    "inputFiles": [
+      "wwwroot/js/HackTimer.min.js",
+      "wwwroot/css/ElementQueries.js",
+      "wwwroot/css/ResizeSensor.js",
+      "wwwroot/newJS/userManager.js",
+      "wwwroot/newJS/_board.js",
+      "wwwroot/newJS/_chat.js",
+      "wwwroot/newJS/_deviceJanust.js",
+      "wwwroot/newJS/_endMeet.js",
+      "wwwroot/newJS/_FilePanel.js",
+      "wwwroot/newJS/_toolbar.js",
+      "wwwroot/newJS/_vidu.js",
+      "wwwroot/newJS/boardControler.js",
+      "wwwroot/newJS/centerPanelControler.js",
+      "wwwroot/newJS/developControler.js",
+      "wwwroot/newJS/diagramControler.js",
+      "wwwroot/newJS/layout.js",
+      "wwwroot/newJS/MathEditorControler.js",
+      "wwwroot/newJS/mqtt.js",
+      "wwwroot/newJS/officControler.js",
+      "wwwroot/newJS/quiz.js",
+      "wwwroot/newJS/screenShareControler.js",
+      "wwwroot/newJS/t.js",
+      "wwwroot/newJS/video.js",
+      "wwwroot/newJS/webRtcControler.js",
+      "wwwroot/newJS/recordControler.js",
+      "wwwroot/newJS/signalmessage.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/board_files/my.min.js",
+    "inputFiles": [
+      "wwwroot/board_files/my.js"
+    ]
+  }
+]

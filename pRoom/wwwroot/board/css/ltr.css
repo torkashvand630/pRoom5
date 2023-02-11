@@ -1,0 +1,35 @@
+﻿.modal-content {
+    direction: ltr;
+    text-align:left;
+}
+#chatContiner {
+    direction: ltr;
+    text-align: left;
+}
+.chatMassageItem {
+    direction: ltr;
+    text-align: left;
+}
+.chatMassageUserName {
+    float: left;
+}
+p.chatMassageItemLine normal {
+    float: left;
+}
+
+p.chatMassageItemLine strong {
+    float: left;
+    cursor: pointer;
+}
+#userPanel {
+    text-align: left;
+    direction: ltr;
+}
+.userListItemIcon{
+    padding-right:10px!important;
+    padding-left:7px!important;
+}
+input[type="text"]{
+    text-align:left;
+    direction:ltr;
+}

@@ -1,0 +1,212 @@
+﻿@using pRoom.Models.eventModel
+@model IEnumerable<pRoom.Models.eventModel.eventRoom>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+     MyPage myPage = (MyPage)ViewBag.MyPage;
+}
+
+<style>
+    @@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+        td:nth-of-type(1):after {
+            content: "@Html.Raw(myPage.t.name)";
+        }
+
+        
+
+        td:nth-of-type(2):after {
+            content: "@Html.Raw(myPage.t.EnterMeet)";
+        }
+
+        td:nth-of-type(3):after {
+            content: "@Html.Raw(myPage.t.edit)";
+        }
+        td:nth-of-type(4):after {
+            content: "@Html.Raw(myPage.t.ShareLink)";
+        }
+       
+        td:nth-of-type(5):after {
+            content: "@Html.Raw(myPage.t.delete)";
+        }
+        tr {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+<div style="margin-top:20px;" class="box">
+    <h4 style="margin: 15px;font-weight:bold;">@myPage.t.front_roomList_yourMeetList</h4>
+    <p></p> 
+</div>
+<div style="margin-bottom:13px;"><a class="btn btn-success" href="/@myPage.lang/room/create">@myPage.t.front_roomList_createMeet</a></div>
+ 
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead style="background-color:currentColor;">
+            <tr style="color:white;">
+                <th>
+                    @myPage.t.name
+                </th>
+
+
+              @*  <th>
+                    @myPage.t.userCount
+                </th>
+                <th>
+                    @myPage.t.startTime
+                </th>
+
+
+                <th>
+                    @myPage.t.duration
+                </th>*@
+                <th>
+                    @myPage.t.EnterMeet
+                </th>
+                <th>
+                    @myPage.t.edit
+                </th>
+                <th>
+                    @myPage.t.ShareLink
+                </th>
+               @* <th>
+                    @myPage.t.record
+                </th>*@
+                <th>
+                    @myPage.t.delete
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                @*<td>
+            <a class="btn btn-primary" onclick="joinRoom(@item.id)">join room</a>
+        </td>*@
+
+               @* <td>
+                    @Html.DisplayFor(modelItem => item.userCount)
+                </td>
+                <td>
+
+
+                    @if (item.persianDate == null)
+                    {
+                        <span>-</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.persianDate)
+                    }
+
+                </td>
+                <td>
+                    @item.duration
+                </td>*@
+                <td>
+
+                    <a class="btn btn-success" href="/@myPage.lang/room/start/@item.id">@myPage.t.EnterMeet</a>
+
+                </td>
+                <td>
+                    
+                     <a  href="/@myPage.lang/room/edit/@item.id">@myPage.t.edit</a>
+                    @*<a asp-action="Details" asp-route-id="@item.id">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.id">Delete</a>*@
+                </td>
+                <td>
+
+                    <a class="btn btn-primary" onclick="shareLink(@item.id , '@item.name')">@myPage.t.ShareLink</a>
+
+                </td>
+              @*  @if (item.recording == 1)
+                {
+            <td>@myPage.t.front_roomList_yes</td>
+                }
+                else
+                {
+            <td>@myPage.t.front_roomList_no</td>
+                }*@
+                <td>
+
+                    <a class="btn btn-danger" onclick="deleteRoom(@item.id)"> @myPage.t.delete</a>
+
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<div class="modal" id="shareLinkModal" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="deviceModalTitle" class="modal-title"><span> @myPage.t.front_roomList_ShareLinkto   </span><span id="shareLinkTitle"></span></h4>
+            </div>
+            <div class="modal-body">
+                <p>@myPage.t.front_start_note </p>
+                @if (@myPage.lang == "fa")
+                {
+                    <p>در صورتی که نیاز است شخصی به عنوان معلم وارد کلاس شود ، پسورد را  نیز برای او ارسال نمایید </p>
+                }
+
+                
+                <input type="text" style="width:350px;" value="Hello World" id="shareLinkUrl">
+                <button onclick="copyPast()">copy link</button>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"   data-dismiss="modal" >Close</button>
+               
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function shareLink(id,name) {
+        var u = window.location.protocol + "//" + window.location.host + "/@myPage.lang/room/start/" + id;
+        urlActive = u; 
+        document.getElementById('shareLinkUrl').value = u;
+        document.getElementById('shareLinkTitle').innerText = name;
+        $('#shareLinkModal').modal('toggle');
+        console.log(u);
+
+    }
+    var urlActive = "";
+    function copyPast() {
+        var copyText = document.getElementById("shareLinkUrl");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+       // alert("Copied the text: " + copyText.value);
+    }
+    function deleteRoom(id) {
+        $.ajax({
+            url: "/room/deleteRoom",
+            type: "POST",
+            //  data: "{ UserName: '" + UserName + "',PassWord: '" + PassWord + "' }",
+            data: JSON.stringify({ id: id }),
+            dataType: "json",
+            async: true,
+            contentType: "application/json",
+            success: function (data) {
+                location.reload();
+            },
+            complete: function (data) {
+                console.log("aa");
+                
+            }
+        });
+    }
+</script>

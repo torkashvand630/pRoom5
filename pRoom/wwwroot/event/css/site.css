@@ -1,0 +1,257 @@
+body {
+    padding-top: 50px;
+    /* padding-bottom: 20px; */
+    font-family: Vazir, Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(244, 246, 247);
+}
+.box {
+    text-align: right;
+    font-family: Samim,'Samim',tahoma;
+    margin-bottom: 20px;
+    border: 1px;
+    min-height: 40px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 4px 10px rgba(0,0,0,0.06);
+    overflow: auto;
+    background-color: white;
+    border-radius: 0px;
+}
+h2, .h2 {
+    font-size: 24px;
+}
+.description{
+    font-size: 12px;
+}
+p, div, h1, h2, h3, h4, h5, h6 {
+    font-family: Vazir, Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.row{
+    margin: 0px!important;
+}
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+.item-boxes {
+    margin: 20px 10px;
+    padding: 5px;
+    border: 1px solid #f1ebeb;
+    border-radius: 0;
+    /* -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05); */
+    /* box-shadow: 0 1px 1px rgba(0,0,0,0.05);*/
+    min-height: 180px;
+}
+p {
+ 
+    font-size: 13px;
+}
+@font-face {
+    font-family: 'Samim';
+    src: url('../../../fonts/Samim.eof') format('eot'), url('../../../fonts/Samim-Bold.eof') format('eot'), url('../../../fonts/Samim.woff') format('woff'), url('../../../fonts/Samim-bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Vazir';
+    src: url('../../../fonts/Vazir.eof') format('eot'), url('../../../fonts/Vazir-Bold.eof') format('eot'), url('../../../fonts/Vazir.woff') format('woff'), url('../../../fonts/Vazir-bold.woff') format('woff');
+}
+.myBox {
+    text-align: right;
+    font-family: Samim,'Samim',tahoma;
+    margin-bottom: 20px;
+    border: 1px;
+    min-height: 40px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 4px 10px rgba(0,0,0,0.06);
+    overflow: auto;
+    background-color: white;
+    border-radius: 0px;
+    background-image: url(../../images/img/b4.jpg);
+    background-repeat: round;
+    background-size:cover;
+}
+.box2 {
+    color: white;
+    margin-top: 35px;
+    position: relative;
+    text-align: center;
+}
+    .box2 h3 {
+        font-size: 20px;
+        font-weight: bold;
+        padding-bottom: 15px;
+    }
+.box3 {
+    text-align: right;
+    position: relative;
+    display: inline-block;
+}
+li {
+    line-height: 24px;
+}
+.box2 input {
+    color: black;
+}
+footer a {
+    color: aliceblue;
+    line-height: 27px;
+}
+
+footer {
+    background: #000000cc;
+    color: white;
+    border-top: #000000c7;
+    border-top-width: 3px;
+    border-top-style: solid;
+    bottom: 0px;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+}
+.mainBox {
+    margin-top: 1px;
+    min-height: 100vh;
+    display: inline-block;
+    width: 100%;
+    /*position: relative;*/
+}
+.box {
+    text-align: right;
+    font-family: Samim,'Samim',tahoma;
+    margin-bottom: 20px;
+    border: 1px;
+    min-height: 40px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 4px 10px rgba(0,0,0,0.06);
+    overflow: auto;
+    background-color: white;
+    border-radius: 0px;
+}
+.copy {
+    background-color: black;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+}
+.itemBox{
+
+margin: 12px 0px;
+
+/* padding: 5px; */
+
+/* border: 1px solid #f1ebeb; */
+
+border-radius: 0;
+
+-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+
+box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+
+min-height: 130px;
+
+border-left: 2px solid #058a28 !important;
+}
+.itemBox1 {
+    width: 35%;
+    background-color: #de1d1d;
+    text-align: center;
+    padding-top: 40px;
+    /* margin-top: 40vh; */
+}
+.itemBox2{
+
+width: 65%;
+
+padding: 10px;
+
+background-color: #e9e9e9;
+}
+.itemBoxing {
+    height: 130px;
+    display: inline-block;
+    position: relative;
+    float: right;
+    /* padding-top: 40px; */
+    /* text-align: center; */
+}
+.itemBox h4 {
+    font-size: 17px;
+    font-weight: bolder;
+}
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+
+    /* Force table to not be like tables anymore */
+    .table-responsive table, .table-responsive thead, .table-responsive tbody, .table-responsive th, .table-responsive td, .table-responsive tr {
+        display: block;
+    }
+
+        /* Hide table headers (but not display: none;, for accessibility) */
+        /*thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }*/
+
+    tr {
+        border: 1px solid #ccc;
+        direction: ltr;
+    }
+
+    td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+        td:after {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 6px;
+            right: 6px;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+ 
+
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    body {
+        /*padding: 0;*/
+        margin: 0;
+        /* width: 320px; */
+    }
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body {
+        /*width: 495px;*/
+    }
+}

@@ -1,0 +1,72 @@
+﻿@model pRoom.meetVM
+<div class="modal" id="deviceModal" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="deviceModalTitle" class="modal-title">انتخاب دستگاه های ورودی</h4>
+                
+            </div>
+
+
+            <div class="modal-body">
+
+                 <p id="selectAudioInputText" >
+                    در صورت انتخاب میکروفون ، باید صدای خود را پس از چند ثانیه بشنوید در غیر این صورت میکروفن دیگری را از لیست انتخاب کنید
+                </p>
+                <p id="selectVideoInputText" >
+                    در صورت انتخاب وب کم ، باید تصویر خود را ببینید در غیر این صورت وب کم دیگری را انتخاب کنید
+                </p>
+                <div id="audioSourceSelect" class="select" style="margin-bottom:15px;">
+                    <label for="audioSource">انتخاب میکروفون: </label><select style="max-width:300px;" id="audioSource"></select>
+                </div>
+
+
+
+                <div id="videoSourceSelect" class="select">
+                    <label for="videoSource">انتخاب وب کم: </label><select style="max-width:300px;" id="videoSource"></select>
+                </div>
+
+                <video style="width:250px;max-height:250px;" id="videoSelectElement" playsinline autoplay controls></video>
+                @*<audio   id="audioSelectElement" playsinline autoplay controls></audio>*@
+                
+
+
+
+
+            </div>
+
+            <!-- Modal footer -->
+            <div id="iconDevicelPanel" class="modal-footer">
+                @*<button type="button" class="btn btn-danger" onclick="device.close()" data-dismiss="modal" >Close</button>*@
+                <button type="button" class="btn btn-success" onclick="device.save()" data-dismiss="modal">انتخاب</button>
+                <button type="button" class="btn btn-danger" onclick="device.close()" data-dismiss="modal">انصراف</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="deviceUnpublisherModal" data-backdrop="false"  >
+    <div class="modal-dialog"  >
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="deviceModalTitle" class="modal-title"><span>به جلسه </span>@Model.meetName <span>خوش آمدید</span></h4>
+            </div>
+            <div class="modal-body">
+                 <p>جهت ورود به کلاس روی گزینه ورود به کلاس کلیک کنید</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-danger" onclick="device.close()" data-dismiss="modal" >Close</button>*@
+                <button type="button" class="btn btn-success" onclick="deviceUnpublisher.save()" data-dismiss="modal">ورود به کلاس</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+ 

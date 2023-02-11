@@ -1,0 +1,9 @@
+﻿{
+
+  "ConnectionString": "Data Source=WIN-6KSNTVML0DL;Initial Catalog=msg;Persist Security Info=True;User ID=sa;Password=passA1!",
+
+  "secret": "aaaaa",
+  "isHost": "1",
+  "exitUrl": "https://learn100.ir/rooms/start/"
+
+}

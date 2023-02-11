@@ -1,0 +1,534 @@
+﻿@model pRoom.meetVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+
+    <title>Whiteboard</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <script>
+        var board = {
+            userName: '@Model.userName',
+
+            publish: @Model.p,
+            host: "http://localhost:8080",
+            IsPublisher: true,
+            pageCount: 3,
+            PdfPageCount: 0,
+            pdfOrder: 0,
+            meetID: '@Model.meetID',
+            fileID: 0,
+            activePage:1,
+
+        };
+       
+
+    </script>
+    <link href="~/board/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/board/css/jquery-ui.min.css">
+    <script src="~/board/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="~/board/js/jquery-ui.min.js"></script>
+    <script src="~/js/popper.min.1.16.0.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <link href="~/board/css/fontawesome-all.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/board/js/fontawseome5.8.1.min.js"></script>
+
+    <script type="text/javascript" src="~/board/js/socketio2.0.4.min.js"></script>
+    <script type="text/javascript" src="~/board/js/jqColorPicker.min.js"></script>
+
+    <script type="text/javascript" src="~/board/js/whiteboard.js"></script>
+    <script type="text/javascript" src="~/board/js/main.js"></script>
+
+</head>
+<body>
+
+
+    <div style="width:100%;height:100%;position:fixed;" id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <div id="" class="lPanel">
+                <a href="#" class="menu-toggle" id="menu-toggle">
+                    <i class="fa fa-bars" style="font-size:17px;" aria-hidden="true"></i>
+                </a>
+                @Html.Partial("_vidu.cshtml", Model)
+            </div>
+            <div class="lPanel">
+                <div class="lPanel_nav">مدیریت فایل</div>
+                <div id="filePanel"></div>
+            </div>
+            <div class="lPanel">
+                <div class="lPanel_nav">چت </div>
+                <div id="chatPanel" style="height:100%;">
+                    @Html.Partial("_chat.cshtml")
+                </div>
+
+            </div>
+            <ul class="sidebar-nav">
+
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Home</a></li>
+
+
+            </ul>
+        </div>
+
+        <!-- Page Content -->
+        <div style=" " id="page-content-wrapper">
+            <nav style="height:38px;" class="navbar navbar-expand-lg navbar-light bg-light">
+                <a href="#" class="menu-toggle" id="menu-toggle">
+                    <i class="fa fa-bars" style="font-size:17px;" aria-hidden="true"></i>
+                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                </a>
+                <div class="">
+                    <div class="farfar screanShareIcon" style="color:black;" onclick="screanShareClick(this)" data-toggle="tooltip" data-placement="bottom" title="اشتراک دسکتاپ"> <i class="fas fa-desktop"></i></div>
+                    <div class="farfar pdfFileIcon" style="color:darkred;" onclick="pdfFileClick()" data-toggle="tooltip" data-placement="bottom" title="اسلاید پی دی اف"><i class="far fa-file-pdf"></i></div>
+                    <div class="farfar boardIcon" style="color:black;" onclick="boardClick()" data-toggle="tooltip" data-placement="bottom" title="تخته سفید"><i class="far fa-edit"></i></div>
+
+                </div>
+            </nav>
+            <div id="newVideosBox"></div>
+            <div id="boardHtmlpanel">
+                <div class="file-upload">
+                    <input id="files" name="files" type="file" onchange="uploadFiles('files');">
+                    <i class="fa fa-arrow-up"></i>
+                    <a style="padding: 0 7px;" href="#" onclick="fileService.activeFileServer(0)">اسلاید </a>
+                    <a style="padding: 0 7px;" href="#" onclick="playerBoard.play()">play </a>
+                    <a style="padding: 0 7px;" href="#" onclick="recordService.recording()">start </a>
+                    <a style="padding: 0 7px;" href="#" onclick="recordService.stopRecording()">stop </a>
+                    <a style="padding: 0 7px;" href="#" onclick="recordService.getRecording()">get </a>
+                    <a style="padding: 0 7px;" href="#" onclick="recordService.saveBoard()">save </a>
+                </div>
+
+                @Html.Partial("_board.cshtml", Model)
+            </div>
+           
+            <div class="centerPanel" style="display:none;" id="screenSharePanel">
+                <div>
+                    <a class="btn btn-success startScreenBtn" onclick="startScreenShare()">اشتراک دسکتاپ</a>
+                    <a style="display:none;" class="btn btn-danger stopScreenBtn" onclick="stopScsh( )">لغو اشتراک دسکتاپ</a>
+                </div>
+                <div style="width:100%;height:400px;max-width:600px;background-color:aliceblue;" id="screenShareElemnt">
+
+                </div>
+
+
+            </div>
+        </div>
+         
+    </div>
+
+
+
+    <style>
+        #boardContainer {
+            /*transform: scale(0.4);*/
+        }
+
+        body {
+            font-size: 0.9rem !important;
+        }
+
+        .farfar {
+            padding-right: 10px;
+            float: right;
+        }
+
+        .lPanel_nav {
+            height: 35px;
+            padding: 6px;
+            border-bottom: groove 1px;
+            width: 100%;
+        }
+
+        .lPanel {
+            height: 33.333%;
+            border: groove 2px;
+            border-bottom: 0px;
+            background-color: #ddececeb;
+            width: 100%;
+        }
+
+        .navbar > .container, .navbar > .container-fluid {
+            display: inline-block !important;
+        }
+        /* Sidebar */
+        #sidebar-wrapper {
+            z-index: 1;
+            position: absolute;
+            width: 0;
+            height: 100%;
+            overflow-y: hidden;
+            background: #5b4282;
+            opacity: 0.9;
+            transition: all .5s;
+        }
+
+        /* Main Content */
+        #page-content-wrapper {
+            width: 100%;
+            position: absolute;
+            transition: all .5s;
+            height: 100%;
+        }
+
+        #menu-toggle {
+            transition: all .3s;
+        }
+
+        .sidebar-nav {
+            padding: 0;
+            list-style: none;
+            transition: all .5s;
+            width: 100%;
+            text-align: center;
+        }
+
+            .sidebar-nav li {
+                line-height: 40px;
+                width: 100%;
+                transition: all .3s;
+                padding: 10px;
+            }
+
+                .sidebar-nav li a {
+                    display: block;
+                    text-decoration: none;
+                    color: #ddd;
+                }
+
+                .sidebar-nav li:hover {
+                    background: #846bab;
+                }
+    </style>
+
+    <script>
+         var playerBoard = {
+             data: null,
+             p: 0,
+             w: 0,
+
+             play: function () {
+                 var d = playerBoard.data;
+                 console.log(d);
+                 playerBoard.p = playerBoard.data[0].d.date;
+                 console.log(playerBoard.p);
+                 console.log(playerBoard.data[0].d.d);
+                 var intervalID = setInterval(playerBoard.interval  , 100);
+             },
+             interval: function () {
+                // console.log((playerBoard.p)++);
+
+                 playerBoard.int2(playerBoard.p)
+                
+             },
+             int2: function (p) {
+                 var d = playerBoard.data[(playerBoard.w)++];
+                 // console.log(p);
+                 if (d.d.date < p) {
+                     console.log("ok");
+                     playerBoard.handleData(d.d.d);
+                     playerBoard.int2(p);
+                 }
+                 else {
+                     (playerBoard.w)--;
+                     (playerBoard.p)++;
+                     console.warn(p);
+                     console.log(d);
+                 }
+                
+             },
+             handleData: function (d) {
+                 // console.log(w);
+                 whiteboard.handleEventsAndData(d, true);
+                 console.log(d);
+             }
+        };
+
+        function screanShareClick(t) {
+            $(".farfar").css("color", "black");
+            $(".screanShareIcon").css("color", "red");
+            connectToScreenShare();
+            // startScreenShare();
+        }
+        function pdfFileClick(t) {
+           
+            $(".farfar").css("color", "black");
+            $(".pdfFileIcon").css("color", "red");
+            disconnectFromScreenShare();
+        }
+        function boardClick(t) {
+            $(".farfar").css("color", "black");
+            $(".boardIcon").css("color", "red");
+            disconnectFromScreenShare();
+        }
+        function prepareBoard(ww, wh) {
+            board.width = ww;
+            board.height = wh;
+            var svgBoard = document.getElementById('svgBoard');
+            if (svgBoard != undefined) {
+                svgBoard.setAttribute("height", wh);
+                svgBoard.setAttribute("width", ww);
+                console.warn(svgBoard);
+
+            }
+
+            whiteboard.settings.width = ww;
+            whiteboard.settings.height = wh;
+            var w = $(window).width();
+            var rigthPanelWidth = w;
+            var h = $(window).height() - 70;
+
+            var w3 = 400;
+
+            console.warn('w w w : ' + w + ' hhh hhh : ' + h);
+
+            if (w > 1000) {
+
+                rigthPanelWidth = rigthPanelWidth - w3;
+            }
+            else {
+                $("#videosBox").appendTo($("#newVideosBox"));
+                h = h - 180;
+                var newVideosBox = document.getElementById('newVideosBox');
+                newVideosBox.style.height = 180 + "px";
+            }
+            var wdif = ww - rigthPanelWidth;
+            var hDif = wh - h;
+
+            //var fileRasho = ww / wh;
+            //var winRasho = rigthPanelWidth / h;
+            //console.warn('fileRasho : ' + fileRasho + ' winrasho : ' + winRasho);
+            var min = rigthPanelWidth;
+            var scTruew = rigthPanelWidth / ww;
+            var scTrueh = h / (wh + 70);
+            var maxScTrue = scTruew;
+            if (scTrueh < maxScTrue) maxScTrue = scTrueh;
+            //if (hDif > wdif) {
+
+            //    scTrue = h / (wh + 70);
+            //    console.warn("scrTrue create by height : " + scTrue);
+            //    //if ((rigthPanelWidth / h) > 1.3 && w > ww)
+            //    // obj2.style.transformOrigin = "center top";
+            //}
+
+            console.log('scTrue' + maxScTrue);
+            var obj2 = document.getElementById('boardContainer');
+            setZoom(maxScTrue, obj2);
+
+            obj2.style.width = board.width + 5 + "px";
+            obj = document.getElementById('whiteboardContainer');
+            obj.style.width = board.width + "px";
+            obj.style.height = board.height + "px";
+        }
+        $(document).ready(function () {
+           // prepareBoard(1290, 1225);
+              prepareBoard(1800, 1000);
+            var w3 = 400;
+            var w = $(window).width();
+            if (w > 1000) {
+                $("#wrapper").toggleClass("menuDisplayed");
+            }
+            console.log('w is : ' + w);
+            if (w < 450) {
+                w3 = w - 100;
+            }
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = '#wrapper.menuDisplayed #sidebar-wrapper { width: ' + w3 + 'px;  }  #wrapper.menuDisplayed #page-content-wrapper {  padding-left: ' + w3 + 'px;  }';
+            document.getElementsByTagName('head')[0].appendChild(style);
+            $(".menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("menuDisplayed");
+
+            });
+
+          
+            //if (getQueryVariable("webdav") == "true") {
+            //    $("#uploadWebDavBtn").show();
+            //}
+            createBoardPaging(false);
+            whiteboard.loadWhiteboard("#whiteboardContainer", {
+                whiteboardId: board.meetID,
+                username: board.userName,
+                sendFunction: function (content) {
+                   
+
+                    content["at"] = "";
+                    content["num"] = whiteboard.num;
+                    content["fileID"] = board.fileID;
+                     content["del"] = 0;
+                   // signaling_socket.emit('drawToWhiteboard', content);
+                    var m = { "type": "board", "board": "draw", "d": content };
+                    content["type"] = "board";
+                    content["board"] = "draw";
+                    mainApp.sendToServer(m);
+
+                }
+            });
+              mainApp.start();
+            
+
+
+        });
+        function getWithboardeData() {
+            // $.get(subdir + "/loadwhiteboard", { wid: whiteboardId, at: accessToken }).done(function (data) {
+            //    //  whiteboard.loadData(data)
+            //     playerBoard.data = data;
+            //});
+
+        }
+
+    </script>
+    <script>
+
+        function sendMessageVidu(k) {
+            kkk();
+            session.signal({
+                data: k,  // Any string (optional)
+                to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
+                type: 'my-chat'             // The type of message (optional)
+            })
+                .then(() => {
+                    console.log('Message successfully sent');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+        var publisher2;
+        async function startScreenShare() {
+
+            OV2 = new OpenVidu();
+            OV2.setAdvancedConfiguration({
+                iceServers: [
+                    { url: "stun:stun.freeswitch.org" },
+                    {
+                        urls: "turns:r2.salampnu.com:443?transport=tcp",
+                        username: "ali",
+                        credential: "ali"
+                    }
+                ]
+            });
+            session2 = OV2.initSession();
+            getToken(sessionId).then(token => {
+                console.log("my token");
+                session2.connect(token)
+                    .then(() => {
+                        console.log("my token");
+                        publisher2 = OV2.initPublisher('screenShareElemnt', { videoSource: "screen" }, function (error) {
+
+                            if (error.name == 'SCREEN_EXTENSION_NOT_INSTALLED') {
+                                showWarning(error.message);
+                            } else if (error.name == 'SCREEN_SHARING_NOT_SUPPORTED') {
+                                alert('Your browser does not support screen sharing');
+                            } else if (error.name == 'SCREEN_EXTENSION_DISABLED') {
+                                alert('You need to enable screen sharing extension');
+                            } else if (error.name == 'SCREEN_CAPTURE_DENIED') {
+                                alert('You need to choose a window or application to share');
+                            }
+                        });
+                        publisher2.on('videoElementDestroyed', function (event) {
+                            console.warn("pppppppppppppppvideoElementDestroyed  22222222222222 videoElementDestroyed event");
+                            console.warn(event);
+                            disconnectFromScreenShare();
+                        });
+                        publisher2.on('videoElementCreated', function (event) {
+                            console.warn("pppppppppppppvideoElement Created 3333333 videoElementCreated event");
+                            connectToScreenShare();
+                            console.warn("pppppppppppppvideoElement Created 222222222 videoElementCreated event");
+                            console.warn(event);
+                            document.getElementsByClassName('startScreenBtn')[0].style.display = "none";
+                            document.getElementsByClassName('stopScreenBtn')[0].style.display = "block";
+
+                            publisher2.stream.getMediaStream().getVideoTracks()[0].addEventListener('ended', () => {
+                                console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkend");
+                                session2.unpublish(publisher2);
+                                disconnectFromScreenShare();
+
+                            })
+
+                        });
+                        session2.publish(publisher2);
+                        session2.on('streamDestroyed', event => {
+
+                            disconnectFromScreenShare();
+                            // Delete the HTML element with the user's nickname. HTML videos are automatically removed from DOM
+                            console.warn("streamDestroyed 222222222 streamDestroyed event");
+                        });
+                    });
+            });
+
+            return;
+
+        }
+        var intervalID = setInterval(interval, 100000);
+        var intervalIDkkk = 0;
+        function interval() {
+
+            //try {
+            //    console.log("h2");
+            //    var r = ssssss.stream.getMediaStream().getVideoTracks()[0];
+            //   // var b=r.remote
+            //   // console.warn(ssssss.stream.getMediaStream().getVideoTracks()[0]);
+            //} catch{
+            //     console.log("a11");
+            //}
+            if (intervalIDkkk == 1) {
+                console.log("h");
+                console.warn(session2);
+                console.warn(session2.stream);
+            }
+
+        }
+        function kkk() {
+            //  session2.publish(publisher2);
+            intervalIDkkk = 2;
+            console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.....................................................................");
+            return;
+            publisher2.stream.getMediaStream().addEventListener('inactive', () => {
+                alert("dddddddd");
+                console.warn('User pressed the "Stop sharing" button');
+                // You can send a signal with Session.signal method to warn other participants
+            });
+        }
+        function stopScsh() {
+            session2.unpublish(publisher2);
+            disconnectFromScreenShare();
+            // var r = ssssss.stream.getMediaStream().getVideoTracks()[0];
+            //r.onend = e => {
+            //    alert("ok");
+            //}
+            return;
+
+            publisher2.stream.getMediaStream().getVideoTracks()[0].addEventListener('ended', () => {
+                console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkend");
+            })
+
+
+        }
+        var boardHtmlpanel = document.getElementById("boardHtmlpanel");
+        var screenSharePanel = document.getElementById("screenSharePanel");
+        function disconnectFromScreenShare() {
+            document.getElementsByClassName('startScreenBtn')[0].style.display = "block";
+            document.getElementsByClassName('stopScreenBtn')[0].style.display = "none";
+            screenSharePanel.style.display = "none";
+            boardHtmlpanel.style.display = "block";
+
+        }
+        function connectToScreenShare() {
+            screenSharePanel.style.display = "block";
+            boardHtmlpanel.style.display = "none";
+        }
+
+    </script>
+
+</body>
+</html>

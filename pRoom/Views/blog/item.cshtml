@@ -1,0 +1,20 @@
+﻿@using pRoom.Models;
+@model pRoom.Models.eventModel.blog
+@{
+    ViewData["Title"] = @Model.title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+<script>
+   // window.open('https://learn100.ir', 'mywindow', 'location=1,status=1,scrollbars=1, resizable=1, directories=1, toolbar=1, titlebar=1');
+
+</script>
+<div>
+    <h2>@Model.title</h2>
+
+</div>
+<div>
+    @Html.Raw(Model.content)
+</div>
+
+ 

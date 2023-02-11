@@ -1,0 +1,184 @@
+﻿@using pRoom.Models.eventModel;
+
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+     MyPage myPage = (MyPage)ViewBag.MyPage;
+}
+<head>
+
+
+</head>
+<div style="margin: 10px" class="form-group">
+    <a onclick="send()" class="btn btn-primary"> @myPage.t.save</a>
+    <a class="btn btn-danger" asp-action="Index"> @myPage.t.Cancel</a>
+</div>
+<hr />
+<div style="margin-bottom:15px;">
+    <div>
+        <p style="color: red;font-weight: bold;" id="errMessage"></p>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-4">
+        @*<form asp-action="Edit">*@
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @*<input type="hidden" asp-for="id" />*@
+        @*@Html.AntiForgeryToken()*@
+        <div class="form-group">
+            <label class="control-label">@myPage.t.name </label>
+            <input id="name" type="text" class="form-control" />
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">@myPage.t.Description</label>
+            <textarea name="description" id="description" style="width:400px;height:150px;max-width:90%;"> </textarea>
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label"></label>
+            
+            @*<p>در صورتی که نیاز است غیر از شما شخص دیگری به عنوان معلم وارد کلاس شود   پسورد را  برای شخص مورد نظر ارسال نمایید</p>*@
+        <p>@myPage.t.password</p>
+            <input id="password" placeholder="@myPage.t.password" class="form-control" />
+
+        </div>
+      @*  <div>
+            <div class="form-group">
+                <label class="control-label"> @myPage.t.duration -  @myPage.t.Minutes  </label>
+                <input class="form-control" type="number" data-val="true" placeholder="60" data-val-required="" id="duration" name="userCount" value="">
+            </div>
+        </div>
+        <div>
+            @if (appInfo.record == 1)
+            {
+                <div class="form-group">
+                    <label class="control-label"> @myPage.t.record </label>
+                    <input type="checkbox" id="record" name="vehicle1" value="">
+                </div>
+            }
+
+        </div>*@
+        @*</form>*@
+    </div>
+</div>
+
+
+
+@{
+    var sStyle = "none";
+    if (@myPage.lang == "fa")
+    {
+        sStyle = "block";
+
+    }
+
+}
+@*
+<div style="padding:15px;display:@sStyle;">
+    <div class="form-group">
+        <label class="control-label" for="password"> انتخاب تاریخ و زمان شروع کلاس </label>
+        <label class="sr-only" for="exampleInput1">تاریخ و زمان</label>
+        <div class="input-group">
+            <div style="background-color:green;" class="input-group-addon" data-placement="left" data-mddatetimepicker="true" data-targetselector="#exampleInput1" data-trigger="click" data-enabletimepicker="true" data-mdpersiandatetimepicker="" data-mdformat="yyyy/MM/dd HH:mm:ss" data-isline="false" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1398,&quot;Month&quot;:12,&quot;Day&quot;:14,&quot;Hour&quot;:13,&quot;Minute&quot;:16,&quot;Second&quot;:13}" style="cursor: pointer;" data-original-title="" title="" data-mdpersiandatetimepickershowing="false">
+                <span>انتخاب </span>
+            </div>
+            <input style="max-width:80%;width:200px;" type="text" class="form-control" id="exampleInput1" placeholder="تاریخ به همراه زمان">
+        </div>
+    </div>
+</div>*@
+
+
+<div style="margin: 10px" class="form-group">
+    <a onclick="send()" class="btn btn-primary"> @myPage.t.save</a>
+     
+     <a class="btn btn-danger" href="/@myPage.lang/room/index">@myPage.t.Cancel</a>
+</div>
+<div>
+
+</div>
+
+
+
+
+<script>
+
+        function startTimeClick(valeu) {
+            activeTime = valeu;
+            try {
+                activeOBJ.className = "btn btn-success";
+            } catch (e) {
+                console.log(e);
+            }
+
+            activeOBJ = document.getElementById("btn_" + valeu);
+            console.log(activeOBJ);
+            activeOBJ.className = "btn btn-danger";
+        }
+
+        function send() {
+            document.getElementById("errMessage").innerText = "";
+
+
+            //var activeTime = document.getElementById('exampleInput1').value;
+            //if (activeTime == null || activeTime == undefined || activeTime == "" ) {
+            //   // alert("لطفا زمان شروع کلاس را مشخص کنید");
+            //    activeTime = "";
+            //}
+           
+            //var duration = document.getElementById('duration').value;
+            //if (duration == null || duration == undefined || duration == "") duration = 60;
+            //else duration = parseInt(duration);
+
+            var name = document.getElementById("name").value;
+            if (name == "" || name == null) {
+                document.getElementById("errMessage").innerText ="@Html.Raw(myPage.t.front_create_emptyName)" ;
+                return;
+            }
+            var description = document.getElementById("description").value;
+            var password = document.getElementById("password").value;
+            if (password == '') {
+                document.getElementById("errMessage").innerText ="@Html.Raw(myPage.t.front_create_emptyPassword)" ;
+
+                return;
+            }
+            
+            var record = 0;
+            //var recordAble =@appInfo.record;
+            //if (recordAble) {
+            //    var recordCheck = document.getElementById("record");
+            //    if (recordCheck.checked == true) record = 1;
+            //}
+
+
+            console.log("record : " + record);
+            $.ajax({
+                url: "/room/create",
+               // url: "/PostApi/create",
+                type: "POST",
+                data: JSON.stringify({  name: name, password: password, description: description, startTime: '', duration: 90 ,record:record}),
+                dataType: "json",
+                //beforeSend: function (xhr) {
+                //    xhr.setRequestHeader("XSRF-TOKEN",
+                //        $('input:hidden[name="__RequestVerificationToken"]').val());
+                //},
+                async: true,
+                contentType: "application/json",
+                success: function (data) {
+                    window.location = "/@myPage.lang/room/";
+                    console.log(data);
+                },
+                complete: function (data) {
+                    console.log(data);
+                  window.location = "/@myPage.lang/room/";
+
+                }
+
+            });
+        }
+</script>
+

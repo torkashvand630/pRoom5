@@ -1,0 +1,69 @@
+﻿@model pRoom.Models.requestMDVM
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>banlialiali2</title>
+
+
+    <script src="~/vidu/RecordRTC/DiskStorage.js"></script>
+    <script src="~/vidu/RecordRTC/EBML.js"></script>
+    @*<script src="~/vidu/RecordRTC/getAllAudioVideoDevices.js"></script>
+        <script src="~/vidu/RecordRTC/MediaStreamRecorder.js"></script>
+        <script src="~/vidu/RecordRTC/MultiStreamRecorder.js"></script>
+        <script src="~/vidu/RecordRTC/MultiStreamsMixer.js"></script>
+        <script src="~/vidu/RecordRTC/StereoAudioRecorder.js"></script>*@
+
+    <script src="~/board/js/jquery-3.2.1.min.js"></script>
+    <script src="~/js/mqtt.min.js"></script>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <button type="button" onclick="myRecorder.start()" value="start">start t</button>
+    <button type="button" onclick="myRecorder.stop()" value="stop">stop t</button>
+    @*<div onclick="stop()">stop</div>
+        <div><input width="400" type="text" /></div>*@
+    <div>
+        @*<video width="600" height="600" controls id="vvv"></video>*@
+        @*<iframe style="width:700px;height: 600px;border: none!important;" src="https://ahang7.ir/v/7390" allow="geolocation; microphone;sound; camera;display-capture" ></iframe>*@
+        <iframe style="width:100%;height: 97.4vh;border: none!important;top:30px" allow="geolocation; microphone;sound; camera;display-capture;autoplay" id="fff"></iframe>
+    </div>
+    <script>
+        var result ='@Model.joinroom.status';
+        var message ='@Model.joinroom.message';
+        if (result != "ok") console.log("error in room : " + message);
+
+        var url = '@Model.joinroom.url';
+
+        var meetID =@Model.meetID;
+        var serverID = '@Model.serverID';
+        var mqttServer = '@Model.mqttServer';
+        var startQS = @Model.start;
+        var recNumber = @Model.fileCount;
+
+
+
+       var duration = Math.min(10 * 60 * 1000, 300000);
+        console.log('duration : ' + duration);
+        var u = window.location.protocol + "//" + window.location.host + url;// "https://p.learn100.ir/meet/245545af-83fc-43fc-86c4-d4d039accb14";//  window.location.protocol + "//" + window.location.host   + url;
+
+
+
+
+
+    </script>
+    <script src="~/files/recordMeet.js"></script>
+</body>
+
+</html>
