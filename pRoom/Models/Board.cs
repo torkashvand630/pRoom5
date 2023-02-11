@@ -80,7 +80,9 @@ namespace pRoom.Models
             BinaryFormatter bf = new BinaryFormatter();
             MemoryStream ms = new MemoryStream();
             byte[] Array;
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
             bf.Serialize(ms, TestObject);
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
             Array = ms.ToArray();
             return Array.Length;
         }

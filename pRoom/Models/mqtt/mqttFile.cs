@@ -79,7 +79,9 @@ namespace pRoom.Models
             BinaryFormatter bf = new BinaryFormatter();
             using (var ms = new MemoryStream())
             {
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
                 bf.Serialize(ms, obj);
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
                 return ms.ToArray();
             }
         }

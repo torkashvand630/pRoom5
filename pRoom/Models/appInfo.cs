@@ -54,6 +54,7 @@ namespace pRoom
 
         public static IDbConnection GetDbconnection()
         {
+          
             IDbConnection db;
             // Console.WriteLine(appInfo.ConnectionString);
             string _connectionString = "Server=127.0.0.1;Database=db2;User=root;Password=;";// "Server=127.0.0.1;Database=d;Uid=root;Pwd=pppp;";

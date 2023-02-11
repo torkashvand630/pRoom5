@@ -24,7 +24,7 @@ namespace pRoom
                 return getrandom.Next(0, int.MaxValue);
             }
         }
-        public static T Clone<T>(T source)
+        public static void Clone<T>(T source)
         {
             if (!typeof(T).IsSerializable)
             {
@@ -40,10 +40,11 @@ namespace pRoom
             Stream stream = new MemoryStream();
             using (stream)
             {
-                formatter.Serialize(stream, source);
-                stream.Seek(0, SeekOrigin.Begin);
-                return (T)formatter.Deserialize(stream);
+                //formatter.Serialize(stream, source);
+                //stream.Seek(0, SeekOrigin.Begin);
+                //return (T)formatter.Deserialize(stream);
             }
+             
         }
     }
     public sealed class Singleton
