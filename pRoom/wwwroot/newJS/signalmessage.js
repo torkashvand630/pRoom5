@@ -27,9 +27,14 @@
             console.warn("reconnected")
         });
         signalmessenger.connection.onclose(error =>  {
-          console.warn("dicxonnrct")
-             signalmessenger.start();
+            console.warn("dicxonnrct")
+            appActions.disconnectRoom();
+             
+             
             signalmessenger.disconnectError();
+            setTimeout(() => {
+                signalmessenger.start();
+            }, 1000);
         });
         //signalmessenger.connection.hub.disconnected=function () {
         //    console.warn("dicxonnrct")
@@ -51,8 +56,8 @@
                 // window.location.href = url.href;
                 // window.location.reload(true);
                 // return;
-              //  m = { type: "join", reConecting: true, role: board.publish };
-                signalmessenger.connectionNptify();
+                //  m = { type: "join", reConecting: true, role: board.publish };
+                signalmessenger.connectionNotify();
             }
 
           //  mainApp.sendToServer(m);
@@ -71,7 +76,7 @@
             console.error(err.toString());
             setTimeout(function () {
                 signalmessenger.start();
-            }, 5000); // Restart connection after 5 seconds.
+            }, 3000); // Restart connection after 5 seconds.
         });
     },
     send: function (m) {
@@ -116,7 +121,7 @@
             type: 'danger'
         });
     },
-     connectionNptify: function () {
+     connectionNotify: function () {
         $.notify({
             message: board.translate.ServerConnection
         }, {

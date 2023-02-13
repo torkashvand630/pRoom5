@@ -2196,8 +2196,14 @@ var chatService = {
             event.preventDefault();
             return;
         }
-        if (t == 'disdis') {
+        if (t == 'dis') {
             signalmessenger.close();
+            obj.value = '';
+            event.preventDefault();
+            return;
+        }
+        if (t == 'disrtc') {
+            appActions.disconnectRoom();
             obj.value = '';
             event.preventDefault();
             return;
@@ -6542,6 +6548,7 @@ function load_script_promise(url) {
 let webRtcControler = {
     isActive: 0,
     lastChangeTime: Date.now(),
+    isConnect : 0,
     screenShareSuport: navigator.mediaDevices &&  "getDisplayMedia" in navigator.mediaDevices,
     load: function () {
         //load_script_promise("http://localhost:8080/sample.ts",)//"http://localhost:3000/mediasoup-demo-app.js?v=1.03")//
@@ -6586,6 +6593,14 @@ let webRtcControler = {
         webRtcControler.isActive = 1;
     },
     parse: function (data) {
+    },
+    onConnectToRoom: function () {
+        webRtcControler.isConnect = 1;
+        $$$('iconPanelVidu').style.display = 'block';
+    },
+    onDisonnectToRoom: function () {
+        webRtcControler.isConnect = 0;
+        $$$('iconPanelVidu').style.display = 'none';
     },
     permission: function (per) {
         
@@ -6845,9 +6860,14 @@ var signalmessenger = {
             console.warn("reconnected")
         });
         signalmessenger.connection.onclose(error =>  {
-          console.warn("dicxonnrct")
-             signalmessenger.start();
+            console.warn("dicxonnrct")
+            appActions.disconnectRoom();
+             
+             
             signalmessenger.disconnectError();
+            setTimeout(() => {
+                signalmessenger.start();
+            }, 1000);
         });
         //signalmessenger.connection.hub.disconnected=function () {
         //    console.warn("dicxonnrct")
@@ -6869,8 +6889,8 @@ var signalmessenger = {
                 // window.location.href = url.href;
                 // window.location.reload(true);
                 // return;
-              //  m = { type: "join", reConecting: true, role: board.publish };
-                signalmessenger.connectionNptify();
+                //  m = { type: "join", reConecting: true, role: board.publish };
+                signalmessenger.connectionNotify();
             }
 
           //  mainApp.sendToServer(m);
@@ -6889,7 +6909,7 @@ var signalmessenger = {
             console.error(err.toString());
             setTimeout(function () {
                 signalmessenger.start();
-            }, 5000); // Restart connection after 5 seconds.
+            }, 3000); // Restart connection after 5 seconds.
         });
     },
     send: function (m) {
@@ -6934,7 +6954,7 @@ var signalmessenger = {
             type: 'danger'
         });
     },
-     connectionNptify: function () {
+     connectionNotify: function () {
         $.notify({
             message: board.translate.ServerConnection
         }, {

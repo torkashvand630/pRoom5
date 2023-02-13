@@ -94,7 +94,7 @@ namespace pRoom.Controllers
             room.CreateDate = DateTime.Now;
             eventRoomReposotory erm = new eventRoomReposotory();
             erm.Add(room);
-           officControler.createDefultFolder(room.id);
+          // officControler.createDefultFolder(room.id);
             var t = "ok";
            
 

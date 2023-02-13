@@ -292,7 +292,7 @@
 }
 
 #wrapper.pos_3 #iconPanelVidu {
-    display: block !important;
+   /* display: block !important;*/
 }
 
 #wrapper.id_1 #centerVideoPanel {

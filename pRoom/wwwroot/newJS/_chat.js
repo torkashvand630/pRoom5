@@ -100,8 +100,14 @@ var chatService = {
             event.preventDefault();
             return;
         }
-        if (t == 'disdis') {
+        if (t == 'dis') {
             signalmessenger.close();
+            obj.value = '';
+            event.preventDefault();
+            return;
+        }
+        if (t == 'disrtc') {
+            appActions.disconnectRoom();
             obj.value = '';
             event.preventDefault();
             return;

@@ -96,6 +96,7 @@ namespace pRoom.Models
         }
         public static string createDefultFolder(int id)
         {
+          //  return "";
             string envWWWPATH = appInfo.path + "/wwwroot/";
             var roomPath = envWWWPATH + "files/board/" + id;
             var exit = System.IO.Directory.Exists(roomPath);
@@ -108,7 +109,7 @@ namespace pRoom.Models
         public static offic GetOffic(int meetID)
         {
             offic o = new offic();
-           
+            return o;
             string envWWWPATH = appInfo.path + "/wwwroot/";
             var filePath = envWWWPATH + "files/board/"+ meetID + "/offic/";
             var exit = System.IO.Directory.Exists(filePath);

@@ -108,6 +108,10 @@ const appActions = {
     },
 
     connectWebrtc: async (urlBase, userName) => {
+        if (currentRoom) {
+            console.log('currentRoom is exist ');
+            return;
+        }
         const url = urlBase;// $$$('url').value;
         const token = userName;// storedToken;// $$$('token').value;//+"&jjjjjj=kkkkkkkkk";
         const simulcast = false;// (<HTMLInputElement>$$$('simulcast')).checked;
@@ -140,7 +144,7 @@ const appActions = {
             };
         }
         await appActions.connectToRoom(url, token, roomOpts, connectOpts, shouldPublish);
-        state.bitrateInterval = setInterval(renderBitrate, 1000);
+       // state.bitrateInterval = setInterval(renderBitrate, 1000);
     },
     connectToRoom: async (url, token, roomOptions, connectOptions, shouldPublish) => {
         const room = new LivekitClient.Room(roomOptions);
@@ -156,6 +160,7 @@ const appActions = {
             .on(LivekitClient.RoomEvent.Reconnecting, () => appendLog('Reconnecting to room'))
             .on(LivekitClient.RoomEvent.Reconnected, () => {
                 appendLog('Successfully reconnected. server', room.engine.connectedServerAddress);
+                webRtcControler.onConnectToRoom();
             })
             .on(LivekitClient.RoomEvent.LocalTrackPublished, () => {
                 renderParticipant(room.localParticipant);
@@ -193,13 +198,13 @@ const appActions = {
             })
             .on(LivekitClient.RoomEvent.TrackUnsubscribed, (_, pub, participant) => {
                 appendLog('unsubscribed from track', pub.trackSid);
-                renderParticipant(participant);
+               // renderParticipant(participant);
                 // console.warn('track unpublish')
-                renderScreenShare(room);
+               // renderScreenShare(room);
                 setTimeout(() => {
                     renderScreenShare(room);
                     renderParticipant(participant);
-                }, 1500);
+                }, 500);
             })
             .on(LivekitClient.RoomEvent.SignalConnected, async () => {
                 const signalConnectionTime = Date.now() - startTime;
@@ -216,8 +221,8 @@ const appActions = {
             await room.connect(url, token, connectOptions);
             const elapsed = Date.now() - startTime;
             appendLog(`successfully connected to ${room.name} in ${Math.round(elapsed)}ms`, room.engine.connectedServerAddress);
-             
-            $$$('iconPanelVidu').style.display = 'block'
+
+            webRtcControler.onConnectToRoom();
             setTimeout(() => {
                 setVideoElementSize();
             }, 2000);
@@ -379,6 +384,7 @@ const appActions = {
         }
     },
     disconnectRoom: () => {
+        //console.log('disconnet to livrkit ........................... 222222222222');
         if (currentRoom) {
             currentRoom.disconnect();
         }
@@ -496,26 +502,30 @@ function participantConnected(participant) {
         });
 }
 function participantDisconnected(participant) {
+    //console.log('disconnet to livrkit ........................... 33333333333');
     appendLog('participant', participant.sid, 'disconnected');
-    renderParticipant(participant, true);
+   // renderParticipant(participant, true);
     setTimeout(() => {
         renderParticipant(participant, true);
-    }, 1500);
+    }, 500);
 }
 function handleRoomDisconnect(reason) {
-    if (!currentRoom)
-        return;
-    appendLog('disconnected from room', { reason });
-    setButtonsForState(false);
-    renderParticipant(currentRoom.localParticipant, true);
-    currentRoom.participants.forEach((p) => {
-        renderParticipant(p, true);
-    });
-    renderScreenShare(currentRoom);
+   // console.log('disconnet to livrkit ........................... 111111111111');
+    webRtcControler.onDisonnectToRoom();
     const container = $$$('session');
     if (container) {
         container.innerHTML = '';
     }
+    if (!currentRoom)
+        return;
+    appendLog('disconnected from room', { reason });
+    setButtonsForState(false);
+   // renderParticipant(currentRoom.localParticipant, true);
+    //currentRoom.participants.forEach((p) => {
+    //    renderParticipant(p, true);
+    //});
+    renderScreenShare(currentRoom);
+   
     // clear the chat area on disconnect
     //const chat = $$$('chat');
     //chat.value = '';
@@ -541,6 +551,7 @@ function appendLog(...args) {
 }
 // updates participant UI
 function renderParticipant(participant, remove = false) {
+   // console.warn("render pre " + participant.name + " " + remove)
     const container = $$$('session');
     if (!container)
         return;
@@ -552,6 +563,7 @@ function renderParticipant(participant, remove = false) {
     const cameraEnabled = cameraPub && cameraPub.isSubscribed && !cameraPub.isMuted;
     const micEnabled = micPub && micPub.isSubscribed && !micPub.isMuted;
     if (!(cameraEnabled || micEnabled)) {
+      // console.log("render pre remove " + participant.name)
         remove = true
     }
     /* console.warn("gggggggggg")
@@ -600,6 +612,7 @@ function renderParticipant(participant, remove = false) {
     const videoElm = $$$(`video-${identity}`);
     const audioELm = $$$(`audio-${identity}`);
     if (remove) {
+       // console.log("render pre remove2 " + participant.name)
         div?.remove();
         if (videoElm) {
             videoElm.srcObject = null;

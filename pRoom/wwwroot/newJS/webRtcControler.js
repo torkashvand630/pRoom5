@@ -1,6 +1,7 @@
 ﻿let webRtcControler = {
     isActive: 0,
     lastChangeTime: Date.now(),
+    isConnect : 0,
     screenShareSuport: navigator.mediaDevices &&  "getDisplayMedia" in navigator.mediaDevices,
     load: function () {
         //load_script_promise("http://localhost:8080/sample.ts",)//"http://localhost:3000/mediasoup-demo-app.js?v=1.03")//
@@ -45,6 +46,14 @@
         webRtcControler.isActive = 1;
     },
     parse: function (data) {
+    },
+    onConnectToRoom: function () {
+        webRtcControler.isConnect = 1;
+        $$$('iconPanelVidu').style.display = 'block';
+    },
+    onDisonnectToRoom: function () {
+        webRtcControler.isConnect = 0;
+        $$$('iconPanelVidu').style.display = 'none';
     },
     permission: function (per) {
         
