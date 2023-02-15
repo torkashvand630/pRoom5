@@ -551,9 +551,40 @@ function resizeNewBoard() {
     setZoom(maxScTrue, obj2);
     board.zoomScale = maxScTrue;
   //  document.getElementById('boardHtmlpanel').style.display = "block";
-    
+    setToolbarPosation();
     
 }
+function setToolbarPosation() {
+    if (board.user.permission.toolBox) {
+
+    }
+    var obj2 = document.getElementById('boardContainer');
+    var w2 = $('#screenAndBoard').width() - 0;
+    var h2 = $('#screenAndBoard').height() - 32;
+    var toolbar = document.getElementById('toolbar');
+    let w3 = $('#boardContainer').width() + 6;
+    if (w2 > w3) {
+        var min = Math.min((w2 - w3), 30);
+       // console.log('min : ' + min);
+        obj2.style.marginLeft = min + "px";
+        toolbar.style.width = "28px";
+        toolbar.style.top = '30px'
+    }
+    else {
+        let h3 = $('#boardContainer').height() + 30
+        if (h2 > h3) {
+            toolbar.style.width = "100%"
+            toolbar.style.top = (h3 +2 ) + 'px'
+        }
+        else {
+            toolbar.style.width = "28px";
+            toolbar.style.top = '30px'
+        }
+        obj2.style.marginLeft = "0px";
+       // console.log('min no neeed');
+    }
+
+};
 $(document).ready(function () {
    
     $(".menu-toggle").click(function (e) {

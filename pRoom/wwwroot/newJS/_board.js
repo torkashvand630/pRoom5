@@ -38,12 +38,14 @@ function setZoomOUT() {
     board.zoomScale = zoomScale;
     var obj = document.getElementById('boardContainer');// document.getElementById('newBoard2');
     setZoom(zoomScale, obj);
+    setToolbarPosation();
 }
 function setZoomIN() {
     var zoomScale = (110 * board.zoomScale) / 100;
     board.zoomScale = zoomScale;
     var obj = document.getElementById('boardContainer');// document.getElementById('newBoard2');
     setZoom(zoomScale, obj);
+    setToolbarPosation();
 }
 //setZoom(5,document.getElementsByClassName('container')[0]);
 var zoomScale2 = 10;

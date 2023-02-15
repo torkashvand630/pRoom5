@@ -199,6 +199,7 @@ namespace pRoom.Controllers
             }
             else
             {
+                Console.WriteLine("user not found");
                 um = (new userMeetReposotory()).getByGuid(guid);
                 if (um == null) return View("meetErrorView", meeterror);
             }

@@ -321,20 +321,24 @@
              title="@Model.translate.WhiteBoard_drawCircle (C)"></div>
         <div class="button icon-text" data-name="text" data-action="draw" data-type="Text" title="@Model.translate.WhiteBoard_writeText (T)">
         </div>
+          <div class="button icon-eraser" data-name="eraser" data-action="erase" title="@Model.translate.WhiteBoard_takeEraser (E)"></div>
         <div class="button icon-formula" data-name="formula" data-action="draw" data-type="Formula"
              title="@Model.translate.WhiteBoard_formula (G)"></div>
-    </div>
-    <div class="toolbar-group">
-        <div class="button icon-eraser" data-name="eraser" data-action="erase" title="@Model.translate.WhiteBoard_takeEraser (E)"></div>
-        @*<div class="button icon-hand" data-name="hand" data-action="pan" title="Hand (M)"></div>
-        <div class="button icon-hand" onclick="newpageClick()" title="Hand 222"></div>*@
-     
-
-        <div class="toolbar-group" id="undo-redo">
+ <div class="toolbar-group" id="undo-redo">
             @*<div class="title"></div>*@
             <div class="button disabled icon-undo" id="undo-button" title="@Model.translate.WhiteBoard_Undo"></div>
             <div class="button disabled icon-redo" id="redo-button" title="@Model.translate.WhiteBoard_Redo"></div>
         </div>
+    </div>
+    <div class="toolbar-group">
+      
+        @*<div class="button icon-hand" data-name="hand" data-action="pan" title="Hand (M)"></div>
+        <div class="button icon-hand" onclick="newpageClick()" title="Hand 222"></div>*@
+     
+
+       
+    </div>
+    
         <script>
             var myArr = [];
             var activePage = 1;
@@ -369,7 +373,6 @@
 
             }
         </script>
-    </div>
 </div>
 
     <div id="newBoard2" style=" position: relative;overflow:overlay;width:100%;">
