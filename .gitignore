@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/pRoom/wwwroot/files/board/25
+/pRoom/wwwroot/files/appConf.json
