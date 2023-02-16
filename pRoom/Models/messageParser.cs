@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.WebSockets;
 using System.Text;
 using System.Threading;
 using pRoom.Models;
+using pRoom.Models.eventModel;
 
 namespace pRoom
 {
@@ -153,6 +154,7 @@ namespace pRoom
             dynamic d = new System.Dynamic.ExpandoObject();
             d.type = "meetSatus";
             d.meet = meet;
+            d.token= await liveKit.getToken(user.nickname , user.name , meet.id);
             await mHub.BroadcastToConnection2(d, user.ConnectionId);
             d.meet = null;
             d = null;

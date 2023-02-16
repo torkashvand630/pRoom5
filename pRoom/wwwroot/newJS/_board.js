@@ -486,6 +486,8 @@ var mainApp = {
         // webrtClient.startApp();
         messageQueue.readAll();
         mqttClient.meetStatus = true;
+        board.token = data.token;
+       // console.log(board)
         //setTimeout(() => {
            
 

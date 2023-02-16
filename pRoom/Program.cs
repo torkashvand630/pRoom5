@@ -33,6 +33,7 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 Startup st = new Startup();
 app.MapHub<ChatHub>("/chatHub");
+ 
 appInfo.hub = new ChatHub();
 //var hubContext = builder.Services.GetService(typeof(IHubContext<ChatHub>));
 app.Use(async (context, next) =>
@@ -260,6 +261,9 @@ namespace pRoom
 
             var poppler = (string)j["poppler"];
             if (poppler != null) appInfo.poppler = poppler;
+
+            var livekitcli = (string)j["livekitcli"];
+            if (livekitcli != null) appInfo.livekitcli = livekitcli;
 
             Console.WriteLine("offic server is : " + appInfo.officeServer);
             Console.WriteLine("webrtc server is : " + appInfo.mediaServer);

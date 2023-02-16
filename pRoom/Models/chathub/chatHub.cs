@@ -119,7 +119,7 @@ namespace pRoom.Models
                 await messengerUtil.sendReloadToUser(this.Context.ConnectionId,"0");
             }
            
-            
+          
             return;
             // var httpContext = this.GetHttpContext();
             var httpContext = this.Context.GetHttpContext();

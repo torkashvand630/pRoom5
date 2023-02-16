@@ -510,7 +510,7 @@ function participantDisconnected(participant) {
     }, 500);
 }
 function handleRoomDisconnect(reason) {
-   // console.log('disconnet to livrkit ........................... 111111111111');
+    console.log('disconnet to livrkit ........................... 111111111111');
     webRtcControler.onDisonnectToRoom();
     const container = $$$('session');
     if (container) {

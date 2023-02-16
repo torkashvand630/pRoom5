@@ -24,15 +24,15 @@ namespace pRoom
         public static string dbType = "sqlserver";
         public static string env = "proom";
         public static string path;
-        public static string mediaServer= "t5.salampnu.com";
-        public static string mediaServerPass= "aaaaa";
+        public static string mediaServer = "t5.salampnu.com";
+        public static string mediaServerPass = "aaaaa";
         public static string domainName;
         public static int record = 0;
         public static int live = 0;
         public static int mathEditor = 0;
         public static int develop = 0;
         public static int office = 0;
-       
+
         public static string lang = "en";
         public static int demoMeetID = 2;
         public static string officeServer = "";
@@ -41,6 +41,7 @@ namespace pRoom
         public static string mqttServer2 = "";
         public static string pdfConverter = "";
         public static string poppler = "";
+        public static string livekitcli = "";
         public static string recordServer = "";
         public static int random = (new Random()).Next(0, 10000);
         public static string randomStr = "?v=17";// (new Random()).Next(0, 10000);
@@ -54,15 +55,15 @@ namespace pRoom
 
         public static IDbConnection GetDbconnection()
         {
-          
+
             IDbConnection db;
             // Console.WriteLine(appInfo.ConnectionString);
             string _connectionString = "Server=127.0.0.1;Database=db2;User=root;Password=;";// "Server=127.0.0.1;Database=d;Uid=root;Pwd=pppp;";
             IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(appInfo.ConnectionString);
             //return connection;
-            if (dbType== "sqlserver")  db = new SqlConnection(ConnectionString);                           
-            else  db = new SQLiteConnection(ConnectionString);
-          //  db = new SqlConnection(_connectionString);
+            if (dbType == "sqlserver") db = new SqlConnection(ConnectionString);
+            else db = new SQLiteConnection(ConnectionString);
+            //  db = new SqlConnection(_connectionString);
             //using (var connection = new SqlConnection("Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;"))
             //{
             //    connection.Query<MyTable>("SELECT * FROM MyTable");

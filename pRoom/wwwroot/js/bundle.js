@@ -1905,6 +1905,8 @@ var mainApp = {
         // webrtClient.startApp();
         messageQueue.readAll();
         mqttClient.meetStatus = true;
+        board.token = data.token;
+       // console.log(board)
         //setTimeout(() => {
            
 
@@ -6589,10 +6591,11 @@ let webRtcControler = {
         //        $('#loadingModal').hide();
         //    });
        // layout.element.sidebar_wrapper.style.display =  "block";
-       
-        var nName = board.nickName;
-        if (nName.length > 5) nName = nName.substring(0, 5)
-        appActions.connectWebrtc(board.mediaServer, board.meetID + '&' + board.userName + '&' + nName.trim())//board.mediaServer
+
+       // var nName = board.nickName;
+       // if (nName.length > 5) nName = nName.substring(0, 5)
+       // appActions.connectWebrtc(board.mediaServer, board.meetID + '&' + board.userName + '&' + nName.trim())//board.mediaServer
+        appActions.connectWebrtc(board.mediaServer, board.token)//board.mediaServer
         return;
          var obj = { roomId: board.meetID, joinVideo: false, joinAudio: false };
         try {
