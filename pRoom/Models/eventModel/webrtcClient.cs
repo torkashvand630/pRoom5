@@ -56,7 +56,7 @@ namespace pRoom.Models.eventModel
             string command = "";// "pdftoppm -jpeg " + pdfFile + " " + outFile;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                command = appInfo.livekitcli + "livekit-cli create-token --api-key devkey --api-secret secret --join --room "+meetID+ " --name "+name+"  --identity " + userId+" --valid-for 24h";
+                command = appInfo.livekitcli + "livekit-cli create-token --api-key devkeydevkeydevkeydevkeydevkey111111 --api-secret secretdevkeydevkeydevkeydevkeydevkey --join --room " + meetID+ " --name "+name+"  --identity " + userId+" --valid-for 24h";
                 Console.WriteLine("platform is win");
             }
            // Console.WriteLine(command);

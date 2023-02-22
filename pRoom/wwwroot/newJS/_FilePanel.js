@@ -79,7 +79,7 @@ async function startFileUpload() {
         var percent_complete = (e.loaded / e.total) * 100;
         percent_complete += "  ";
         document.getElementById('fileUploadMessage').innerHTML = board.translate.fileManagement_startUpload + " : " + percent_complete.substring(0, 3)+ " %";
-        console.log(percent_complete);
+       // console.log(percent_complete);
     });
 
 
@@ -88,8 +88,8 @@ async function startFileUpload() {
        // setTimeout(function () {
           //  document.getElementById('fileUploadMessage').innerHTML = "";
       //  }, 5000)
-        console.log(request.status);
-        console.log(request.response);
+       // console.log(request.status);
+       // console.log(request.response);
     });
 
     // send POST request to server side script
@@ -142,8 +142,8 @@ function startFileOfficUpload() {
         setTimeout(function () {
             document.getElementById('fileOfficUploadMessage').innerHTML = "";
         }, 5000)
-        console.log(request.status);
-        console.log(request.response);
+       // console.log(request.status);
+        // console.log(request.response);
     });
 
     // send POST request to server side script
@@ -197,8 +197,8 @@ var fileService = {
     },
 
     handleReciveFile: function (data) {
-        console.log('handleReciveFile');
-        console.log(data);
+       // console.log('handleReciveFile');
+       // console.log(data);
         
        
         if (data.res != "ok") {
@@ -219,8 +219,8 @@ var fileService = {
 
     
         var k = { id: 0, inRoomID: data.fileID, ext: data.ext, name: data.fileName, pageCount: data.pdfPageCount, width: data.width, height: data.height, d: null };
-        console.log("fifle file fffffffffffffffff");
-        console.log(k);
+       // console.log("fifle file fffffffffffffffff");
+       // console.log(k);
         bboard.addFileToDic(k);
         fileService.renderFileToHtmlElement(board.meetID, data.fileID, data.fileName, data.ext);
     },
@@ -284,7 +284,7 @@ var fileService = {
     activeFileServer: function (fileID, pageID) {
        // panelControler.disconectScreenShare();
         boardClick();
-        console.log(fileID);
+       // console.log(fileID);
         var p = { type: 'board', action: 'fileSelect', p: 0, f: fileID, m: '', };
        // var m = { "type": "board", "board": "draw", "d": { "t": "pageSelect", "drawId": 1, "at": "", "num": pageID, "fileID": fileID, "del": 0, "type": "board", "board": "draw" } }
         mainApp.sendToServer(p);

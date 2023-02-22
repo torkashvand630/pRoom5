@@ -1,4 +1,18 @@
-﻿var bboard = {
+﻿//const { idroo } = require("../board_files/my");
+
+var isTabActive;
+
+window.onfocus = function () {
+    isTabActive = true;
+};
+
+window.onblur = function () {
+    isTabActive = false;
+};
+
+// test
+ 
+var bboard = {
     bboard: null,
     fboard: null,
     fileList: null,
@@ -84,19 +98,49 @@
         boardControler.sendMessage = 1
        // console.log('end page select 1');
         document.getElementById('inputGroupSelect04').value = pageID;
+        var c = document.getElementById("canvas");
+        
+        let canvas = c.firstChild;
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (bboard.fileID != 0) {
+            
             var pageIdbg = Number(pageID) + 1;
-            var bgImage =  '/files/board/' + board.meetID + '/pic/' + bboard.fileID + '/' + pageIdbg + '.jpg';
+            var bgImage = '/files/board/' + board.meetID + '/pic/' + bboard.fileID + '/' + pageIdbg + '.jpg';
+            idroo.board.setBackground(bgImage)
+            return;
+            let img = new Image();
+            img.onload = function () {
+                // image.src = this.src;
+               // console.log('w3 : ' + img.width)
+               // console.log('h : ' + img.height)
+              
+                //console.log(c)
+               
+                ctx.drawImage(img, 0, 0);
+               // console.log(ctx)
+                //var img = document.getElementById("scream");
+               
+                   //
+                   // canvas.setAttribute('width', img.width);
+                   // c.height = img.height+200;
+                  //  canvas.width += 200;
+                  //  ctx.drawImage(img, 0, 0);
+                    // console.log( canvas.toDataURL('image/png'));
+                  //  idroo.board.insertImageByURL(500, 500, bgImage)
+                    
+                
+               
+                
+            };
+            img.src = bgImage;
+            canvas.style.backgroundImage = "url(" + bgImage + ")";
 
-            document.getElementById("canvas").firstChild.style.backgroundImage = "url(" + bgImage + ")";
-            //var c = document.getElementById("canvas");
-            //var ctx = c.firstChild.getContext("2d");
-            //var img = document.getElementById("scream");
-            //ctx.drawImage(img, 10, 10);
+           
             //console.log(bgImage);
         }
         else {
-            document.getElementById("canvas").firstChild.style.backgroundImage = "none";
+            canvas.style.backgroundImage = "none";
         }
 
        
@@ -242,7 +286,7 @@
     },
 
     addFileToDic: function (f) {
-        console.warn(f);
+       // console.warn(f);
         var fileID = f.inRoomID;
        // bboard.fileList[fileID] = f;
         bboard.fileList.push(f);
@@ -259,7 +303,7 @@
     },
     reciveMessage: function (data) {
        
-       // console.log(data);
+      //  console.log(data);
         var fileID = data.f;
         var pageID = data.p;   
        

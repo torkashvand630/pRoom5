@@ -6934,7 +6934,9 @@ this.Board = function() {
         this.socket.emit("set", "title", t)
     }
     ,
-    t.prototype.setBackground = function(t) {
+        t.prototype.setBackground = function (t) {
+       // console.log('ret bg');
+       // console.log(t)
         var e;
         ui.settings.selectBackground(t),
         "" === t ? (this.backgroundImage = "",
@@ -6945,7 +6947,7 @@ this.Board = function() {
                 t.background.changed = !0
             }
         }(this),
-        e.src = "/img/background-" + t + ".jpg")
+        e.src =t)// "/img/background-" + t + ".jpg")
     }
     ,
     t.prototype.uid = function() {
@@ -8585,12 +8587,13 @@ this.Board = function() {
     }
     ,
     t.prototype.restoreChange = function(t) {
-       // console.log("restoreChangeggggg");
+       // console.log("ggggg");
       //  console.warn(t.editors);
        // console.log(t);
-        //if (t.m) {
-        //    this.editors[6].mouse = t.m;
-        //}
+        if (t.m) {
+           // console.log(t.m);
+            this.editors[6].mouse = t.m;
+        }
         var e, u, i, o, r, n, s, a, h, c, l, d, p, f, C, B, D, A, F, g, m, y, v;
         if (t.background && this.setBackground(t.background),
         t.editors) {
@@ -8689,7 +8692,7 @@ this.Board = function() {
             //    return;
             //}
              
-            if (m.t == undefined && m.e == undefined && m.u == undefined && m.i == undefined && m.o == undefined && m.r == undefined && m.n == undefined && m.s == undefined && m.a == undefined && m.h == undefined && m.c == undefined && m.d == undefined) {
+            if ( m.t == undefined && m.e == undefined && m.u == undefined && m.i == undefined && m.o == undefined && m.r == undefined && m.n == undefined && m.s == undefined && m.a == undefined && m.h == undefined && m.c == undefined && m.d == undefined) {
                 //console.log("nothing");
                 //console.log(m);ggggg
                 if (CBoard.MousePointer) {

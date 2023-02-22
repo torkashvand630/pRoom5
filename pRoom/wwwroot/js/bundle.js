@@ -2686,7 +2686,7 @@ async function startFileUpload() {
         var percent_complete = (e.loaded / e.total) * 100;
         percent_complete += "  ";
         document.getElementById('fileUploadMessage').innerHTML = board.translate.fileManagement_startUpload + " : " + percent_complete.substring(0, 3)+ " %";
-        console.log(percent_complete);
+       // console.log(percent_complete);
     });
 
 
@@ -2695,8 +2695,8 @@ async function startFileUpload() {
        // setTimeout(function () {
           //  document.getElementById('fileUploadMessage').innerHTML = "";
       //  }, 5000)
-        console.log(request.status);
-        console.log(request.response);
+       // console.log(request.status);
+       // console.log(request.response);
     });
 
     // send POST request to server side script
@@ -2749,8 +2749,8 @@ function startFileOfficUpload() {
         setTimeout(function () {
             document.getElementById('fileOfficUploadMessage').innerHTML = "";
         }, 5000)
-        console.log(request.status);
-        console.log(request.response);
+       // console.log(request.status);
+        // console.log(request.response);
     });
 
     // send POST request to server side script
@@ -2804,8 +2804,8 @@ var fileService = {
     },
 
     handleReciveFile: function (data) {
-        console.log('handleReciveFile');
-        console.log(data);
+       // console.log('handleReciveFile');
+       // console.log(data);
         
        
         if (data.res != "ok") {
@@ -2826,8 +2826,8 @@ var fileService = {
 
     
         var k = { id: 0, inRoomID: data.fileID, ext: data.ext, name: data.fileName, pageCount: data.pdfPageCount, width: data.width, height: data.height, d: null };
-        console.log("fifle file fffffffffffffffff");
-        console.log(k);
+       // console.log("fifle file fffffffffffffffff");
+       // console.log(k);
         bboard.addFileToDic(k);
         fileService.renderFileToHtmlElement(board.meetID, data.fileID, data.fileName, data.ext);
     },
@@ -2891,7 +2891,7 @@ var fileService = {
     activeFileServer: function (fileID, pageID) {
        // panelControler.disconectScreenShare();
         boardClick();
-        console.log(fileID);
+       // console.log(fileID);
         var p = { type: 'board', action: 'fileSelect', p: 0, f: fileID, m: '', };
        // var m = { "type": "board", "board": "draw", "d": { "t": "pageSelect", "drawId": 1, "at": "", "num": pageID, "fileID": fileID, "del": 0, "type": "board", "board": "draw" } }
         mainApp.sendToServer(p);
@@ -5419,6 +5419,20 @@ var screenControler = {
     },
 }
  
+//const { idroo } = require("../board_files/my");
+
+var isTabActive;
+
+window.onfocus = function () {
+    isTabActive = true;
+};
+
+window.onblur = function () {
+    isTabActive = false;
+};
+
+// test
+ 
 var bboard = {
     bboard: null,
     fboard: null,
@@ -5505,19 +5519,49 @@ var bboard = {
         boardControler.sendMessage = 1
        // console.log('end page select 1');
         document.getElementById('inputGroupSelect04').value = pageID;
+        var c = document.getElementById("canvas");
+        
+        let canvas = c.firstChild;
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (bboard.fileID != 0) {
+            
             var pageIdbg = Number(pageID) + 1;
-            var bgImage =  '/files/board/' + board.meetID + '/pic/' + bboard.fileID + '/' + pageIdbg + '.jpg';
+            var bgImage = '/files/board/' + board.meetID + '/pic/' + bboard.fileID + '/' + pageIdbg + '.jpg';
+            idroo.board.setBackground(bgImage)
+            return;
+            let img = new Image();
+            img.onload = function () {
+                // image.src = this.src;
+               // console.log('w3 : ' + img.width)
+               // console.log('h : ' + img.height)
+              
+                //console.log(c)
+               
+                ctx.drawImage(img, 0, 0);
+               // console.log(ctx)
+                //var img = document.getElementById("scream");
+               
+                   //
+                   // canvas.setAttribute('width', img.width);
+                   // c.height = img.height+200;
+                  //  canvas.width += 200;
+                  //  ctx.drawImage(img, 0, 0);
+                    // console.log( canvas.toDataURL('image/png'));
+                  //  idroo.board.insertImageByURL(500, 500, bgImage)
+                    
+                
+               
+                
+            };
+            img.src = bgImage;
+            canvas.style.backgroundImage = "url(" + bgImage + ")";
 
-            document.getElementById("canvas").firstChild.style.backgroundImage = "url(" + bgImage + ")";
-            //var c = document.getElementById("canvas");
-            //var ctx = c.firstChild.getContext("2d");
-            //var img = document.getElementById("scream");
-            //ctx.drawImage(img, 10, 10);
+           
             //console.log(bgImage);
         }
         else {
-            document.getElementById("canvas").firstChild.style.backgroundImage = "none";
+            canvas.style.backgroundImage = "none";
         }
 
        
@@ -5663,7 +5707,7 @@ var bboard = {
     },
 
     addFileToDic: function (f) {
-        console.warn(f);
+       // console.warn(f);
         var fileID = f.inRoomID;
        // bboard.fileList[fileID] = f;
         bboard.fileList.push(f);
@@ -5680,7 +5724,7 @@ var bboard = {
     },
     reciveMessage: function (data) {
        
-       // console.log(data);
+      //  console.log(data);
         var fileID = data.f;
         var pageID = data.p;   
        
