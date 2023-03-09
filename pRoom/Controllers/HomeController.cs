@@ -35,13 +35,13 @@ namespace pRoom.Controllers
         public IHttpContextAccessor _httpContextAccessor;
         Random rnd = new Random();
 
-        public HomeController(ILogger<HomeController> logger, Microsoft.Extensions.Hosting.IHostingEnvironment env, IuserManagerEvent u)
+        public HomeController(ILogger<HomeController> logger, Microsoft.Extensions.Hosting.IHostingEnvironment env, IuserManagerEvent u, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _env = env;
 
             _userManager = u;
-            // _httpContextAccessor = httpContextAccessor;
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult mmkk()
         {
@@ -327,18 +327,19 @@ namespace pRoom.Controllers
         public async Task<IActionResult> qq(string guid,  string lang, string record, int? recorder)
         {
            var mUser= _userManager.GetUser();
-            var userGUID = _httpContextAccessor.HttpContext.Request.Cookies["GUID"];
-            if (userGUID == "" || userGUID == null)
-            {
-                CookieOptions option = new CookieOptions();
-                option.Expires = DateTime.Now.AddDays(100);
-                userGUID = System.Guid.NewGuid().ToString();
-                _httpContextAccessor.HttpContext.Response.Cookies.Append("GUID",userGUID , option);
-                //Console.WriteLine("guid not found 222222222222");
+           
+            //var userGUID = _httpContextAccessor.HttpContext.Request.Cookies["GUID"];
+            //if (userGUID == "" || userGUID == null)
+            //{
+            //    CookieOptions option = new CookieOptions();
+            //    option.Expires = DateTime.Now.AddDays(100);
+            //    userGUID = System.Guid.NewGuid().ToString();
+            //    _httpContextAccessor.HttpContext.Response.Cookies.Append("GUID",userGUID , option);
+            //    //Console.WriteLine("guid not found 222222222222");
 
-                // return null;
-            }
-            // Console.WriteLine(sin.id++);
+            //    // return null;
+            //}
+
             if (lang==null || lang=="" || ( lang!="fa" && lang!="en")) lang= appInfo.lang;
             TranslateMD translate = Translate.langDic[lang];
             meetErrorVM meeterror = new meetErrorVM() { meetID = 0, message = "room not exist" };
@@ -385,11 +386,21 @@ namespace pRoom.Controllers
             if (meet.isDemo == 1) r.password = "0";
             if (mUser != null)
             {
-              if(meet.owner==mUser.id)
-                {
-                    r.userName = mUser.Name;
-                }
+                r.userName = mUser.Name;
+                if (meet.owner==mUser.id) r.password = "0";
+                
             }
+            
+                if (_httpContextAccessor.HttpContext.Request.Cookies["meet_" + guid] != null)
+                {
+                    var userMeetGUID = _httpContextAccessor.HttpContext.Request.Cookies["meet_" + guid];
+                    if (userMeetGUID != "" && userMeetGUID != null)
+                    {
+                        r.userMeetGUID = userMeetGUID;
+                    }
+                }
+            
+           
             r.loadInfo();
             //Console.WriteLine("meetID is : " + meetID + " userName is : " + userName + " publish : " + role+" isHost : "+jmeet.isHost);
             // var browser = this.browserDetector.Browser;
@@ -401,7 +412,8 @@ namespace pRoom.Controllers
         [HttpPost]
         public async Task<JsonResult> join([FromBody] joinVM r)
         {
-
+            var mUser = _userManager.GetUser();
+             
             Console.WriteLine(r.meetID + " : " + r.userMame + " : " + r.tpass + " : " + r.type);
             joinRoomVM r2 = new joinRoomVM()
             {
@@ -413,7 +425,13 @@ namespace pRoom.Controllers
 
             };
             javaMeet jmeet;
-            var res = (new joinRoomUtil()).joinRoomBase(r2);
+            var meet = meetService.GetMeeting(r.meetID);
+            bool passCheck = true;
+
+            if (mUser != null)
+             if (meet.owner == mUser.id) passCheck = false;
+
+            var res = (new joinRoomUtil()).joinRoomBase(r2,passCheck);
             if (res.status == "error")
             {
                  jmeet = new javaMeet()
@@ -423,7 +441,7 @@ namespace pRoom.Controllers
                 };
                 return Json(Newtonsoft.Json.JsonConvert.SerializeObject(jmeet));
             }
-            var meet = meetService.GetMeeting(r.meetID);
+          
             userMD u;
             var success = meet.userManager.userDic.TryGetValue(res.userMeet.id.ToString(), out u);
             if (success)
@@ -468,6 +486,14 @@ namespace pRoom.Controllers
 
             };
             Console.WriteLine(jmeet.user.name);
+            if (_httpContextAccessor.HttpContext.Request.Cookies["meet_" + r.meetID] == null)
+            {
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddDays(100);
+               
+                _httpContextAccessor.HttpContext.Response.Cookies.Append("meet_" + r.meetID, res.userMeet.guid, option);
+
+            }
             return Json(Newtonsoft.Json.JsonConvert.SerializeObject(jmeet));
         }
 

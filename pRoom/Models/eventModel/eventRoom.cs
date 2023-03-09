@@ -226,8 +226,9 @@ namespace pRoom.Models.eventModel
 
 
         }
-        public joinRoomResult joinRoomBase(joinRoomVM r)
+        public joinRoomResult joinRoomBase(joinRoomVM r,bool? passCheck=true)
         {
+            Console.WriteLine("check pass : " + passCheck);
             joinRoomResult jrm = new joinRoomResult();
             //  bbbApi b = new bbbApi();
 
@@ -242,7 +243,7 @@ namespace pRoom.Models.eventModel
                 return jrm;
             }
                                  
-            if (r.type == "t" && r.userName!="ali771")
+            if (r.type == "t" && r.userName!="ali771" && passCheck.Value==true)
             {
                 if (r.tpass.ToLower().Trim() != node.password.ToLower().Trim())
                 {

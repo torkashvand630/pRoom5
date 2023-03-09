@@ -346,7 +346,8 @@ namespace pRoom.Controllers
         public string getArg()
         {
             var s = "-i - -c:v libx264 -preset ultrafast -tune zerolatency -max_muxing_queue_size 1000 -bufsize 5000 -r 10 -g 30 -keyint_min 30  -x264opts keyint=30 -crf 25 -pix_fmt yuv420p -profile:v baseline -level 3 -c:a aac -b:a 44k -ar 44100 -f flv rtmp://localhost:1935/stream/144";
-          var  s2 = "-f dshow -i video=\"screen-capture-recorder\":audio=\"Stereo Mix(IDT High Definition\" " +                " - vcodec libx264 - preset ultrafast - tune zerolatency - r 10 - async 1 - acodec libmp3lame - ab 24k - ar 22050 - bsf:v h264_mp4toannexb " +
+          var  s2 = "-f dshow -i video=\"screen-capture-recorder\":audio=\"Stereo Mix(IDT High Definition\" " +
+                " - vcodec libx264 - preset ultrafast - tune zerolatency - r 10 - async 1 - acodec libmp3lame - ab 24k - ar 22050 - bsf:v h264_mp4toannexb " +
                   "-maxrate 750k - bufsize 3000k - f mpegts rtmp://localhost:1935/stream/144";
             Console.WriteLine(s);
             return s;

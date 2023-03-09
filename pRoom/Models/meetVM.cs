@@ -24,6 +24,7 @@ namespace pRoom
         public int meetID;
         public string userName="";
         public string password = "";
+        public string userMeetGUID = "";
         public string userMeetInfo = "";
         public void loadInfo()
         {
