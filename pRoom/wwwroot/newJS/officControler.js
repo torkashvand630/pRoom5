@@ -8,8 +8,8 @@
     fileList: [],
     ui: 'min',//atlas
     firstLoad: 1,
-    wopiUri: board.officeServer,
-    queryStr: board.user.permission.offic ? "" : "&permission=readonly",
+    wopiUri:'ggggg',// board.officeServer,
+    queryStr:"",//ggggg board.user.permission.offic ? "" : "&permission=readonly",
     WordFile: ['DOCX', 'DOC', 'DOT', 'ODT', 'FODT', 'RTF', 'TXT', 'HTML', 'HTM'],
     PowerPointFile: ['PPTX', 'PPT', 'PPS', 'POT', 'ODP', 'FODP'],
     ExcelFile: ['XLSX', 'ODS' , 'FODS' ],

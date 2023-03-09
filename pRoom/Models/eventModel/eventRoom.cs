@@ -113,6 +113,7 @@ namespace pRoom.Models.eventModel
         public string message { get; set; }
         public string error { get; set; }
         public string url { get; set; }
+        public userMeet userMeet { get;set; }
     }
 
     public class joinRoomUtil
@@ -278,6 +279,7 @@ namespace pRoom.Models.eventModel
             umr.Add(um);
             jrm.url = "/meet/" + um.guid;
             jrm.status = "ok";
+            jrm.userMeet = um;
            
             return jrm;
            

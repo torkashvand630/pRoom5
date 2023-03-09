@@ -3,7 +3,7 @@
     isConnect: false,
     meetStatus: false,
     sendOption: { qos: 2 },
-    serverTopic: "allmeet_" + board.serverID,
+    serverTopic: "allmeet_",//ggggg + board.serverID,
     connect: function () {
        // signalmessenger.connect();
         var o = { clientId: board.meetID+'_'+ board.userName, username: board.nickName };

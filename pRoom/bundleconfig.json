@@ -27,13 +27,20 @@
       "wwwroot/newJS/video.js",
       "wwwroot/newJS/webRtcControler.js",
       "wwwroot/newJS/recordControler.js",
-      "wwwroot/newJS/signalmessage.js"
+      "wwwroot/newJS/signalmessage.js",
+      "wwwroot/newJS/loading.js"
     ]
   },
   {
     "outputFileName": "wwwroot/board_files/my.min.js",
     "inputFiles": [
       "wwwroot/board_files/my.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/board_files/wb.min.css",
+    "inputFiles": [
+      "wwwroot/board_files/idroo.css"
     ]
   }
 ]

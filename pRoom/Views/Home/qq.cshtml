@@ -1,0 +1,271 @@
+﻿@using pRoom.Models
+@model pRoom.meetNewVM
+@{
+    Layout = null;
+    var vStr = appInfo.randomStr;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>hh</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />*@
+    @if (Model.isHost != 20)
+    {
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+        <link href="~/board/css/main.css" rel="stylesheet">
+        <link rel="stylesheet" href="~/board/css/jquery-ui.min.css">
+        <link href="~/css/per5.css@(vStr)" rel="stylesheet" />
+
+        @*<link href="~/board/css/font-awesome.min.css" rel="stylesheet" />*@
+
+        <link href="~/vidu/style.css" rel="stylesheet" />
+        <link href="~/css/webrtcStyles.css@(vStr)" rel="stylesheet" />
+        @* <link href="http://localhost:8080/styles.css" rel="stylesheet" />*@
+    }
+    else
+    {
+        <link href="~/css/all.min.css" rel="stylesheet" />
+    }
+    @if (Model.isLTR)
+    {
+        <link href="~/board/css/ltr.css@(vStr)" rel="stylesheet">
+    }
+    <link rel="stylesheet" href="~/css/webfonts/font-awesome-all.min.css" />
+    <script>
+
+        userMeetInfo = @Html.Raw(@Model.userMeetInfo);
+        console.log(userMeetInfo);
+       
+
+    </script>
+    @*<link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />*@
+    @*<script src="https://vjs.zencdn.net/7.8.4/video.js"></script>*@
+    @*<script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>*@
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">*@
+    @*<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>*@
+
+    <style></style>
+</head>
+
+<body id="bodybase">
+    @*<div class="bs-canvas-overlay   position-fixed w-100 h-100"></div>
+    <div id="bs-canvas-right" class="bs-canvas bs-canvas-right position-fixed bg-light h-100">
+    <div class="bs-canvas-header p-3 bg-danger overflow-auto">
+    <button type="button" class="bs-canvas-close float-left close" aria-label="Close" aria-expanded="false"><span aria-hidden="true" class="text-light">&times;</span></button>
+    <h4 class="d-inline-block text-light mb-0 float-right">Canvas Header</h4>
+    </div>
+    <div class="bs-canvas-content px-3 py-5">
+    ggggggggggggggg
+    </div>
+    </div>*@
+    @Html.Partial("_permissionModal.cshtml")
+    @Html.Partial("_FilePanel.cshtml")
+    @Html.Partial("_endMeet.cshtml")
+    @Html.Partial("_quiz.cshtml")
+
+
+    <div style="width:100%;height:100%;" id="wrapper">
+
+        <div style="display: flex;" id="page-content-wrapper">
+            <div style="flex: 1;max-width: 100%;display:flex;flex-direction:column;">
+                @Html.Partial("_menu.cshtml")
+                <div id="newVideosBox" style="width:100%;"></div>
+                <div id="screenAndBoard">
+                    <div id="boardHtmlpanel" class="centerPanelItem" style=" visibility: visible;">
+                        @Html.Partial("_newBoard.cshtml", Model)
+                    </div>
+                    <div id="developPanel" class="centerPanelItem" style=" visibility: hidden;">
+                        @Html.Partial("_develop.cshtml", Model)
+                    </div>
+                    @*<img id="scream" style="display:none;" width="220" height="277" src="/files/board/135/pic/1/1.jpg" alt="The Scream">*@
+                    <div id="diagramPanel" class="centerPanelItem" style="background-color:azure;">
+                        <iframe id="diagramIframe" style="width:100%;height:100%;">
+                        </iframe>
+                    </div>
+                    <div id="officPanel" class="centerPanelItem" style="background-color:azure;">
+                        @*<iframe id="officIframe" style="width:100%;height:100%;">
+                        </iframe>*@
+                        <form id="office_form" name="office_form" target="office_frame" action="https://meet.salampnu.com/loleaflet/a92f157/loleaflet.html?WOPISrc=https://p.learn100.ir/wopi/files/word110.odt" method="post">
+                          @*  <input name="access_token" value="@Model.nickName" type="hidden" />*@
+                            <input name="access_token_ttl" value="test ttl" type="hidden" />
+                        </form>
+                        <span id="frameholder"></span>
+                    </div>
+                    <div id="MathEditorPanel" class="centerPanelItem" style="background-color:azure;">
+                        <iframe id="MathEditorIframe" style="width:100%;height:100%;">
+                        </iframe>
+                        @*<img src="" id="MathEditorImg" style="width:100%;height:100%;" />*@
+                    </div>
+                    <div id="screenShareElemnt" class="centerPanelItem" style=" max-width:1200px;background-color:aliceblue;margin:auto">
+                        <div id="screenshare-area">
+                            @*<div>
+                            <span id="screenshare-info"> </span>
+                            <span id="screenshare-resolution"> </span>
+                            </div>*@
+                            <video id="screenshare-video" autoplay playsinline></video>
+                        </div>
+                    </div>
+                    <div id="vidioPlayerElement" class="centerPanelItem" style="visibility:visible;display:none;  max-width:1200px;background-color:burlywood;margin:auto;">
+                        <video id="myVideo"
+                               class="video-js"
+                               controls
+                               preload="auto"
+                               style="width:100%;height:600px;max-height:100%;"
+                               data-setup='{ "techOrder": ["youtube", "html5"] }'>
+                            <source id="vPlayerSource" src="" type="video/mp4" />
+                        </video>
+                    </div>
+
+                    <div class="centerPanel" style="display:none;margin:auto;width:100%;height:100%" id="screenSharePanel">   </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="centerVideoPanel" style=""></div>
+        <div id="sidebar-wrapper">
+
+            <div id="lpanelVideo" class="lPanel">
+                @Html.Partial("_vidu.cshtml", Model)
+            </div>
+
+            <div class="lPanel" id="chatPanelDiv">
+                <div class="lPanel_nav">
+                    <span style="padding: 0px 7px;font-size: 16px;"><i class="far fa-comments"></i></span>
+                    <span>@Model.translate.chatPanel</span>
+                </div>
+                <div id="chatPanel" style="height:100%;">
+                    @Html.Partial("_chat.cshtml")
+                </div>
+            </div>
+
+            <div class="lPanel" id="userPanelDiv">
+                <div class="lPanel_nav" style="cursor: pointer;" onclick="userManager.userClick('DefaultPermission')">
+                    <span style="padding: 0px 7px;color: darkcyan;font-size:16px;"><i class="fas fa-users"></i></span>
+                    <span> @Model.translate.userManager</span>
+                    
+
+                </div>
+                <div id="userPanel" style="overflow-y: auto;">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    @Html.Partial("_deviceJanus.cshtml")
+    <script src="~/js/popper.min.1.16.0.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-notify.min.js"></script>
+    @* <script src="~/js/mqtt.min.js"></script>*@
+
+    <script src="~/newJS/video.js"></script>
+    @if (Model.isHost == 2)
+    {
+        <script src="~/css/ResizeSensor.js"></script>
+        <script src="~/css/ElementQueries.js"></script>
+        @*<script src="~/board/js/jquery-3.2.1.min.js"></script>*@
+
+        @*<script src="~/js/popper.min.1.16.0.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-notify.min.js"></script>*@
+
+        @*<script src="~/vidu/webrtc/jquery.initialize.js"></script>*@
+
+        @*<script type="text/javascript" src="~/board/js/socketio2.0.4.min.js"></script>*@
+        @*<script type="text/javascript" src="~/board/js/jqColorPicker.min.js"></script>*@
+        @*<script type="text/javascript" src="~/board/js/whiteboard.js"></script>*@
+        @*<script type="text/javascript" src="~/board/js/main.js"></script>*@
+        @*<script src="~/js/pako.min.js"></script>*@
+
+        @*<script src="~/css/ResizeSensor.js"></script>
+    <script src="~/css/ElementQueries.js"></script>*@
+
+        @*<script src="~/vidu/app.js"></script>*@
+        <script src="~/js/HackTimer.min.js"></script>
+        <script src="~/newJS/layout.js"></script>
+        <script src="~/newJS/_chat.js"></script>
+        <script src="~/newJS/_deviceJanust.js"></script>
+        <script src="~/newJS/_endMeet.js"></script>
+        <script src="~/newJS/_FilePanel.js"></script>
+        <script src="~/newJS/_toolbar.js"></script>
+        <script src="~/newJS/_vidu.js"></script>
+        @*<script src="~/vidu/webrtc/client.js"></script>*@
+        @*<script src="~/vidu/webrtc/screensharingtest.js"></script>*@
+        @*<script src="~/vidu/webrtc/Tvideoroomtest.js"></script>*@
+        @*<script src="~/vidu/webrtc/jquery-3.5.1.slim.min.js"></script>*@
+        @*<script src="~/vidu/webrtc/ion-sdk.min.js"></script>*@
+        @*<script src="~/vidu/webrtc/json-rpc.min.js"></script>*@
+        @*<script src="~/vidu/webrtc/webRtcClient.js"></script>*@
+        @*<script src="~/js/mediasoup-demo-app.js"></script>*@
+
+        <script src="~/newJS/quiz.js"></script>
+        <script src="~/newJS/diagramControler.js"></script>
+        <script src="~/newJS/officControler.js"></script>
+        <script src="~/newJS/MathEditorControler.js"></script>
+        <script src="~/newJS/centerPanelControler.js"></script>
+        <script src="~/newJS/screenShareControler.js"></script>
+        @*<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>*@
+        @*<script src="~/js/mqtt.min.js"></script>*@
+        <script src="~/newJS/mqtt.js"></script>
+        <script src="~/newJS/webRtcControler.js"></script>
+        <script src="~/newJS/t.js"></script>
+        <script src="~/newJS/_board.js"></script>
+        <script src="~/newJS/userManager.js"></script>
+        <script src="~/newJS/boardControler.js"></script>
+        @*<script src="~/vidu/webrtc/soundmeter.js"></script>*@
+        <script src="~/newJS/developControler.js"></script>
+        <script src="~/newJS/recordControler.js"></script>
+        <script src="~/newJS/signalmessage.js"></script>
+        <script src="~/newJS/loading.js"></script>
+        @* <script src="http://localhost:8080/sample.ts" type="module"></script>*@
+
+
+    }
+    else
+    {
+
+        <script src="~/js/bundle.min.js@(vStr)"></script>
+    }
+    <script src="~/js/livekit-client.umd.js@(vStr)"></script>
+    <script src="~/js/livekit.js@(vStr)"></script>
+    <script src="~/js/signalr.min.js"></script>
+
+    @if (Model.isRecorder == 1)
+    {
+
+        <link href="~/vidu/script/Capture.css@(vStr)" rel="stylesheet" />
+        <script src="~/vidu/script/Capture.js@(vStr)"></script>
+    }
+
+    @*<script type="text/javascript" src="~/board/js/jquery-ui.min.js"></script>*@
+    @*<script src="~/vidu/adapter_no_edge.min.js"></script>*@
+    @*<script src="~/vidu/RecordRTC/DiskStorage.js"></script>
+    <script src="~/vidu/RecordRTC/EBML.js"></script>
+    <script src="~/vidu/RecordRTC/recordTest.js"></script>*@
+    @*@if (Model.isRecorder == 1)
+    {
+
+
+    <script src="~/vidu/RecordRTC/DiskStorage.js"></script>
+    <script src="~/vidu/RecordRTC/EBML.js"></script>
+    <script src="~/vidu/RecordRTC/recordTest.js"></script>
+    }*@
+
+    <environment exclude="Development">
+
+    </environment>
+
+    <environment include="Development">
+
+    </environment>
+
+</body>
+
+</html>

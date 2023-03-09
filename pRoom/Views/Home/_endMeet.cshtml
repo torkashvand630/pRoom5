@@ -1,4 +1,4 @@
-﻿@model pRoom.meetVM
+﻿@model pRoom.meetNewVM
 <div class="modal" id="endMeetingExitModal" data-backdrop="false">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -12,15 +12,7 @@
                     <p style="margin-bottom:20px;">@Model.translate.endMeet_LeaveMeetMessage</p>
                     <button type="button" class="btn btn-danger" onclick="meetManager.exit()">@Model.translate.endMeet_LeaveMeet</button>
                 </div>
-                @if (Model.p == 1 && Model.isLimit == 1)
-                {
-                    <div id="finishMeetPanel" style="border-top:groove 2px red;padding-top:10px;">
-                        <p style="margin-bottom: 20px;color: #800303; font-weight: bold;">@Model.translate.endMeet_EndMeetMessage</p>
-                        <p style="margin-bottom: 20px;color: white; font-weight: bold;">@Model.translate.endMeet_EndMeetAttention</p>
-                        <button type="button" class="btn btn-danger" onclick="meetManager.end()">@Model.translate.endMeet_EndMeet</button>
-
-                    </div>
-                }
+                
 
             </div>
 
@@ -63,7 +55,7 @@
             <h4 id="deviceModalTitle" class="modal-title"><span>status :   </span><span id="recordStatus"></span></h4>
             <div class="modal-body" style="direction: ltr!important">
                 <div id="meetLiveDiv" style="display:none;margin-bottom:15px;">
-                    <a style="color:#0322ff;font-weight:bold;" href="@(appInfo.recordServer)play/?meetid=@(appInfo.serverID)_@Model.meetID" target="_blank">meet is live : click to play</a>
+                    @*<a style="color:#0322ff;font-weight:bold;" href="@(appInfo.recordServer)play/?meetid=@(appInfo.serverID)_@Model.meetID" target="_blank">meet is live : click to play</a>*@
                 </div>
                 <button type="button" id="recordButton" class="btn btn-success" onclick="recordControler.request()">start record</button>
                 <p id="recordRequstMessage" style="padding-top:10px;"></p>

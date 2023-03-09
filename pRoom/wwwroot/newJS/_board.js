@@ -13,7 +13,7 @@ function setHost() {
     }
     else board.isHost = 0;
 }
-setHost();
+//setHost();
 
 function setZoom(zoom, el) {
     //board.zoomScale = zoom;
@@ -32,7 +32,7 @@ function setZoom(zoom, el) {
     // el.style["transformOrigin"] = oString;
 
 }
-board.zoomScale2 = 1;
+//board.zoomScale2 = 1;
 function setZoomOUT() {
     var zoomScale = (90 * board.zoomScale) / 100;
     board.zoomScale = zoomScale;
@@ -267,8 +267,8 @@ var mainApp = {
     ddd: "ssssssss",
 
     meetInfo: {
-        userName: board.userName,
-        meetID: board.meetID
+        userName:"ggggg",// board.userName,
+        meetID:1,// board.meetID
     },
     AppStatus: {
         connection: false,

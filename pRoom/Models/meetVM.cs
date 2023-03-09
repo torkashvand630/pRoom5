@@ -12,7 +12,24 @@ using pRoom.Models.eventModel;
 
 namespace pRoom
 {
-
+    public class meetNewVM
+    {
+        public string state = "no";
+        public string errorMessage;
+        public TranslateMD translate;
+        public bool isLTR = true;
+        public int isHost = 0;
+        public int isRecorder = 0;
+        public string meetName = "dddd";
+        public int meetID;
+        public string userName="";
+        public string password = "";
+        public string userMeetInfo = "";
+        public void loadInfo()
+        {
+            this.userMeetInfo = Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    }
     public class meetVM
     {
         public int meetID;
@@ -35,7 +52,7 @@ namespace pRoom
         public int develop = appInfo.develop;
         public int office = appInfo.office;
         public int record = appInfo.record;
-
+        
 
         public meetVM()
         {
@@ -57,6 +74,8 @@ namespace pRoom
     }
     public class javaMeet
     {
+        public int state = 0;
+        public string error = "";
         public string meetID;
         public string userName;
         public string meetName;
@@ -99,6 +118,7 @@ namespace pRoom
         public string serverID = appInfo.serverID;
         public string recordServer = appInfo.recordServer;
         public string Prefix = appInfo.Prefix;
+        public string guid = "";
     }
     public class meetErrorVM
     {
@@ -137,6 +157,8 @@ namespace pRoom
         // public bool isSubscribeMqtt = false;
         public Permission permission = new Permission(0);
         public DevelopMD developMD = new DevelopMD();
+        public int isDemo = 0;
+        public int owner = 0;
         //public int readyStatus = 0;
 
         public object copy()
@@ -198,6 +220,8 @@ namespace pRoom
             this.st.record = new System.Dynamic.ExpandoObject();
             this.st.record.status = "not";
             this.st.record.id = "0";
+            if (node.password == "0") this.isDemo = 1;
+            this.owner = node.userID;
             this.userManager = new userManager();
 
             this.loadFile();

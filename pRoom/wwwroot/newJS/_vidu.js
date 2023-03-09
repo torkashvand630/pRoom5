@@ -7,7 +7,7 @@ var OV2;
 var session3 = 0;
 var OV3;
 
-var AsessionId = "a" + board.meetID;
+var AsessionId = "a";// + board.meetID;
 var boardHtmlpanel;
 var screenSharePanel;
 

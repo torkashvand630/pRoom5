@@ -1,4 +1,4 @@
-﻿@model pRoom.meetVM
+﻿@model pRoom.meetNewVM
 <div class="modal" id="deviceJanusModal" data-backdrop="false">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -67,13 +67,30 @@
             </div>
             <div class="modal-body">
 
-                <p>@Model.translate.EnterMeetMessage</p>
+                <div class="col-md-6">
+                    <p style="font-weight: bold;" id="errMessage"></p>
+                    @if (Model.userName != "")
+                    {
+                        <div style="margin-bottom:10px;"><div style="width:140px;float:initial; ">@Model.translate.front_userName </div> <input id="userName" value="@Model.userName" type="text" /></div>
+                    }
+                    else
+                    {
+                        <div style="margin-bottom:10px;"><div style="width:140px;float:initial;">@Model.translate.front_userName </div> <input id="userName" placeholder="@Model.translate.front_userName" type="text" /></div>
+                    }
+                      @if (Model.password != "0")
+                    {
+                        <div style="width:140px;">@Model.translate.password</div> <span><input style="" type="text" value="@Model.password" placeholder="password" id="tpass" /></span>
+                    }
+                </div>
+                <div class="col-md-6" style="margin-top:20px;">
+                    <a class="btn btn-primary" onclick="joinRoom('t')">@Model.translate.front_start_EnterMeeting</a>
+                </div>
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
                 @*<button type="button" class="btn btn-danger" onclick="device.close()" data-dismiss="modal" >Close</button>*@
-                <button type="button" class="btn btn-success" onclick="deviceUnpublisher.save()" data-dismiss="modal">@Model.translate.EnterMeet</button>
+                <button type="button" class="btn btn-success" onclick="loading.sendForm()"  >@Model.translate.EnterMeet</button>
 
             </div>
 

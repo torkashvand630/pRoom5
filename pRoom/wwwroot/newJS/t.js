@@ -1,5 +1,5 @@
 ﻿//const { idroo } = require("../board_files/my");
-
+////
 var isTabActive;
 
 window.onfocus = function () {
@@ -630,6 +630,7 @@ function setToolbarPosation() {
 
 };
 $(document).ready(function () {
+
    
     $(".menu-toggle").click(function (e) {
         layout.menuToggle();
@@ -638,6 +639,8 @@ $(document).ready(function () {
         // $("#wrapper").toggleClass("menuDisplayed");
 
     });
+    loading.start();
+    return;
    // $('#loadingModal').modal('toggle');
     // document.getElementById('boardHtmlpanel').style.display = "none";
     
