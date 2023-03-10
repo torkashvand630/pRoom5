@@ -630,7 +630,7 @@ function setToolbarPosation() {
 
 };
 $(document).ready(function () {
-   
+    
     $(".menu-toggle").click(function (e) {
         layout.menuToggle();
 
@@ -731,8 +731,8 @@ $(document).ready(function () {
         mainApp.start();
       //  $('#loadingModal').hide();
     }
-   
-
+     
+ 
    // mainApp.start();
     _viduModulStart(); 
 
@@ -755,7 +755,12 @@ $(document).ready(function () {
       //  resizingVideoBox();
         webRtcControler.CHANGEMYPEER();
     });
-    $("#stroke-width-slider").slider().set(5,1);
+    $("#stroke-width-slider").slider().set(5, 1);
+
+    var noSleep = new NoSleep(); 
+    noSleep.enable();
+    
+
     var f1 = function () {
        // console.log("f1");
         return 0;

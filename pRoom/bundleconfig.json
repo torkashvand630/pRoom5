@@ -27,7 +27,8 @@
       "wwwroot/newJS/video.js",
       "wwwroot/newJS/webRtcControler.js",
       "wwwroot/newJS/recordControler.js",
-      "wwwroot/newJS/signalmessage.js"
+      "wwwroot/newJS/signalmessage.js",
+      "wwwroot/js/NoSleep.min.js"
     ]
   },
   {
