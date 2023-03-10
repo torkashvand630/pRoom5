@@ -5464,7 +5464,7 @@ var bboard = {
         }
         if (fileID != 0) {
             var pageIdbg = Number(pageID) + 1;
-            var bgImage = '/files/board/' + board.meetID + '/pic/' + fileID + '/' + pageIdbg + '.jpg';
+            var bgImage = '/files/board/' + board.meetID + '/pic/' + fileID + '/' + pageIdbg + '.png';
 
             document.getElementById("whiteboardBG").style.backgroundImage = "url(" + bgImage + ")";
            // console.log(bgImage);
@@ -5527,7 +5527,7 @@ var bboard = {
         if (bboard.fileID != 0) {
             
             var pageIdbg = Number(pageID) + 1;
-            var bgImage = '/files/board/' + board.meetID + '/pic/' + bboard.fileID + '/' + pageIdbg + '.jpg';
+            var bgImage = '/files/board/' + board.meetID + '/pic/' + bboard.fileID + '/' + pageIdbg + '.png';
             idroo.board.setBackground(bgImage)
             return;
             let img = new Image();

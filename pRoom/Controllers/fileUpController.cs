@@ -202,7 +202,7 @@ namespace pRoom.Controllers
                     if (appInfo.pdfConverter == "aspose")
                         t = convertByAspose(envWWWPATH, meetID, tmpFile.inRoomID.ToString(), extension);
                     else
-                        t = await convertByPoppler(envWWWPATH, meetID, tmpFile.inRoomID.ToString(), extension);
+                        t = await convertByMupdf(envWWWPATH, meetID, tmpFile.inRoomID.ToString(), extension);
 
                     if (meet == null) t = "no";//|| meet.meetManagPrpperty.finishStatus != "no"
                     dynamic d = new System.Dynamic.ExpandoObject();
@@ -211,12 +211,14 @@ namespace pRoom.Controllers
                     d.res = t;
                     if (t == "ok")
                     {
+                        var pCount = Directory.GetFiles(outPicFile, "*.png").Count();
 
-                        int pCount = getPdfPageCount(outPicFile);
+                        
+                       // int pCount = getPdfPageCount(outPicFile);
                         if (pCount >= 1)
                         {
                             d.pdfPageCount = pCount;
-                            System.Drawing.Image img = System.Drawing.Image.FromFile(outPicFile + "1.jpg");
+                            System.Drawing.Image img = System.Drawing.Image.FromFile(outPicFile + "1.png");
                             //if (extension != ".pdf")
                             //{
                             //    img = resizeImage(img, outPicFile);
@@ -268,6 +270,145 @@ namespace pRoom.Controllers
             return jsonString;
 
         }
+
+
+        public async Task<string> convertByMupdf(string envWWWPATH, int meetID, string fileID, string ext)
+        {
+            var WorkPath = envWWWPATH + "files/board/";
+            string outFolder = WorkPath + meetID + "/pic/" + fileID + "/";
+            string outFile = outFolder + "%d.png";
+            
+            var exit = System.IO.Directory.Exists(outFolder);
+            if (!exit) System.IO.Directory.CreateDirectory(outFolder);
+            else
+            {
+                try
+                {
+                    var list = Directory.GetFiles(outFolder, "*.*");
+                    foreach (var f in list)
+                    {
+                        //if (System.IO.File.Exists(outFile + "1.jpg"))
+                        //{
+                        //    System.IO.File.Delete(outFile + "1.jpg");
+                        //}
+                        if (System.IO.File.Exists(f))
+                        {
+                            System.IO.File.Delete(f);
+                        }
+                    }
+
+                }
+                catch
+                {
+                    return "no";
+                }
+            }
+
+
+            string pdfFile = WorkPath + meetID + "/pdf/" + fileID + ".pdf";
+
+
+            if (ext != ".pdf")
+            {
+                try
+                {
+
+                    System.IO.File.Copy(WorkPath + meetID + "/pdf/" + fileID + ext, outFolder + "1.png");
+                    return "ok";
+                }
+                catch
+                {
+                    return "no";
+                }
+
+            }
+
+            //./pdftoppm -jpeg 3.pdf 3.jpg
+           // string command = "pdftoppm -jpeg " + pdfFile + " " + outFile;
+            string command = "pdftoppm -jpeg " + pdfFile + " " + outFile;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                //command = @"H:\tmp\livekit-1.3.4\mupdf\mutool convert   -o " + outFile + " " + pdfFile ;
+                command = appInfo.mupdf + outFile + " " + pdfFile;
+                Console.WriteLine("platform is win");
+            }
+            Console.WriteLine(command);
+            string result = "";
+            using (System.Diagnostics.Process proc = new System.Diagnostics.Process())
+            {
+                try
+                {
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        // var processResults = await ProcessEx.RunAsync("git.exe", "pull");
+
+                        proc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                        proc.StartInfo.Verb = "runas";
+                        proc.StartInfo.FileName = @"C:\Windows\System32\cmd.exe";
+                        proc.StartInfo.Arguments = "/c " + command;
+                        proc.StartInfo.UseShellExecute = false;
+                        proc.StartInfo.RedirectStandardOutput = true;
+                        proc.StartInfo.RedirectStandardError = true;
+                        proc.StartInfo.CreateNoWindow = false;
+                        proc.Start();
+                        Console.WriteLine("101");
+                        proc.Exited += delegate (object? sender, EventArgs args) {
+
+                        };
+                        await Task.Delay(5000);
+                        Console.WriteLine("102");
+                        if (proc.HasExited) return "ok";
+
+                        await Task.Delay(5000);
+                        Console.WriteLine("103");
+                        if (proc.HasExited) return "ok";
+
+                        await Task.Delay(5000);
+                        Console.WriteLine("104");
+                        if (proc.HasExited) return "ok";
+
+                        await Task.Delay(5000);
+
+                        proc.Kill(true);
+                        //   result += proc.StandardOutput.ReadToEnd();
+                        //  result += proc.StandardError.ReadToEnd();
+
+
+
+
+                        Console.WriteLine("105");
+                        //  await proc.WaitForExitAsync();
+                        // proc.WaitForExit();
+                        return "ok";
+                    }
+                    else
+                    {
+                        proc.StartInfo.FileName = "/bin/bash";
+                        proc.StartInfo.Arguments = "-c \" " + command + " \"";
+                        proc.StartInfo.UseShellExecute = false;
+                        proc.StartInfo.RedirectStandardOutput = true;
+                        proc.StartInfo.RedirectStandardError = true;
+                        proc.Start();
+
+                        result += proc.StandardOutput.ReadToEnd();
+                        result += proc.StandardError.ReadToEnd();
+
+                        proc.WaitForExit();
+                        return "ok";
+                    }
+
+
+                }
+                catch
+                {
+                    return "no";
+                }
+            }
+            // Console.WriteLine("result is :" + result);
+            // return result;
+            return "ok";
+        }
+
         public string convertByAspose(string envWWWPATH, int meetID, string fileID, string ext)
         {
             return "no";
@@ -509,7 +650,13 @@ namespace pRoom.Controllers
             return list.Count();
         }
 
-
+        public int getPdfPageCountMupdf(string p)
+        {
+            var list = Directory.GetFiles(p, "*.png");
+            
+                return list.Count();
+           
+        }
         public class kkjj
         {
             public IList<IFormFile> files;

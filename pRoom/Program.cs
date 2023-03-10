@@ -262,6 +262,9 @@ namespace pRoom
             var poppler = (string)j["poppler"];
             if (poppler != null) appInfo.poppler = poppler;
 
+            string mupdf = (string)(j["mupdf"]);
+            if (mupdf != null) appInfo.mupdf = mupdf;
+
             var livekitcli = (string)j["livekitcli"];
             if (livekitcli != null) appInfo.livekitcli = livekitcli;
 
@@ -274,6 +277,7 @@ namespace pRoom
             Console.WriteLine("server live : " + appInfo.live);
             Console.WriteLine("ConnectionString : " + appInfo.ConnectionString);
             Console.WriteLine("poppler : " + appInfo.poppler);
+            Console.WriteLine("mupdf : " + appInfo.mupdf);
 
             //appInfo1 a = JsonConvert.DeserializeObject<appInfo1>(str);
             //appInfo.ConnectionString = a.ConnectionString;

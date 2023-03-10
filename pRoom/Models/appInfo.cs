@@ -41,6 +41,7 @@ namespace pRoom
         public static string mqttServer2 = "";
         public static string pdfConverter = "";
         public static string poppler = "";
+        public static string mupdf = "";
         public static string livekitcli = "";
         public static string recordServer = "";
         public static int random = (new Random()).Next(0, 10000);
