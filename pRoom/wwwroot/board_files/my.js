@@ -7073,7 +7073,7 @@ this.Board = function() {
     }
     ,
         t.prototype.panBy = function (t, e) {
-        console.log('prnby')
+        return;//ggggg
         this.x += t * this.zoom,
             this.y += e * this.zoom,
            

@@ -2,8 +2,6 @@
  * PEP v0.4.1 | https://github.com/jquery/PEP
  * Copyright jQuery Foundation and other contributors | http://jquery.org/license
  */
-console.log("ggggggggggggg");
-//alert("22");
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -1094,8 +1092,7 @@ console.log("ggggggggggggg");
 
     // For single axis scrollers, determines whether the element should emit
     // pointer events or behave as a scroller
-      shouldScroll: function (inEvent) {
-          alert("hghgh");
+    shouldScroll: function(inEvent) {
       if (this.firstXY) {
         var ret;
         var scrollAxis = inEvent.currentTarget._scrollType;
@@ -1138,8 +1135,7 @@ console.log("ggggggggggggg");
     // touchend event.
     // To keep state globally consistent, we fire a
     // pointercancel for this "abandoned" touch
-      vacuumTouches: function (inEvent) {
-          alert("33333")
+    vacuumTouches: function(inEvent) {
       var tl = inEvent.touches;
 
       // pointermap.size should be < tl.length here, as the touchstart has not
@@ -1402,7 +1398,7 @@ console.log("ggggggggggggg");
       _dispatcher.releaseCapture(pointerId, this);
     };
   }
-   
+
   function _capture__applyPolyfill() {
     if (window.Element && !Element.prototype.setPointerCapture) {
       Object.defineProperties(Element.prototype, {
@@ -1414,7 +1410,7 @@ console.log("ggggggggggggg");
         }
       });
     }
-  }  
+  }
 
   applyAttributeStyles();
   platform_events__applyPolyfill();

@@ -274,5 +274,6 @@ var DragDropTouch;
             t._ptProps = "pageX,pageY,clientX,clientY,screenX,screenY".split(","),
             t
     }();
-    t.DragDropTouch = i
+    t.DragDropTouch = i ;
+    window.DragDropTouch=i;
 }(DragDropTouch || (DragDropTouch = {}));
