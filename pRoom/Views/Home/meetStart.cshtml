@@ -13,7 +13,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="~/board_files/jquery-3.1.0.min.js"></script>
-    <script src="~/js/bundleutil.min.js@(vStr)"></script>
+     @if (Model.isHost != 2)
+    {
+        <script src="~/js/bundleutil.min.js@(vStr)"></script>
+    }
     @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />*@
     @if (Model.isHost != 20)
     {

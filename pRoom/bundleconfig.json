@@ -38,8 +38,8 @@
       "wwwroot/board_files/webfont.js",
       "wwwroot/board_files/underscore-min.js",
       "wwwroot/board_files/draggable-shim.js",
-      "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
       "wwwroot/js/popper.min.1.16.0.js",
+      "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
       "wwwroot/lib/bootstrap/dist/js/bootstrap-notify.min.js",
       "wwwroot/newJS/video.js"
     ]
