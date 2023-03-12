@@ -12,7 +12,8 @@
     <title>@Model.meetName</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <script src="~/board_files/jquery-3.1.0.min.js"></script>
+    <script src="~/js/bundleutil.min.js@(vStr)"></script>
     @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />*@
     @if (Model.isHost != 20)
     {
@@ -37,6 +38,7 @@
         <link href="~/board/css/ltr.css@(vStr)" rel="stylesheet">
     }
     <link rel="stylesheet" href="~/css/webfonts/font-awesome-all.min.css" />
+    
     <script>
 
 
@@ -163,14 +165,16 @@
     </div>
 
     @Html.Partial("_deviceJanus.cshtml")
-    <script src="~/js/popper.min.1.16.0.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap-notify.min.js"></script>
+  
    @* <script src="~/js/mqtt.min.js"></script>*@
   
-    <script src="~/newJS/video.js"></script>
+   
     @if (Model.isHost == 2)
     {
+        <script src="~/js/popper.min.1.16.0.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap-notify.min.js"></script>
+        <script src="~/newJS/video.js"></script>
          <script src="~/css/ResizeSensor.js"></script>
     <script src="~/css/ElementQueries.js"></script>
         @*<script src="~/board/js/jquery-3.2.1.min.js"></script>*@
@@ -235,6 +239,7 @@
     {
 
         <script src="~/js/bundle.min.js@(vStr)"></script>
+       
     }
     <script src="~/js/livekit-client.umd.js@(vStr)"></script>
         <script src="~/js/livekit.js@(vStr)"></script>
@@ -244,7 +249,7 @@
     {
 
         <link href="~/vidu/script/Capture.css@(vStr)" rel="stylesheet" />
-        <script src="~/vidu/script/Capture.js@(vStr)"></script>
+      
     }
 
     @*<script type="text/javascript" src="~/board/js/jquery-ui.min.js"></script>*@

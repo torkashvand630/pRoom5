@@ -1398,7 +1398,7 @@
       _dispatcher.releaseCapture(pointerId, this);
     };
   }
-
+   
   function _capture__applyPolyfill() {
     if (window.Element && !Element.prototype.setPointerCapture) {
       Object.defineProperties(Element.prototype, {
@@ -1410,7 +1410,7 @@
         }
       });
     }
-  }
+  } 
 
   applyAttributeStyles();
   platform_events__applyPolyfill();

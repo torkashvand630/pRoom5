@@ -107,7 +107,8 @@ var bboard = {
             
             var pageIdbg = Number(pageID) + 1;
             var bgImage = '/files/board/' + board.meetID + '/pic/' + bboard.fileID + '/' + pageIdbg + '.png';
-            idroo.board.setBackground(bgImage)
+            canvas.style.backgroundImage = "url(" + bgImage + ")";
+           // idroo.board.setBackground(bgImage)
             return;
             let img = new Image();
             img.onload = function () {

@@ -105,6 +105,8 @@ var layout = {
 
     },
     setLayoutID: function () {
+        var w = $(window).width();
+        var h = $(window).height();
         if (webRtcControler.isActive) {
             if (w > 1000) layout.id = 1;
             else layout.id = 2;
@@ -112,8 +114,7 @@ var layout = {
         }
         layout.sessionPanelPosetion = 1;
         // return;
-        var w = $(window).width();
-        var h = $(window).height();
+      
         if (w > 1000) {
             layout.id = 1;
             layout.sessionPanelPosetion = 1;
@@ -121,6 +122,9 @@ var layout = {
         }
         else {
             layout.id = 2;
+            //layout.rightPanelwidth = 300;
+            //layout.element.sidebar_wrapper.style.width = "300px";
+           // layout.closeRightPanel();
             if (h < 700 && w > 650) {
                 layout.sessionPanelPosetion = 3;
             } else layout.sessionPanelPosetion = 2;
