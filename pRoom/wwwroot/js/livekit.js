@@ -829,12 +829,21 @@ function setButtonsForState(connected) {
     toRemove.forEach((id) => $$$(id)?.removeAttribute('disabled'));
     toAdd.forEach((id) => $$$(id)?.setAttribute('disabled', 'true'));
 }
-const elementMapping = {
+const elementMapping2 = {
     'video-input': 'videoinput',
     'audio-input': 'audioinput',
     'audio-output': 'audiooutput',
 };
 async function handleDevicesChanged() {
+    const elementMapping = { 
+        'audio-output': 'audiooutput',
+    };
+    if (board.user.permission.video) {
+        elementMapping['video-input'] ='videoinput'
+    }
+    if (board.user.permission.audio) {
+        elementMapping['audio-input'] = 'audioinput'
+    }
     Promise.all(Object.keys(elementMapping).map(async (id) => {
         const kind = elementMapping[id];
         if (!kind) {
