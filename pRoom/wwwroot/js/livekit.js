@@ -175,7 +175,7 @@ const appActions = {
             .on(LivekitClient.RoomEvent.RoomMetadataChanged, (metadata) => {
                 appendLog('new metadata for room', metadata);
             })
-            .on(LivekitClient.RoomEvent.MediaDevicesChanged, handleDevicesChanged)
+            .on(LivekitClient.RoomEvent.MediaDevicesChanged,  () => console.warn('MediaDevicesChanged1'))
             .on(LivekitClient.RoomEvent.AudioPlaybackStatusChanged, () => {
                 if (room.canPlaybackAudio) {
                     $$$('start-audio-button')?.setAttribute('disabled', 'true');
